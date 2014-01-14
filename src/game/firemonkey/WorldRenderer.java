@@ -28,6 +28,9 @@ public class WorldRenderer {
     }
 
     public void render() {
+    	
+        if(world.player.position.y > cam.position.y )
+            cam.position.y = world.player.position.y;
         cam.setViewportAndMatrices();
         renderBackground();
         renderObjects();
@@ -35,7 +38,7 @@ public class WorldRenderer {
     
     public void renderBackground() {	
     	batcher.beginBatch(Assets.gameBackgroundItems);
-    	batcher.drawSprite(World.WORLD_WIDTH/2, World.WORLD_HEIGHT/2, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.gameBackground_1);
+    	batcher.drawSprite(cam.position.x, cam.position.y, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.gameBackground);
     	batcher.endBatch();
     }
     
@@ -48,48 +51,18 @@ public class WorldRenderer {
         gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
         gl.glColor4f(1, 1, 1, 1);
         
-        renderShips();
-        renderProjectiles();
+        renderPlayer();
         
         gl.glDisable(GL10.GL_BLEND);
     }
     
-    private void renderShips()
+    private void renderPlayer()
     {
-    	batcher.beginBatch(Assets.tileMapItems);
-       
-    	for (Ship s : world.ships) {
-    		
-    		// Ship Body
-    		batcher.drawSprite(s.position.x, s.position.y , s.bounds.width, s.bounds.height, s.bodyTexture);
-    		
-    		// Ship Rooms
-    		for (ShipRoom r : s.rooms) {
-    			batcher.drawSprite(r.position.x, r.position.y , r.bounds.width, r.bounds.height, r.bodyTextureHealthy);
-    			
-    			// Ship Crew ?
-    		}
-    		
-    		// Ship Weapons
-       		for (ShipWeapon w : s.weapons) {
-    			batcher.drawSprite(w.position.x, w.position.y , w.bounds.width, w.bounds.height, w.bodyTexture);
-    		}
-		}
- 
-        batcher.endBatch();
+    	batcher.beginBatch(Assets.playerItems);
+    	batcher.drawSprite(world.player.position.x, world.player.position.y, 1, 1, Assets.player);
+    	batcher.endBatch();
     }
     
-    private void renderProjectiles()
-    {
-    	try {
-	    	batcher.beginBatch(Assets.tileMapItems);
-	    	for (Projectile p : world.projectiles) {
-	    		batcher.drawSprite(p.position.x, p.position.y, p.bounds.width, p.bounds.height, p.asset);
-			}
-	    	batcher.endBatch();
-    	} 
-    	catch(Exception e){}
-    }
  
     
 //    private void renderExplosions() {

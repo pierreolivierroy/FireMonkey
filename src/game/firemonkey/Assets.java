@@ -12,8 +12,7 @@ public class Assets {
     
 	// Game Backgrounds
     public static Texture gameBackgroundItems;
-    public static TextureRegion gameBackground_1;
-    public static TextureRegion gameBackground_2;
+    public static TextureRegion gameBackground;
     
     // Game Interface
     
@@ -34,11 +33,10 @@ public class Assets {
        	
     	// Main Menu (UI)
     	mainMenuItems = new Texture(game, "mapPack1.png");
-    	mainMenuBackground = new TextureRegion(mainMenuItems, 0, 0, 800, 480);
+    	mainMenuBackground = new TextureRegion(mainMenuItems, 0, 0, 480, 800);
     	
-    	gameBackgroundItems = new Texture(game, "backgroundsMap.png");
-    	gameBackground_1 = new TextureRegion(mainMenuItems, 0, 0, 800, 480);
-    	gameBackground_2 = new TextureRegion(mainMenuItems, 0, 0, 800, 480);
+    	gameBackgroundItems = new Texture(game, "background.png");
+    	gameBackground = new TextureRegion(mainMenuItems, 0, 0, 320, 480);
     	
     	// Game Screen 
     	tileMapItems = new Texture(game, "tilemap.png");

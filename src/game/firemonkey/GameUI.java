@@ -19,8 +19,8 @@ public class GameUI {
 	    button1 = new UIButton(80, 50, 140, 70, Assets.redTile, Assets.blueTile, Assets.player);
 	    button2 = new UIButton(400, 50, 140, 70, Assets.redTile, Assets.redTile, Assets.player);
 	    
-	    UIButtons.add(button1);
-	    UIButtons.add(button2);
+	    //UIButtons.add(button1);
+	    //UIButtons.add(button2);
 	    
 	    batcher = sBatcher;
 	}

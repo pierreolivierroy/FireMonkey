@@ -9,23 +9,36 @@ public class Player extends DynamicGameObject {
     public static final float PLAYER_FLOOR_POSITION = 0.5f + PLAYER_HEIGHT/2;
     public static final float PLAYER_MAX_VELOCITY	= 12.0f;
     
-    public static final int PLAYER_STATE_IDLE 		= 0;
-    public static final int PLAYER_STATE_RUNNING 	= 1;
-    public static final int PLAYER_STATE_FLYING 	= 2;
-    public static final int PLAYER_STATE_FALLING 	= 3;
-    public static final int PLAYER_STATE_HIT_WALL 	= 9;
-
+    public static final int PLAYER_STATE_STARTING 	= 0;
+    public static final int PLAYER_STATE_FLYING 	= 1;
+    public static final int PLAYER_STATE_REFUEL 	= 2;
+    public static final int PLAYER_STATE_HIT 		= 3;
+    public static final int PLAYER_STATE_BONUS 		= 4;
     
-    public static final float JETPACK_ACCELERATION	= 5.0f;
-
-    float moveX = 15.0f; // Test value that makes the pacman move in X
-    public int state;
+    public static final float ROCKET_ACCELERATION	= 5.0f;
+    public static final float MOVE_VELOCITY = 25.0f;
+    
+    public int state;   
     public int previousState;
-
+    
+    private float stateTime;   
     
 	public Player(float x, float y) {
 		super(x, y, PLAYER_WIDTH, PLAYER_HEIGHT);
-		this.state = PLAYER_STATE_IDLE;
+		this.state = PLAYER_STATE_STARTING;
 	}
 
+    public void update(float deltaTime) {  
+    	
+        //velocity.add(World.gravity.x * deltaTime, World.gravity.y * deltaTime);
+        position.add(velocity.x * deltaTime, velocity.y * deltaTime);
+        bounds.lowerLeft.set(position).sub(bounds.width / 2, bounds.height / 2);
+        
+        if(position.x < 0)
+            position.x = World.WORLD_WIDTH;
+        if(position.x > World.WORLD_WIDTH)
+            position.x = 0;
+        
+        stateTime += deltaTime;
+    }
 }
