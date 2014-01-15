@@ -47,8 +47,8 @@ public class MainMenuScreen extends GLScreen {
         Assets.load((GLGame) game);
         
         // UI Buttons and the array with all of their assets
-        playButton = new UIButton(500,200,200,200,Assets.blueTile,Assets.redTile, null);
-        highScoresButton = new UIButton(200,200,200,200,Assets.blueTile,Assets.redTile, null);
+        playButton = new UIButton(240,300,200,200,Assets.blueTile,Assets.redTile, null);
+        highScoresButton = new UIButton(240,600,200,200,Assets.blueTile,Assets.redTile, null);
         buttonsAssets = new ArrayList<UIButton>();
         buttonsAssets.add(playButton);
         buttonsAssets.add(highScoresButton);  
@@ -88,8 +88,7 @@ public class MainMenuScreen extends GLScreen {
             if(event.type == TouchEvent.TOUCH_UP) { 
                 if(playButton.state == UIButton.STATE_PRESSED) {
                 	changeScreen = true;
-                	GameScreen.makeInstance(game);
-                	screen = GameScreen.getInstance(); 
+                	screen = new GameScreen(game);
                 	playButton.state = UIButton.STATE_IDLE;
                 }
             }

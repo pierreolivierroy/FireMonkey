@@ -37,7 +37,7 @@ public class AnimationHandler {
         
         // Select the assets batch and draw them
         batcher.beginBatch(Assets.mainMenuItems);
-        batcher.drawSprite(400, 240, 800, 480, sceneAngle, Assets.mainMenuBackground);
+        batcher.drawSprite(240, 400, 480, 800, sceneAngle, Assets.mainMenuBackground);
         batcher.endBatch();
         batcher.beginBatch(Assets.tileMapItems);
 

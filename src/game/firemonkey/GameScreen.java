@@ -53,22 +53,6 @@ public class GameScreen extends GLScreen {
     
 	boolean 		gameOverTouch = false;
 	
-	public static void makeInstance(Game game)
-	{
-		if(GameScreen.instance == null) {
-			GameScreen.instance = new GameScreen(game);
-		}
-	}
-	
-	public static GameScreen getInstance()
-	{
-		// Sketchy singleton pattern inherited from framework architecture and the need to pass a unique "game".
-		if(instance == null){	// If null (SHOULD NEVER OCCUR) kill the game
-			throw new RuntimeException("No instance for GameScreen - Aborting - Rethink your code");
-		}
-		return instance;
-	}
-	
     public GameScreen(Game game) {
         super(game);
         
@@ -195,7 +179,6 @@ public class GameScreen extends GLScreen {
 		case STATE_TOUCH_FLYING:			
 			break;
 
-
 		default:
 			break;
 		}
@@ -208,29 +191,14 @@ public class GameScreen extends GLScreen {
 		
 		// No prior touch states detected
 		case STATE_TOUCH_STARTING:
-			if(event.type == TouchEvent.TOUCH_DRAGGED ||event.type == TouchEvent.TOUCH_DOWN){     
-	         	
-	        } else if(event.type == TouchEvent.TOUCH_UP){
-	
-	        }
 			break;
 			
 		// User previously touched a ship member
 		case STATE_TOUCH_REFUEL:
-			if(event.type == TouchEvent.TOUCH_DRAGGED ||event.type == TouchEvent.TOUCH_DOWN){     
-	         	
-	        } else if(event.type == TouchEvent.TOUCH_UP){
-	
-	        }
 			break;
 			
 		// User previously touched a weapon in the UI
 		case STATE_TOUCH_FLYING:
-			if(event.type == TouchEvent.TOUCH_DRAGGED ||event.type == TouchEvent.TOUCH_DOWN){     
-	         	
-	        } else if(event.type == TouchEvent.TOUCH_UP){
-
-	        }
 			break;
 
 		default:
@@ -263,8 +231,6 @@ public class GameScreen extends GLScreen {
 	    gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 	    gl.glColor4f(1, 1, 1, 1);
 	    
-	    //batcher.beginBatch(Assets.gameScreenItems);
-	    
 		// Draw the UI for current State
 	    switch(state) {
 	    case GAME_READY:
@@ -283,7 +249,7 @@ public class GameScreen extends GLScreen {
 	        presentGameOver();
 	        break;
 	    }
-	    //batcher.endBatch();
+
 	    gl.glDisable(GL10.GL_BLEND);
 		
 	}
@@ -310,8 +276,7 @@ public class GameScreen extends GLScreen {
 		// Draw here
 	}
 	
-	private void drawUI()
-	{
+	private void drawUI() {
 		gameUI.draw();
 	}
 
