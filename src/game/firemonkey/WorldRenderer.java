@@ -6,6 +6,7 @@ import com.bag.lib.gl.Camera2D;
 import com.bag.lib.gl.SpriteBatcher;
 import com.bag.lib.gl.TextureRegion;
 import com.bag.lib.impl.GLGraphics;
+import com.bag.lib.math.Circle;
 
 @SuppressWarnings("unused")
 public class WorldRenderer {
@@ -31,6 +32,7 @@ public class WorldRenderer {
     	
         if(world.player.position.y > cam.position.y )
             cam.position.y = world.player.position.y;
+        
         cam.setViewportAndMatrices();
         renderBackground();
         renderObjects();
@@ -38,7 +40,7 @@ public class WorldRenderer {
     
     public void renderBackground() {	
     	batcher.beginBatch(Assets.gameBackgroundItems);
-    	batcher.drawSprite(cam.position.x, cam.position.y, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.gameBackground);
+    	batcher.drawSprite(cam.position.x, World.WORLD_HEIGHT/2, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.gameBackground);
     	batcher.endBatch();
     }
     
@@ -52,14 +54,30 @@ public class WorldRenderer {
         gl.glColor4f(1, 1, 1, 1);
         
         renderPlayer();
+        renderClouds();
         
         gl.glDisable(GL10.GL_BLEND);
     }
     
     private void renderPlayer()
     {
+    	if(world.player.position.y - World.WORLD_HEIGHT/2 > 0 )
+    		cam.position.y = world.player.position.y;
+    	
     	batcher.beginBatch(Assets.playerItems);
     	batcher.drawSprite(world.player.position.x, world.player.position.y, 1, 1, Assets.player);
+    	batcher.endBatch();
+    }
+    
+    private void renderClouds()
+    {
+    	if(world.clouds == null || world.clouds.size() == 0)
+    		return;
+    	
+    	batcher.beginBatch(Assets.tileMapItems);
+    	for (Circle c : world.clouds) {
+    		batcher.drawSprite(c.center.x, c.center.y, c.radius, c.radius, Assets.redTile);
+		}   	
     	batcher.endBatch();
     }
     

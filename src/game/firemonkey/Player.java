@@ -16,7 +16,7 @@ public class Player extends DynamicGameObject {
     public static final int PLAYER_STATE_BONUS 		= 4;
     
     public static final float ROCKET_ACCELERATION	= 5.0f;
-    public static final float MOVE_VELOCITY = 25.0f;
+    public static final float MOVE_VELOCITY = 20.0f;
     
     public int state;   
     public int previousState;
@@ -30,7 +30,7 @@ public class Player extends DynamicGameObject {
 
     public void update(float deltaTime) {  
     	
-        //velocity.add(World.gravity.x * deltaTime, World.gravity.y * deltaTime);
+        velocity.add(World.gravity.x * deltaTime, World.gravity.y * deltaTime);
         position.add(velocity.x * deltaTime, velocity.y * deltaTime);
         bounds.lowerLeft.set(position).sub(bounds.width / 2, bounds.height / 2);
         
@@ -38,6 +38,9 @@ public class Player extends DynamicGameObject {
             position.x = World.WORLD_WIDTH;
         if(position.x > World.WORLD_WIDTH)
             position.x = 0;
+        
+        if(position.y < PLAYER_HEIGHT/2)
+        	position.y = PLAYER_HEIGHT/2;
         
         stateTime += deltaTime;
     }
