@@ -7,6 +7,7 @@ import com.bag.lib.gl.SpriteBatcher;
 public class GameUI {
 
 	SpriteBatcher batcher;
+	SpriteBatcher batcherMonkey;
 	
     ArrayList<UIButton> UIButtons;
 	UIButton button1;
