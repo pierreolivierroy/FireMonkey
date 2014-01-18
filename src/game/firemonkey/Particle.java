@@ -5,9 +5,9 @@ public class Particle {
 	public static final int STATE_ALIVE = 0;	// particle is alive
 	public static final int STATE_DEAD = 1;		// particle is dead
 
-	public static final int DEFAULT_LIFETIME 	= 200;	// play with this
+	public static final int DEFAULT_LIFETIME 	= 150;	// play with this
 	public static final int MAX_DIMENSION		= 5;	// the maximum width or height
-	public static final int MAX_SPEED			= 10;	// maximum speed (per update)
+	public static final int MAX_SPEED			= 15;	// maximum speed (per update)
 
 	public int state;			// particle is alive or dead
 	private float width;		// width of the particle
@@ -18,7 +18,7 @@ public class Particle {
 	private float lifetime;		// particle dies when it reaches this value
 	public	float alpha;
 	
-	public Particle(int x, int y) {
+	public Particle(float x, float y) {
 		this.x = x;
 		this.y = y;
 		this.state = Particle.STATE_ALIVE;

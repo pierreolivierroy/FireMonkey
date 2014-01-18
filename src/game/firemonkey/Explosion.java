@@ -8,10 +8,10 @@ public class Explosion {
 	public static final int STATE_DEAD 		= 1;	// all particles are dead
 
 	public ArrayList<Particle> particles;			// particles in the explosion
-	protected int size;						// number of particles
-	protected int state;						// whether it's still active or not
+	protected int size;								// number of particles
+	protected int state;							// whether it's still active or not
 	
-	public Explosion(int particleNr, int x, int y) {
+	public Explosion(int particleNr, float x, float y) {
 		this.state = STATE_ALIVE;
 		this.particles = new ArrayList<Particle>();
 	 	for (int i = 0; i < particleNr; i++) {
