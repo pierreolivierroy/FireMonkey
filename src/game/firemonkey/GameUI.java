@@ -13,7 +13,9 @@ public class GameUI {
     ArrayList<UIImage> UIImages;
 	UIButton button1;
 	UIButton button2;
-	UIImage bananaIcon;
+	UIImage bananaIcon1;
+	UIImage bananaIcon2;
+	UIImage bananaIcon3;
 
 	public GameUI(SpriteBatcher sBatcher)
 	{
@@ -23,8 +25,13 @@ public class GameUI {
 	    button2 = new UIButton(400, 50, 140, 70, Assets.redTile, Assets.redTile, Assets.player);
 	    
 	    UIImages = new ArrayList<UIImage>();
-	    bananaIcon = new UIImage(30, 30, 120, 90, Assets.bananaNormal);
-	    UIImages.add(bananaIcon);
+	    bananaIcon1 = new UIImage(50, 35, 120, 90, 10, Assets.bananaNormal);
+	    bananaIcon2 = new UIImage(50, 35, 120, 90, 10, Assets.bananaNormal);
+	    bananaIcon3 = new UIImage(50, 35, 120, 90, 10, Assets.bananaNormal);
+	
+	    UIImages.add(bananaIcon1);
+	    UIImages.add(bananaIcon2);
+	    UIImages.add(bananaIcon3);
 	    //UIButtons.add(button1);
 	    //UIButtons.add(button2);
 	    
@@ -34,7 +41,7 @@ public class GameUI {
 	public void draw()
 	{	
 		try {
-			batcher.beginBatch(Assets.bananasTexture);
+			batcher.beginBatch(Assets.bananasTexture); 
 			for (int i = 0; i < UIButtons.size(); i++) {
 				UIButton u = UIButtons.get(i);
 				if(u.state == UIButton.STATE_IDLE) {
@@ -47,7 +54,7 @@ public class GameUI {
 			}
 			
 			for (UIImage u : UIImages) {
-				batcher.drawSprite(u.position.x, u.position.y, u.bounds.width, u.bounds.height, u.asset);
+				batcher.drawSprite(u.position.x, u.position.y, u.bounds.width, u.bounds.height, u.angle, u.asset);
 			}
 			batcher.endBatch();
 	         

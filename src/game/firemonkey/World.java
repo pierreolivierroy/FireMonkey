@@ -176,8 +176,7 @@ public class World {
 				showBanana = true;
 			}
 			else {
-				generateRandomBananaPattern();
-				
+								
 				//Generate banana petterns randomly according to their stats
 				if(BANANA_PATTERN_BLANK_MIN < pattern && pattern <= BANANA_PATTERN_RANDOM_MIN)
 					generateRandomBananaPattern();
@@ -187,6 +186,8 @@ public class World {
 					generateRectangleBananaPattern();
 				else if(BANANA_PATTERN_DIAGONAL_MIN < pattern && pattern <= max)
 					generateDiagonalBananaPattern();	
+				
+				generateRandomBananaPattern();
 			}		
 		}		
 
