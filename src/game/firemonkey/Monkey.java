@@ -60,8 +60,7 @@ public class Monkey extends DynamicGameObject {
         stateTime += deltaTime;        
     }
     
-    public void bananaCollision(float boost)
-    {
+    public void bananaCollision(float boost) {
     	this.velocity.y = boost;
     }
 }

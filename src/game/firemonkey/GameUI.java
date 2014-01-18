@@ -10,8 +10,10 @@ public class GameUI {
 	SpriteBatcher batcherMonkey;
 	
     ArrayList<UIButton> UIButtons;
+    ArrayList<UIImage> UIImages;
 	UIButton button1;
 	UIButton button2;
+	UIImage bananaIcon;
 
 	public GameUI(SpriteBatcher sBatcher)
 	{
@@ -20,6 +22,9 @@ public class GameUI {
 	    button1 = new UIButton(80, 50, 140, 70, Assets.redTile, Assets.blueTile, Assets.player);
 	    button2 = new UIButton(400, 50, 140, 70, Assets.redTile, Assets.redTile, Assets.player);
 	    
+	    UIImages = new ArrayList<UIImage>();
+	    bananaIcon = new UIImage(30, 30, 120, 90, Assets.redTile);
+	    UIImages.add(bananaIcon);
 	    //UIButtons.add(button1);
 	    //UIButtons.add(button2);
 	    
@@ -40,7 +45,12 @@ public class GameUI {
 					batcher.drawSprite(u.position.x, u.position.y, u.bounds.width, u.bounds.height, u.pressedAsset);
 				}
 			}
+			
+			for (UIImage u : UIImages) {
+				batcher.drawSprite(u.position.x, u.position.y, u.bounds.width, u.bounds.height, u.asset);
+			}
 			batcher.endBatch();
+	         
 		} catch(Exception e){}
 	}
 }

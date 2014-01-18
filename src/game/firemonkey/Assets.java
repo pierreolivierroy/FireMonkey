@@ -14,7 +14,9 @@ public class Assets {
     public static Texture gameBackgroundItems;
     public static TextureRegion gameBackground;
     
-    // Game Interface
+    // Game Font
+    public static Texture fontTex;  
+    public static Font font; 
     
     // Game Objects
     public static Texture playerItems;
@@ -46,6 +48,10 @@ public class Assets {
     	// Game Objects
     	playerItems = new Texture(game, "pacman.png");
     	player = new TextureRegion(playerItems, 0, 0, 64, 64);
+    	
+    	// Fonts
+    	fontTex = new Texture(game, "font3.png");
+        font = new Font(fontTex, 0, 0, 16, 32, 40);
 
     }       
     
@@ -54,6 +60,7 @@ public class Assets {
     	playerItems.reload();
     	mainMenuItems.reload();
     	gameBackgroundItems.reload();
+    	fontTex.reload();
 
     	//if(Settings.soundEnabled )
            // music.play();

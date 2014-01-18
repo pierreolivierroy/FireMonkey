@@ -110,9 +110,10 @@ public class GameScreen extends GLScreen {
 	// Update when state is READY
 	private void updateReady() {
 		// First touch 
-	    //if(game.getInput().getTouchEvents().size() > 0) {
+	    if(game.getInput().getTouchEvents().size() > 0) {
 	        state = GAME_RUNNING;
-	    //}
+	        
+	    }
 	}
 	
 	// Update when state is RUNNING
@@ -198,15 +199,12 @@ public class GameScreen extends GLScreen {
 	{
 		switch (touchState) {
 		
-		// No prior touch states detected
 		case STATE_TOUCH_STARTING:
 			break;
 			
-		// User previously touched a ship member
 		case STATE_TOUCH_REFUEL:
 			break;
 			
-		// User previously touched a weapon in the UI
 		case STATE_TOUCH_FLYING:
 			break;
 
@@ -264,28 +262,27 @@ public class GameScreen extends GLScreen {
 	}
 	
 	private void presentReady() {
-         // Draw here
-		drawUI();
+         
+		 batcher.beginBatch(Assets.fontTex);
+         Assets.font.drawText(batcher, "PREPARE FOR LAUNCH!", 262, 520);
+         Assets.font.drawText(batcher, "TOUCH TO START!", 300, 560);
+         batcher.endBatch();
+		
+         gameUI.draw();
 	}
 	
 	private void presentRunning() {
-		// Draw here
-		drawUI();
-	}
+		gameUI.draw();	}
 	
 	private void presentPaused() { 
-		// Draw here
+		gameUI.draw();
 	}
 	
 	private void presentLevelEnd() {
-		// Draw here
+		gameUI.draw();
 	}
 	
 	private void presentGameOver() {
-		// Draw here
-	}
-	
-	private void drawUI() {
 		gameUI.draw();
 	}
 
