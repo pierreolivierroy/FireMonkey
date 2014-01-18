@@ -3,6 +3,8 @@ package game.firemonkey;
 import android.util.Log;
 
 import com.bag.lib.DynamicGameObject;
+import com.bag.lib.math.Circle;
+import com.bag.lib.math.Vector2;
 
 public class Monkey extends DynamicGameObject {
 
@@ -22,19 +24,25 @@ public class Monkey extends DynamicGameObject {
     
     public int state;   
     public int previousState;
+    public Circle hitZone;
     
     private float stateTime;   
         
 	public Monkey(float x, float y) {
 		super(x, y, PLAYER_WIDTH, PLAYER_HEIGHT);
 		this.state = PLAYER_STATE_STARTING;
+		this.hitZone = new Circle(x, y, PLAYER_HEIGHT/3);
 	}
 
     public void update(float deltaTime) {  
     	
-        velocity.add(World.gravity.x * deltaTime, World.gravity.y * deltaTime);
-        position.add(velocity.x * deltaTime, velocity.y * deltaTime);
+    	if(state != PLAYER_STATE_BONUS) {
+	        velocity.add(World.gravity.x * deltaTime, World.gravity.y * deltaTime);
+	        position.add(velocity.x * deltaTime, velocity.y * deltaTime);
+    	}
+    	
         bounds.lowerLeft.set(position).sub(bounds.width / 2, bounds.height / 2);
+        hitZone.center.set(position);
         
         // Sides stuff
         if(position.x < 0)
@@ -60,7 +68,15 @@ public class Monkey extends DynamicGameObject {
         stateTime += deltaTime;        
     }
     
-    public void bananaCollision(float boost) {
+    public void bananaCollision(float boost) 
+    {
     	this.velocity.y = boost;
+    }
+    
+    public void barrelCollision(Vector2 barrelPos) 
+    {
+    	this.state = PLAYER_STATE_BONUS;
+    	this.position.set(barrelPos);
+    	this.velocity.set(0,0);
     }
 }

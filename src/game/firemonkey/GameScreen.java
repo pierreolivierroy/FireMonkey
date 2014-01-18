@@ -25,6 +25,7 @@ public class GameScreen extends GLScreen {
     static final int GAME_PAUSED 	= 2;
     static final int GAME_LEVEL_END = 3;
     static final int GAME_OVER 		= 4;
+    static final int GAME_ENTERING 	= 5;   
     
     // Touch States
     static final int STATE_TOUCH_STARTING = 10;
@@ -50,13 +51,14 @@ public class GameScreen extends GLScreen {
     
     float 			startTime;
     float 			elapsedTime;
+    float 			transitionTime;
     
-	boolean 		gameOverTouch = false;
+	public int currentLevelIndex;
 	
     public GameScreen(Game game) {
         super(game);
         
-        state = GAME_READY;
+        state = GAME_ENTERING;
         touchState = STATE_TOUCH_STARTING;
         
         guiCam = new Camera2D(glGraphics, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -76,6 +78,7 @@ public class GameScreen extends GLScreen {
         renderer = new WorldRenderer(glGraphics, batcher, world);
         
         // Variables
+        transitionTime = 1.0f;
         startTime = System.currentTimeMillis();
         elapsedTime = 0;
     }
@@ -92,9 +95,12 @@ public class GameScreen extends GLScreen {
 	        deltaTime = 0.1f;*/
 	    
 	    switch(state) {
+	    case GAME_ENTERING:
+	    	updateEntering(deltaTime);
+	        break;
 	    case GAME_READY:
 	        updateReady();
-	        break;
+	        break;        
 	    case GAME_RUNNING:
 	        updateRunning(deltaTime);
 	        break;
@@ -105,6 +111,15 @@ public class GameScreen extends GLScreen {
 	        updateGameOver();
 	        break;
 	    }
+	}
+	
+	// Update when state is ENTERING
+	private void updateEntering(float deltaTime) {
+		
+	    if(transitionTime <= 0.0f) { // 1 second wait time
+	        state = GAME_READY;
+	    }
+	    transitionTime -= deltaTime/1.3f;
 	}
 	
 	// Update when state is READY
@@ -165,31 +180,23 @@ public class GameScreen extends GLScreen {
 		point.x = (point.x/SCREEN_WIDTH) * WorldRenderer.FRUSTUM_WIDTH;
 		point.y = (point.y/SCREEN_HEIGHT) * WorldRenderer.FRUSTUM_HEIGHT;
 		
-		switch (touchState) {
+		switch (world.monkey.state) {
 		
 		// No prior touch states detected
-		case STATE_TOUCH_STARTING:
+		case Monkey.PLAYER_STATE_BONUS:
+			if(event.type == TouchEvent.TOUCH_DRAGGED ||event.type == TouchEvent.TOUCH_DOWN){     
+	         	
+	        } else if(event.type == TouchEvent.TOUCH_UP){        	
+	        	world.shootMonkey();
+	        }
+			break;
+
+		default:
 			if(event.type == TouchEvent.TOUCH_DRAGGED ||event.type == TouchEvent.TOUCH_DOWN){     
 	         	
 	        } else if(event.type == TouchEvent.TOUCH_UP){
 	        	world.monkey.velocity.y = 20;
 	        }
-			break;
-			
-		// User previously touched a ship member
-		case STATE_TOUCH_REFUEL:
-			if(event.type == TouchEvent.TOUCH_DRAGGED ||event.type == TouchEvent.TOUCH_DOWN){     
-	         	
-	        } else if(event.type == TouchEvent.TOUCH_UP){
-	
-	        }
-			break;
-			
-		// User previously touched a weapon in the UI
-		case STATE_TOUCH_FLYING:			
-			break;
-
-		default:
 			break;
 		}
 	}
@@ -240,6 +247,9 @@ public class GameScreen extends GLScreen {
 	    
 		// Draw the UI for current State
 	    switch(state) {
+	    case GAME_ENTERING:
+	    	presentEntering(gl);
+	        break;
 	    case GAME_READY:
 	        presentReady();
 	        break;
@@ -261,6 +271,17 @@ public class GameScreen extends GLScreen {
 		
 	}
 	
+	private void presentEntering(GL10 gl) 
+	{
+		batcher.beginBatch(Assets.tileMapItems);
+		
+		gl.glColor4f(1, 1, 1, transitionTime);
+  	  	batcher.drawSprite(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, SCREEN_WIDTH, SCREEN_HEIGHT, Assets.whiteTween);
+		batcher.endBatch();
+		
+		gl.glColor4f(1, 1, 1, 1);
+	}
+	
 	private void presentReady() {
          
 		 batcher.beginBatch(Assets.fontTex);
@@ -272,6 +293,11 @@ public class GameScreen extends GLScreen {
 	}
 	
 	private void presentRunning() {
+		
+		 batcher.beginBatch(Assets.fontTex);
+         Assets.font.drawText(batcher, "pts :" + world.score, 40, 30);
+         batcher.endBatch();
+		
 		gameUI.draw();	}
 	
 	private void presentPaused() { 
@@ -283,6 +309,15 @@ public class GameScreen extends GLScreen {
 	}
 	
 	private void presentGameOver() {
+		
+		 batcher.beginBatch(Assets.fontTex);
+		 Assets.font.drawText(batcher, "Your Monkey ran ", 150, 840);
+		 Assets.font.drawText(batcher, "out of bananas!", 150, 800);
+		 Assets.font.drawText(batcher, "Game Over!", 230, 700);
+         Assets.font.drawText(batcher, "- Final Score -", 140, 600);
+         Assets.font.drawText(batcher, "" + world.score, 340, 560);
+         batcher.endBatch();
+		
 		gameUI.draw();
 	}
 

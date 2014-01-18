@@ -55,6 +55,7 @@ public class WorldRenderer {
         gl.glColor4f(1, 1, 1, 1);
         
         renderPlayer();
+        renderBarrel();
         renderBananas();
         renderExplosions();
         
@@ -68,6 +69,8 @@ public class WorldRenderer {
     		batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, Monkey.PLAYER_WIDTH, Monkey.PLAYER_HEIGHT, Assets.monkey_idle);
     	else if(world.monkey.state == Monkey.PLAYER_STATE_FLYING)
     		batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, Monkey.PLAYER_WIDTH, Monkey.PLAYER_HEIGHT, Assets.monkey_flying);
+    	else
+    		batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, Monkey.PLAYER_WIDTH, Monkey.PLAYER_HEIGHT, Assets.monkey_flying);
     	batcher.endBatch();
     }
     
@@ -78,8 +81,19 @@ public class WorldRenderer {
     	
     	batcher.beginBatch(Assets.tileMapItems);
     	for (Banana b : world.activeBananas) {
-    		batcher.drawSprite(b.position.x, b.position.y, b.bounds.width, b.bounds.height, Assets.redTile);
+    		batcher.drawSprite(b.position.x, b.position.y, b.bounds.width, b.bounds.height, b.tiltAngle-10, Assets.redTile);
 		}   	
+    	batcher.endBatch();
+    }
+    
+    private void renderBarrel()
+    {
+    	if(world.activeBarrel == null)
+    		return;
+    	
+    	Barrel b = world.activeBarrel;
+    	batcher.beginBatch(Assets.tileMapItems);
+    	batcher.drawSprite(b.position.x, b.position.y, b.bounds.width, b.bounds.height, b.tiltAngle-10, Assets.blueTile);
     	batcher.endBatch();
     }
    

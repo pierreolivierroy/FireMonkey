@@ -48,6 +48,7 @@ public class Assets {
     public static Texture tileMapItems;
     public static TextureRegion blueTile;
     public static TextureRegion redTile;
+    public static TextureRegion whiteTween;
 
 
     public static void load(GLGame game) {
@@ -73,6 +74,7 @@ public class Assets {
         tileMapItems = new Texture(game, "tilemap.png");
         blueTile = new TextureRegion(tileMapItems, 0, 0, 64, 64);
         redTile = new TextureRegion(tileMapItems, 64, 0, 64, 64);
+        whiteTween = new TextureRegion(tileMapItems, 0, 64, 64, 64);
 
         // Game Objects
         playerItems = new Texture(game, "pacman.png");
