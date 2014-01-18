@@ -32,8 +32,6 @@ public class Barrel extends DynamicGameObject{
 		state = STATE_IDLE;
 		hitZone = new Circle(x, y, width/2);
 		
-		sequence = new BarrelSequence(diff);
-		
 		rand = new Random();
 		
 		int decider = rand.nextInt(1);
@@ -43,6 +41,11 @@ public class Barrel extends DynamicGameObject{
 			isTiltingUp = false;
 		
 		tiltAngle = rand.nextFloat() * 30;
+	}
+	
+	public void generateSequence(int diff, float y)
+	{
+		sequence = new BarrelSequence(diff, y);
 	}
 	
 	public void update(float deltaTime)

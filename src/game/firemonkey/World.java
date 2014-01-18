@@ -126,8 +126,21 @@ public class World {
 			return;
 		
 		activeBarrel.update(deltaTime);
+		
+		if(monkey.state == Monkey.PLAYER_STATE_BONUS)
+			updateBarrelSequence(deltaTime);
+		
 		if(activeBarrel.position.y <= monkey.position.y - WORLD_HEIGHT/2)
 			activeBarrel = null;
+	}
+	
+	private void updateBarrelSequence(float deltaTime)
+	{
+		activeBarrel.sequence.update(deltaTime);
+		
+		if(activeBarrel.sequence.state == BarrelSequence.STATE_DEAD) {
+			endBarrel();
+		}
 	}
 
 	private void updateExplosions(float deltaTime) 
@@ -411,8 +424,8 @@ private void generateBananaPattern(){
 	
 	private float randomizeBananaSize(){
 		
-		float minSize = 0.5f;
-		float maxSize = 1.0f;
+		float minSize = 0.8f;
+		float maxSize = 1.6f;
 		Random r = new Random();		
 		
 		return r.nextFloat() * (maxSize - minSize) + minSize;
@@ -427,7 +440,7 @@ private void generateBananaPattern(){
 				activeBananas.remove(b);
 		}
 	}
-	
+		
 	private void updateScore()
 	{
 		score = (int) (bananaScore + maxHeight);
@@ -461,6 +474,10 @@ private void generateBananaPattern(){
 						
 			monkey.barrelCollision(activeBarrel.position);
 			activeBarrel.state = Barrel.STATE_MONKEY_IN;
+			
+			if(activeBarrel.sequence == null) {
+				activeBarrel.generateSequence(BarrelSequence.DIFF_EASY, monkey.position.y);
+			}
 		}
 	}
 	
@@ -472,10 +489,14 @@ private void generateBananaPattern(){
 		rand = new Random();
 		float odds = rand.nextFloat();
 		
-		if(odds > 0.05f && odds < 0.15f) {
-			float xValue = rand.nextFloat() * WORLD_WIDTH;
+		if(odds > 0.98f && odds < 0.99f) {
+			float xValue = (rand.nextFloat() * WORLD_WIDTH - 1) + 1;
 			float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
-			activeBarrel = new Barrel(xValue, yValue, 1.3f, 1.6f, BarrelSequence.DIFF_EASY);
+			
+			if(maxHeight > 5000)
+				activeBarrel = new Barrel(xValue, yValue, 1.3f, 1.6f, BarrelSequence.DIFF_MEDIUM);
+			else 
+				activeBarrel = new Barrel(xValue, yValue, 1.3f, 1.6f, BarrelSequence.DIFF_EASY);
 		}
 	}
 	
@@ -510,9 +531,25 @@ private void generateBananaPattern(){
 			
 			if(OverlapTester.pointInRectangle(bt.bounds, touch)) {
 				activeExplosions.add(new Explosion(20, (int)bt.position.x, (int)bt.position.y, 0.5f));
-				
+				activeBarrel.sequence.inputSequence(bt);				
 			}
 		}
+		
+		if(activeBarrel.sequence.state == BarrelSequence.STATE_DEAD) {
+			endBarrel();
+		}		
+	}
+	
+	public void endBarrel(){
+		activeExplosions.add(new Explosion(30, (int)activeBarrel.position.x, (int)activeBarrel.position.y, 1.8f));
+		
+		monkey.state = Monkey.PLAYER_STATE_FLYING;
+		if(activeBarrel.sequence.completionBonus <= 15) {
+			activeBarrel.sequence.completionBonus = 15.0f;
+		}
+		monkey.velocity.y = activeBarrel.sequence.completionBonus;
+		
+		activeBarrel = null;
 	}
 }
 

@@ -106,6 +106,15 @@ public class WorldRenderer {
     	Barrel b = world.activeBarrel;
     	batcher.beginBatch(Assets.tileMapItems);
     	batcher.drawSprite(b.position.x, b.position.y, b.bounds.width, b.bounds.height, b.tiltAngle-10, Assets.blueTile);
+    	 
+    	if(world.activeBarrel.sequence != null) {
+	    	for (BarrelToken bt : world.activeBarrel.sequence.tokens) {
+	    		if(!bt.touched) {
+					batcher.drawSprite(bt.position.x, bt.position.y, bt.bounds.width, bt.bounds.height, Assets.blueTile);
+	    		}
+			}
+    	}
+    	
     	batcher.endBatch();
     }
    
