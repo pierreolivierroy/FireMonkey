@@ -488,11 +488,11 @@ private void generateBananaPattern(){
 		rand = new Random();
 		float odds = rand.nextFloat();
 		
-		if(odds > 0.985f && odds < 0.98.9f) {
+		if(odds > 0.985f && odds < 0.989f) {
 			float xValue = (rand.nextFloat() * WORLD_WIDTH - 1) + 1;
 			float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
 			
-			if(maxHeight > 5000)
+			if(maxHeight > 3000)
 				activeBarrel = new Barrel(xValue, yValue, 1.3f, 1.6f, BarrelSequence.DIFF_MEDIUM);
 			else 
 				activeBarrel = new Barrel(xValue, yValue, 1.3f, 1.6f, BarrelSequence.DIFF_EASY);

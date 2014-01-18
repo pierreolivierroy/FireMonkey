@@ -41,57 +41,45 @@ public class WorldRenderer {
     public void renderBackground() {
         float center = 8;
         if(World.currentLevel == 1) {
-            if(world.maxHeight <= 24) {
-                batcher.beginBatch(Assets.jungleBackgroundStartTexture);
-                batcher.drawSprite(cam.position.x, center, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.jungleBackgroundStart);
-                batcher.endBatch();
+        	batcher.beginBatch(Assets.jungleBackgrounds);
+            if(world.maxHeight <= 24) {     
+                batcher.drawSprite(cam.position.x, center, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.jungleBackgroundStart);               
             }
             if(world.maxHeight >= 8) {
-                batcher.beginBatch(Assets.jungleBackgroundRepeatTexture);
                 batcher.drawSprite(cam.position.x, center + 15, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.jungleBackgroundRepeat);
-                batcher.endBatch();
             }
             if(world.maxHeight >= 23) {
-                batcher.beginBatch(Assets.jungleBackgroundRepeatTexture);
                 batcher.drawSprite(cam.position.x, cam.position.y, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.jungleBackgroundRepeat);
-                batcher.endBatch();
             }
+            batcher.endBatch();
         }
 
         else if(World.currentLevel == 2) {
+        	batcher.beginBatch(Assets.snowBackgrounds);
             if(world.maxHeight <= 24) {
-                batcher.beginBatch(Assets.snowBackgroundStartTexture);
                 batcher.drawSprite(cam.position.x, center, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.snowBackgroundStart);
-                batcher.endBatch();
             }
             if(world.maxHeight >= 8) {
-                batcher.beginBatch(Assets.snowBackgroundRepeatTexture);
                 batcher.drawSprite(cam.position.x, center + 15, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.snowBackgroundRepeat);
-                batcher.endBatch();
             }
             if(world.maxHeight >= 23) {
-                batcher.beginBatch(Assets.snowBackgroundRepeatTexture);
                 batcher.drawSprite(cam.position.x, cam.position.y, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.snowBackgroundRepeat);
-                batcher.endBatch();
             }
+            batcher.endBatch();
         }
 
         else if(World.currentLevel == 3) {
-            if(world.maxHeight <= 24) {
-                batcher.beginBatch(Assets.spaceBackgroundStartTexture);
+        	batcher.beginBatch(Assets.spaceBackgrounds);
+            if(world.maxHeight <= 24) {           
                 batcher.drawSprite(cam.position.x, center, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.spaceBackgroundStart);
-                batcher.endBatch();
             }
             if(world.maxHeight >= 8) {
-                batcher.beginBatch(Assets.spaceBackgroundRepeatTexture);
                 batcher.drawSprite(cam.position.x, center + 15, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.spaceBackgroundRepeat);
-                batcher.endBatch();
             }
             if(world.maxHeight >= 23) {
-                batcher.beginBatch(Assets.spaceBackgroundRepeatTexture);
-                batcher.drawSprite(cam.position.x, cam.position.y, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.spaceBackgroundRepeat);
-                batcher.endBatch();
+                batcher.drawSprite(cam.position.x, cam.position.y, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.spaceBackgroundRepeat); 
             }
+            batcher.endBatch();
         }
     }
     

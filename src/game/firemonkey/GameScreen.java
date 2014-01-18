@@ -172,7 +172,7 @@ public class GameScreen extends GLScreen {
 	        guiCam.touchToWorld(touchPoint);
 	        
 	        if(event.type == TouchEvent.TOUCH_UP){
-	        	game.setScreen(new MainMenuScreen(game));
+	        	game.setScreen(new LevelSelectorScreen(game));
 	        }
 	    }
 	}
