@@ -1,5 +1,7 @@
 package game.firemonkey;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import com.bag.lib.Game;
 import com.bag.lib.gl.Camera2D;
 import com.bag.lib.gl.SpriteBatcher;
@@ -81,5 +83,23 @@ public class LevelSelectorScreen extends GLScreen {
 
     @Override
     public void dispose() {
+    }
+
+    public int getUnlockedLevel() {
+        final SharedPreferences prefs = getGCMPreferences();
+        int level = prefs.getInt("UNLOCKED_LEVEL", 1);
+        return level;
+    }
+
+    public void setUnlockedLevel(int level) {
+        final SharedPreferences prefs = getGCMPreferences();
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("UNLOCKED_LEVEL", level);
+        editor.commit();
+    }
+
+    public SharedPreferences getGCMPreferences() {
+        return FireMonkeyActivity.context.getSharedPreferences(FireMonkeyActivity.class.getSimpleName(),
+                Context.MODE_PRIVATE);
     }
 }
