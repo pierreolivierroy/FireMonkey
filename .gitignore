@@ -25,3 +25,6 @@ proguard/
 # IntelliJ
 .idea/
 *.iml
+
+# Design
+assets/PSD
