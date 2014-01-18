@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import com.bag.lib.Game;
 import com.bag.lib.Input;
+import com.bag.lib.Screen;
 import com.bag.lib.gl.Camera2D;
 import com.bag.lib.gl.SpriteBatcher;
 import com.bag.lib.impl.GLGame;
@@ -20,6 +21,9 @@ public class LevelSelectorScreen extends GLScreen {
     SpriteBatcher batcher;
     Vector2 touchPoint;
     float rotationAngle;
+    Screen screen;
+    boolean changeScreen;
+    float alpha;
 
     static int playerPosition = 1;
 
@@ -28,6 +32,8 @@ public class LevelSelectorScreen extends GLScreen {
     public LevelSelectorScreen(Game game) {
         super(game);
         rotationAngle = 0;
+        alpha = 0;
+        changeScreen = false;
 
         // Main GL camera
         guiCam = new Camera2D(glGraphics, 768, 1280);
@@ -50,6 +56,14 @@ public class LevelSelectorScreen extends GLScreen {
     @Override
     public void update(float deltaTime) {
         rotationAngle += (40 * deltaTime) % 360;
+
+        if(changeScreen) {
+            alpha += (deltaTime / 1.3f );
+            if(alpha >= 1) {
+                screen = new GameScreen(game);
+                game.setScreen(screen);
+            }
+        }
 
         // Acquire all of touch events
         List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
@@ -78,7 +92,10 @@ public class LevelSelectorScreen extends GLScreen {
                 int curLevel = 1;
                 for(UIButton button : levelButtons) {
                     if(button.state == UIButton.STATE_PRESSED) {
-                        if(getUnlockedLevel() >= curLevel) {
+                        if(playerPosition == curLevel) {
+                            changeScreen = true;
+                            screen = new GameScreen(game);
+                        } else if(getUnlockedLevel() >= curLevel) {
                             playerPosition = curLevel;
                         }
                         button.state = UIButton.STATE_IDLE;
@@ -98,15 +115,15 @@ public class LevelSelectorScreen extends GLScreen {
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         gl.glEnable(GL10.GL_TEXTURE_2D);
         guiCam.setViewportAndMatrices();
+        
+        gl.glEnable(GL10.GL_BLEND);
+        gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
+        gl.glColor4f(1,1,1,1);
 
         batcher.beginBatch(Assets.mapBackgroundTexture);
         batcher.drawSprite(768 / 2, 1280 / 2, 768, 1280, Assets.mapBackground);
         batcher.endBatch();
-        
-        gl.glEnable(GL10.GL_BLEND);
-        gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);        
-        gl.glColor4f(1, 1, 1, 1);  
-        
+
         int curLevel = 1;
         int level = getUnlockedLevel();
         for(UIButton button : levelButtons) {
@@ -126,6 +143,14 @@ public class LevelSelectorScreen extends GLScreen {
                 batcher.endBatch();
             }
             curLevel++;
+        }
+
+        if(changeScreen) {
+            gl.glColor4f(1,1,1,alpha);
+            batcher.beginBatch(Assets.tileMapItems);
+            batcher.drawSprite(768 / 2, 1280 / 2, 768, 1280, Assets.whiteTween);
+            batcher.endBatch();
+            gl.glColor4f(1,1,1,1);
         }
 
         gl.glDisable(GL10.GL_BLEND);
