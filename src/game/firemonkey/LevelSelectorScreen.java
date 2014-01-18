@@ -51,6 +51,7 @@ public class LevelSelectorScreen extends GLScreen {
         levelButtons.add(new UIButton(240, 375, 64, 64, Assets.levelButton, Assets.levelButton, null));
         levelButtons.add(new UIButton(430, 700, 64, 64, Assets.levelButton, Assets.levelButton, null));
         levelButtons.add(new UIButton(200, 820, 64, 64, Assets.levelButton, Assets.levelButton, null));
+        setUnlockedLevel(3);
     }
 
     @Override
@@ -97,7 +98,9 @@ public class LevelSelectorScreen extends GLScreen {
                         if(playerPosition == curLevel) {
                             changeScreen = true;
                             World.currentLevel = curLevel;
+                            Assets.loadLevel((GLGame) game, curLevel);
                             screen = new GameScreen(game);
+                            
                         } else if(getUnlockedLevel() >= curLevel) {
                             playerPosition = curLevel;
                         }

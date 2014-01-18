@@ -31,10 +31,10 @@ public class World {
     
     //Banana patterns
     public static final int BANANA_PATTERN_BLANK_MIN		= 2;//5%
-    public static final int BANANA_PATTERN_RANDOM_MIN		= 60;//60%
-    public static final int BANANA_PATTERN_STACK_MIN 		= 75;//15%
-    public static final int BANANA_PATTERN_RECTANGLE_MIN 	= 85;//10%
-    public static final int BANANA_PATTERN_DIAGONAL_MIN 	= 98;//10%
+    public static final int BANANA_PATTERN_RANDOM_MIN		= 20;//60%
+    public static final int BANANA_PATTERN_STACK_MIN 		= 40;//15%
+    public static final int BANANA_PATTERN_RECTANGLE_MIN 	= 60;//10%
+    public static final int BANANA_PATTERN_DIAGONAL_MIN 	= 80;//10%
     float minWidth = 0.5f;
 	float maxWidth = WORLD_WIDTH - 0.5f;
 	boolean showBanana = false;
@@ -132,8 +132,8 @@ public class World {
 		
 		if(monkey.state == Monkey.PLAYER_STATE_BONUS)
 			updateBarrelSequence(deltaTime);
-		
-		if(activeBarrel.position.y <= monkey.position.y - WORLD_HEIGHT/2)
+
+		if(activeBarrel != null && activeBarrel.position.y <= monkey.position.y - WORLD_HEIGHT/2)
 			activeBarrel = null;
 	}
 	
@@ -176,6 +176,8 @@ public class World {
 				showBanana = true;
 			}
 			else {
+				generateRandomBananaPattern();
+				
 				//Generate banana petterns randomly according to their stats
 				if(BANANA_PATTERN_BLANK_MIN < pattern && pattern <= BANANA_PATTERN_RANDOM_MIN)
 					generateRandomBananaPattern();
@@ -217,7 +219,7 @@ private void generateBananaPattern(){
 		}
 		
 		incrementX = 1.5f;
-		incrementY = 0.8f;
+		incrementY = 0.8f; 
 		
 		for (int i = 0; i < 3; i++) {
 			float x = xValue + incrementX;
@@ -488,11 +490,11 @@ private void generateBananaPattern(){
 		rand = new Random();
 		float odds = rand.nextFloat();
 		
-		if(odds > 0.98f && odds < 0.99f) {
+		if(odds > 0.985f && odds < 0.989f) {
 			float xValue = (rand.nextFloat() * WORLD_WIDTH - 1) + 1;
 			float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
 			
-			if(maxHeight > 5000)
+			if(maxHeight > 3000)
 				activeBarrel = new Barrel(xValue, yValue, 1.3f, 1.6f, BarrelSequence.DIFF_MEDIUM);
 			else 
 				activeBarrel = new Barrel(xValue, yValue, 1.3f, 1.6f, BarrelSequence.DIFF_EASY);

@@ -23,7 +23,7 @@ public class GameUI {
 	    button2 = new UIButton(400, 50, 140, 70, Assets.redTile, Assets.redTile, Assets.player);
 	    
 	    UIImages = new ArrayList<UIImage>();
-	    bananaIcon = new UIImage(30, 30, 120, 90, Assets.redTile);
+	    bananaIcon = new UIImage(30, 30, 120, 90, Assets.bananaNormal);
 	    UIImages.add(bananaIcon);
 	    //UIButtons.add(button1);
 	    //UIButtons.add(button2);
@@ -34,7 +34,7 @@ public class GameUI {
 	public void draw()
 	{	
 		try {
-			batcher.beginBatch(Assets.tileMapItems);
+			batcher.beginBatch(Assets.bananasTexture);
 			for (int i = 0; i < UIButtons.size(); i++) {
 				UIButton u = UIButtons.get(i);
 				if(u.state == UIButton.STATE_IDLE) {
