@@ -23,6 +23,7 @@ public class BarrelSequence {
 	
 	public int state;
 	public float lifeTime;
+	public boolean totalSuccess;
 	
 	public BarrelSequence(int difficulty, float height)
 	{
@@ -31,6 +32,7 @@ public class BarrelSequence {
 		anchorPoints = new ArrayList<Vector2>();
 		nextIndex = 0;
 		completionBonus = 0;
+		totalSuccess = false;
 		generate(difficulty, height);
 		
 		if(difficulty == DIFF_EASY)
@@ -128,11 +130,17 @@ public class BarrelSequence {
 	public void finalizeSequence()
 	{
 		float bonus = 15.0f;
+		int count = 0;
 		for (BarrelToken bt : tokens) {
 			
 			if(bt.success) {
 				velocityBonus += bt.bonus;
+				count ++;
 			}
+		}
+		
+		if(count == tokens.size()) {
+			totalSuccess = true;
 		}
 		
 		state = STATE_DEAD;

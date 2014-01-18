@@ -164,17 +164,19 @@ public class GameScreen extends GLScreen {
 	}	
 	
 	private void updateGameOver() {
-	    List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
-	    int len = touchEvents.size();
-	    for(int i = 0; i < len; i++) {      
-	        TouchEvent event = touchEvents.get(i);
-	        touchPoint.set(event.x, event.y);
-	        guiCam.touchToWorld(touchPoint);
-	        
-	        if(event.type == TouchEvent.TOUCH_UP){
-	        	game.setScreen(new LevelSelectorScreen(game));
-	        }
-	    }
+	    try {
+			List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
+		    int len = touchEvents.size();
+		    for(int i = 0; i < len; i++) {      
+		        TouchEvent event = touchEvents.get(i);
+		        touchPoint.set(event.x, event.y);
+		        guiCam.touchToWorld(touchPoint);
+		        
+		        if(event.type == TouchEvent.TOUCH_UP){
+		        	game.setScreen(new LevelSelectorScreen(game));
+		        }
+		    }
+		    } catch (Exception e){}
 	}
 	
 	private void worldTouchHandler(TouchEvent event, Vector2 point)
@@ -182,7 +184,6 @@ public class GameScreen extends GLScreen {
 		// Convert for world coordinate (ex 16:9 rather than 1280x768)
 		point.x = (point.x/SCREEN_WIDTH) * WorldRenderer.FRUSTUM_WIDTH;
 		point.y = (point.y/SCREEN_HEIGHT) * WorldRenderer.FRUSTUM_HEIGHT;
-		
 		
 		
 		switch (world.monkey.state) {
