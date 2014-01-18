@@ -54,6 +54,9 @@ public class Assets {
     public static TextureRegion explo1;
 
     // Game Backgrounds
+    public static Texture menuBackgroundTexture;
+    public static TextureRegion menuBackground;
+
     public static Texture tileMapItems;
     public static TextureRegion blueTile;
     public static TextureRegion redTile;
@@ -121,6 +124,9 @@ public class Assets {
         bananaSpace = new TextureRegion(bananasTexture, 0, 128, 128, 128);
 
         //Backgrounds
+        menuBackgroundTexture = new Texture(game, "menu.png");
+        menuBackground = new TextureRegion(menuBackgroundTexture, 0, 0, 768, 1280);
+
         jungleBackgroundStartTexture = new Texture(game, "jungle_background_start.png");
         jungleBackgroundRepeatTexture = new Texture(game, "jungle_background_repeat.png");
         jungleBackgroundStart = new TextureRegion(jungleBackgroundStartTexture, 0, 0, 768, 1280);
