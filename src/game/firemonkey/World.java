@@ -25,6 +25,9 @@ public class World {
     public static final int WORLD_STATE_RUNNING 	= 0;
     public static final int WORLD_STATE_NEXT_LEVEL 	= 1;
     public static final int WORLD_STATE_GAME_OVER 	= 2;
+
+    // Level
+    public static int currentLevel = 1;
     
     //Banana patterns
     public static final int BANANA_PATTERN_BLANK_MIN		= 2;//5%
@@ -35,7 +38,7 @@ public class World {
     float minWidth = 0.5f;
 	float maxWidth = WORLD_WIDTH - 0.5f;
 	boolean showBanana = false;
-    
+
     public final WorldListener listener;
     public GameUI gameUI;
     
@@ -160,9 +163,9 @@ public class World {
 	{
 		// Generation if player is exiting an already filled zone
 		if(monkey.position.y > nextGenerationHeight) {
-			nextGenerationHeight += WORLD_HEIGHT;
+			nextGenerationHeight += (WORLD_HEIGHT + 4);
 			rand = new Random();
-			
+
 			Random r = new Random();
 			int min = 0;
 			int max = 100;
@@ -316,13 +319,9 @@ private void generateBananaPattern(){
 										
 				Banana b = new Banana(x, y, 1, 1, Banana.BOOST_MED, Banana.POINTS_MED);
 				activeBananas.add(b);
-				
-				incrementY += 1.5f;
-				x -= incrementX;
-				y = yValue + incrementY;
 			}
 		}
-		
+		// Remove clouds if out of view
 		
 	}
 	
@@ -458,7 +457,7 @@ private void generateBananaPattern(){
 				activeExplosions.add(new Explosion(10, (int)b.position.x, (int)b.position.y, 0.5f));
 				
 				bananaScore += b.points;
-				monkey.bananaCollision(Math.max(b.boostValue, monkey.velocity.y));
+				monkey.bananaCollision(b.boostValue);
 				
 				activeBananas.remove(b);
 			}
@@ -508,12 +507,6 @@ private void generateBananaPattern(){
 			
 			state = WORLD_STATE_GAME_OVER;
 	}
-	
-	 /******************************************
-	  * 
-	  * 	UI Touch interactions
-	  * 
-	  ******************************************/
 	
 	public void shootMonkey()
 	{
