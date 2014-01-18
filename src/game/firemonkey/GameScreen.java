@@ -199,12 +199,19 @@ public class GameScreen extends GLScreen {
 		default:
 			if(event.type == TouchEvent.TOUCH_DRAGGED ||event.type == TouchEvent.TOUCH_DOWN){     
 	         	
-	        } else if(event.type == TouchEvent.TOUCH_UP){       	
-	        	if(world.monkey.jump > 0 && world.monkey.jump <= Monkey.PLAYER_DEFAULT_JUMPS){
-	        		world.monkey.velocity.y = Math.max(20, world.monkey.velocity.y);
-		        	world.monkey.jump--;
+	        } 
+			else if(event.type == TouchEvent.TOUCH_UP){
+	        	
+	        	if(world.monkey.firstJump == true){
+	        		world.monkey.firstJump = false;
+	        		world.monkey.velocity.y = 30;
 	        	}
-	        }
+	        	else if(world.monkey.jump > 0 && world.monkey.jump <= Monkey.PLAYER_DEFAULT_JUMPS && world.monkey.firstJump == false){
+		        		world.monkey.velocity.y = Math.max(20, world.monkey.velocity.y);
+			        	world.monkey.jump--; 
+	        	}
+	        		
+	        } 
 			break;
 		}
 	}
@@ -308,10 +315,13 @@ public class GameScreen extends GLScreen {
 	private void presentRunning() {
 		
 		 batcher.beginBatch(Assets.fontTex);
-         Assets.font.drawText(batcher, "pts :" + world.score, 40, 30);
+         Assets.font.drawText(batcher, "X" + world.score, 125, 30);
          batcher.endBatch();
          
-
+         batcher.beginBatch(Assets.fontTex);
+         Assets.font.drawText(batcher, "X" + world.monkey.jump, 700, 30);
+         batcher.endBatch();
+                  
          gameUI.draw();	
          
         // Touch tokens
