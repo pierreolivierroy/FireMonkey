@@ -22,12 +22,13 @@ public class Monkey extends DynamicGameObject {
     public static final float ROCKET_ACCELERATION	= 5.0f;
     public static final float MOVE_VELOCITY = 25.0f;
     
-    public static final int PLAYER_DEFAULT_JUMPS 	= 7;
+    public static final int PLAYER_DEFAULT_JUMPS 	= 5;
     
     public int state;   
     public int previousState;
     public Circle hitZone;
     public int jump;
+    public boolean firstJump = true;
     
     private float stateTime;   
         
