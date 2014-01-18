@@ -267,7 +267,7 @@ public class World {
 		float x = xValue + incrementX;
 		float y = yValue + incrementY;			
 		
-		Banana b = new Banana(xValue, yValue, 1, 1, Math.max(Banana.BOOST_MED, monkey.velocity.y));
+		Banana b = new Banana(xValue, yValue, 1, 1, Banana.BOOST_MED);
 		activeBananas.add(b);
 		
 		for(int i = 0; i < rectangleHeight; i++){
@@ -278,7 +278,7 @@ public class World {
 			for(int j = 0; j < rectangleWidth; j++){
 				
 				x = xValue + incrementX;						
-				Banana bb = new Banana(x, y, 1, 1, Math.max(Banana.BOOST_MED, monkey.velocity.y));
+				Banana bb = new Banana(x, y, 1, 1, Banana.BOOST_MED);
 				activeBananas.add(bb);
 				incrementX += 1.5f;
 			}
@@ -302,14 +302,14 @@ public class World {
 		float xValue = rand.nextFloat() * (maxWidth - minWidth) + minWidth;
 		float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
 	
-		Banana b = new Banana(xValue, yValue, 1, 1, Math.max(Banana.BOOST_HIGH, monkey.velocity.y));
+		Banana b = new Banana(xValue, yValue, 1, 1, Banana.BOOST_HIGH);
 
 		activeBananas.add(b);
 		
 		for(int i = 0; i < nbBananas; i++){
 			
 			float y = yValue + ((float)increment);			
-			Banana bb = new Banana(xValue, y, 1, 1, Math.max(Banana.BOOST_HIGH, monkey.velocity.y));
+			Banana bb = new Banana(xValue, y, 1, 1, Banana.BOOST_HIGH);
 
 			activeBananas.add(bb);
 			increment += 1.5f;
@@ -343,7 +343,7 @@ public class World {
 				activeExplosions.add(new Explosion(10, (int)b.position.x, (int)b.position.y, 0.5f));
 				
 				bananaScore += b.points;
-				monkey.bananaCollision(b.boostValue);
+				monkey.bananaCollision(Math.max(b.boostValue, monkey.velocity.y));
 				
 				activeBananas.remove(b);
 			}
