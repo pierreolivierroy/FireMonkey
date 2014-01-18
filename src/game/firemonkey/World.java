@@ -31,10 +31,10 @@ public class World {
     
     //Banana patterns
     public static final int BANANA_PATTERN_BLANK_MIN		= 2;//5%
-    public static final int BANANA_PATTERN_RANDOM_MIN		= 60;//60%
-    public static final int BANANA_PATTERN_STACK_MIN 		= 75;//15%
-    public static final int BANANA_PATTERN_RECTANGLE_MIN 	= 85;//10%
-    public static final int BANANA_PATTERN_DIAGONAL_MIN 	= 98;//10%
+    public static final int BANANA_PATTERN_RANDOM_MIN		= 20;//60%
+    public static final int BANANA_PATTERN_STACK_MIN 		= 40;//15%
+    public static final int BANANA_PATTERN_RECTANGLE_MIN 	= 60;//10%
+    public static final int BANANA_PATTERN_DIAGONAL_MIN 	= 80;//10%
     float minWidth = 0.5f;
 	float maxWidth = WORLD_WIDTH - 0.5f;
 	boolean showBanana = false;
@@ -488,7 +488,7 @@ private void generateBananaPattern(){
 		rand = new Random();
 		float odds = rand.nextFloat();
 		
-		if(odds > 0.98f && odds < 0.99f) {
+		if(odds > 0.985f && odds < 0.98.9f) {
 			float xValue = (rand.nextFloat() * WORLD_WIDTH - 1) + 1;
 			float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
 			
