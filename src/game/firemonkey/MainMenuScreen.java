@@ -59,6 +59,7 @@ public class MainMenuScreen extends GLScreen {
         // Load previous game settings (sound enabled on/off)
         //Settings.load(game.getFileIO());
         
+        
     }       
 
     @Override

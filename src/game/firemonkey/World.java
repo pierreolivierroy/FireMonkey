@@ -27,11 +27,11 @@ public class World {
 	public static int currentLevel = 1;
 
 	//Banana patterns
-	public static final int BANANA_PATTERN_BLANK_MIN		= 0;//5%
-	public static final int BANANA_PATTERN_RANDOM_MIN		= 20;//60%
-	public static final int BANANA_PATTERN_STACK_MIN 		= 40;//15%
-	public static final int BANANA_PATTERN_RECTANGLE_MIN 	= 50;//10%
-	public static final int BANANA_PATTERN_DIAGONAL_MIN 	= 70;//10%
+	public static final int BANANA_PATTERN_BLANK_MIN		= 2;//5%
+	public static final int BANANA_PATTERN_RANDOM_MIN		= 40;//60%
+	public static final int BANANA_PATTERN_STACK_MIN 		= 60;//15%
+	public static final int BANANA_PATTERN_RECTANGLE_MIN 	= 70;//10%
+	public static final int BANANA_PATTERN_DIAGONAL_MIN 	= 90;//10%
 	public static final int BANANA_PATTERN_BANANA			= 98;//10%
 	
 	float minWidth = 0.5f;
@@ -164,7 +164,7 @@ public class World {
 	{
 		// Generation if player is exiting an already filled zone
 		if(monkey.position.y > nextGenerationHeight) {
-			nextGenerationHeight += WORLD_HEIGHT;
+			nextGenerationHeight += WORLD_HEIGHT + 4;
 			rand = new Random();
 
 			Random r = new Random();
@@ -188,9 +188,8 @@ public class World {
 				else if(BANANA_PATTERN_BANANA < pattern && pattern <= max)
 					generateBananaPattern();
 			}
-			generateRandomBananaPattern(5 - currentLevel);
+			//generateRandomBananaPattern(4 - currentLevel);	
 		}		
-
 		removeBananas();
 	}
 
@@ -322,6 +321,10 @@ public class World {
 
 				Banana b = new Banana(x, y, 1, 1, Banana.BOOST_MED, Banana.POINTS_MED);
 				activeBananas.add(b);
+				
+				incrementY += 1.5f;
+				x -= incrementX;
+				y = yValue + incrementY;
 			}
 		}
 		// Remove clouds if out of view
@@ -363,9 +366,9 @@ public class World {
 
 		Random r = new Random();
 		int minWidth = 2;
-		int maxWidth = 6;
+		int maxWidth = 5;
 		int minHeight = 2;
-		int maxHeight = 10;
+		int maxHeight = 8;
 		int rectangleWidth = r.nextInt(maxWidth-minWidth) + minWidth;
 		int rectangleHeight = r.nextInt(maxHeight-minHeight) + minHeight;
 
@@ -399,8 +402,8 @@ public class World {
 	private void generateStackBananaPattern(){
 
 		Random r = new Random();
-		int minBananas = 6;
-		int maxbananas = 12	;
+		int minBananas = 4;
+		int maxbananas = 10	;
 		int nbBananas = r.nextInt(maxbananas-minBananas) + minBananas;
 
 		float increment = 1.5f;
@@ -425,9 +428,9 @@ public class World {
 	}
 
 	private float randomizeBananaSize(){
+		float minSize = 0.8f;
+		float maxSize = 1.6f;
 
-		float minSize = 0.5f;
-		float maxSize = 1.0f;
 		Random r = new Random();		
 
 		return r.nextFloat() * (maxSize - minSize) + minSize;
