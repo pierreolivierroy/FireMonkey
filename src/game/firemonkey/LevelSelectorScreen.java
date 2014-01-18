@@ -3,20 +3,25 @@ package game.firemonkey;
 import android.content.Context;
 import android.content.SharedPreferences;
 import com.bag.lib.Game;
+import com.bag.lib.Input;
 import com.bag.lib.gl.Camera2D;
 import com.bag.lib.gl.SpriteBatcher;
 import com.bag.lib.impl.GLGame;
 import com.bag.lib.impl.GLScreen;
+import com.bag.lib.math.OverlapTester;
 import com.bag.lib.math.Vector2;
 
 import javax.microedition.khronos.opengles.GL10;
 import java.util.ArrayList;
+import java.util.List;
 
 public class LevelSelectorScreen extends GLScreen {
     Camera2D guiCam;
     SpriteBatcher batcher;
     Vector2 touchPoint;
     float rotationAngle;
+
+    static int playerPosition = 1;
 
     ArrayList<UIButton> levelButtons;
 
@@ -45,6 +50,43 @@ public class LevelSelectorScreen extends GLScreen {
     @Override
     public void update(float deltaTime) {
         rotationAngle += (40 * deltaTime) % 360;
+
+        // Acquire all of touch events
+        List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
+        game.getInput().getKeyEvents();
+
+        int len = touchEvents.size();
+        for(int i = 0; i < len; i++) {
+            // Cycle through every touch events
+            Input.TouchEvent event = touchEvents.get(i);
+
+            // Assign touch point after conversion to our World coordinates
+            touchPoint.set(event.x, event.y);
+            guiCam.touchToWorld(touchPoint);
+
+            if(event.type == Input.TouchEvent.TOUCH_DOWN) {
+                for(UIButton button : levelButtons) {
+                    if(OverlapTester.pointInRectangle(button.bounds, touchPoint)) {
+                        button.state = UIButton.STATE_PRESSED;
+                        break;
+                    }
+                }
+            }
+
+            // Detect touch on specific bounding rects
+            if(event.type == Input.TouchEvent.TOUCH_UP) {
+                int curLevel = 1;
+                for(UIButton button : levelButtons) {
+                    if(button.state == UIButton.STATE_PRESSED) {
+                        if(getUnlockedLevel() >= curLevel) {
+                            playerPosition = curLevel;
+                        }
+                        button.state = UIButton.STATE_IDLE;
+                    }
+                    curLevel++;
+                }
+            }
+        }
     }
 
     @Override
@@ -74,6 +116,12 @@ public class LevelSelectorScreen extends GLScreen {
             if(level >= curLevel) {
                 batcher.beginBatch(Assets.starsTexture);
                 batcher.drawSprite(button.position.x, button.position.y, 128, 128, rotationAngle, Assets.starsCircle);
+                batcher.endBatch();
+            }
+
+            if(playerPosition == curLevel) {
+                batcher.beginBatch(Assets.monkeyTexture);
+                batcher.drawSprite(button.position.x, button.position.y, 64*1.5f, 64*1.5f, Assets.monkey_flying);
                 batcher.endBatch();
             }
             curLevel++;

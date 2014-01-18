@@ -64,35 +64,41 @@ public class MainMenuScreen extends GLScreen {
     @Override
     public void update(float deltaTime) {
     	
-    	// Acquire all of touch events
-        List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
-        game.getInput().getKeyEvents();
-        
-        int len = touchEvents.size();
-        for(int i = 0; i < len; i++) {
-        	
-        	// Cycle through every touch events
-            TouchEvent event = touchEvents.get(i);
-            
-            // Assign touch point after conversion to our World coordinates
-            touchPoint.set(event.x, event.y);
-            guiCam.touchToWorld(touchPoint);
-            
-            if(event.type == TouchEvent.TOUCH_DOWN){
-                if(OverlapTester.pointInRectangle(playButton.bounds, touchPoint)) {
-                	playButton.state = UIButton.STATE_PRESSED;
-                }	
-            }
-            
-            // Detect touch on specific bounding rects
-            if(event.type == TouchEvent.TOUCH_UP) { 
-                if(playButton.state == UIButton.STATE_PRESSED) {
-                	changeScreen = true;
-                	screen = new GameScreen(game);
-                	playButton.state = UIButton.STATE_IDLE;
+            // Acquire all of touch events
+            List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
+            game.getInput().getKeyEvents();
+
+            int len = touchEvents.size();
+            for(int i = 0; i < len; i++) {
+
+                // Cycle through every touch events
+                TouchEvent event = touchEvents.get(i);
+
+                // Assign touch point after conversion to our World coordinates
+                touchPoint.set(event.x, event.y);
+                guiCam.touchToWorld(touchPoint);
+
+                if(event.type == TouchEvent.TOUCH_DOWN){
+                    if(OverlapTester.pointInRectangle(playButton.bounds, touchPoint)) {
+                        playButton.state = UIButton.STATE_PRESSED;
+                    } else if(OverlapTester.pointInRectangle(highScoresButton.bounds, touchPoint)) {
+                        highScoresButton.state = UIButton.STATE_PRESSED;
+                    }
+                }
+
+                // Detect touch on specific bounding rects
+                if(event.type == TouchEvent.TOUCH_UP) {
+                    if(playButton.state == UIButton.STATE_PRESSED) {
+                        changeScreen = true;
+                        screen = new GameScreen(game);
+                        playButton.state = UIButton.STATE_IDLE;
+                    } else if(highScoresButton.state == UIButton.STATE_PRESSED) {
+                        changeScreen = true;
+                        screen = new LevelSelectorScreen(game);
+                        highScoresButton.state = UIButton.STATE_IDLE;
+                    }
                 }
             }
-        }
         
         // Check if we are changing screen
         if(changeScreen) {
