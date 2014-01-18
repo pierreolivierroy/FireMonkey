@@ -61,7 +61,7 @@ public class Assets {
         gameBackground = new TextureRegion(mainMenuItems, 0, 0, 320, 480);
 
         // Map (level selector) Screen
-        mapBackgroundTexture = new Texture(game, "game_map.jpg");
+        mapBackgroundTexture = new Texture(game, "game_map.png");
         mapBackground = new TextureRegion(mapBackgroundTexture, 0, 0, 768, 1280);
 
         mapButtonsTexture = new Texture(game, "bouton_map.png");
