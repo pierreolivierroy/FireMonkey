@@ -63,8 +63,11 @@ public class WorldRenderer {
     
     private void renderPlayer()
     {	
-    	batcher.beginBatch(Assets.playerItems);
-    	batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, 1, 1, Assets.player);
+    	batcher.beginBatch(Assets.monkeyTexture);
+    	if(world.monkey.state == Monkey.PLAYER_STATE_STARTING || world.monkey.state == Monkey.PLAYER_STATE_FALLING)
+    		batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, Monkey.PLAYER_WIDTH, Monkey.PLAYER_HEIGHT, Assets.monkey_idle);
+    	else if(world.monkey.state == Monkey.PLAYER_STATE_FLYING)
+    		batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, Monkey.PLAYER_WIDTH, Monkey.PLAYER_HEIGHT, Assets.monkey_flying);
     	batcher.endBatch();
     }
     

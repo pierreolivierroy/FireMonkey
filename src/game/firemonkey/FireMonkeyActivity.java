@@ -16,7 +16,7 @@ public class FireMonkeyActivity extends GLGame {
     public Screen getStartScreen() {
         //return new MainMenuScreen(this);
         context = getBaseContext();
-        return new LevelSelectorScreen(this);
+        return new MainMenuScreen(this);
 
     }
 

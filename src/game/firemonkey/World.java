@@ -49,7 +49,7 @@ public class World {
     	this.listener = listener;
     	this.gameUI = gUI;
     	
-    	this.monkey = new Monkey(WORLD_WIDTH/2, 4);
+    	this.monkey = new Monkey(WORLD_WIDTH/2, Monkey.PLAYER_HEIGHT/2);
     	this.activeBananas = new ArrayList<Banana>();
     	this.activeExplosions = new ArrayList<Explosion>();
     	

@@ -6,8 +6,8 @@ import com.bag.lib.DynamicGameObject;
 
 public class Monkey extends DynamicGameObject {
 
-    public static final float PLAYER_WIDTH 			= 1.4f;
-    public static final float PLAYER_HEIGHT 		= 1.4f;
+    public static final float PLAYER_WIDTH 			= 1.8f;
+    public static final float PLAYER_HEIGHT 		= 1.8f;
     public static final float PLAYER_FLOOR_POSITION = 0.5f + PLAYER_HEIGHT/2;
     public static final float PLAYER_MAX_VELOCITY	= 12.0f;
     
