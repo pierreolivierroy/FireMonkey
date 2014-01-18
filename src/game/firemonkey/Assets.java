@@ -9,10 +9,6 @@ public class Assets {
     // Main Menu
     public static Texture mainMenuItems;
     public static TextureRegion mainMenuBackground;
-
-    // Game Backgrounds
-    public static Texture gameBackgroundItems;
-    public static TextureRegion gameBackground;
     
     // Game Font
     public static Texture fontTex;  
@@ -62,18 +58,15 @@ public class Assets {
     public static TextureRegion redTile;
     public static TextureRegion whiteTween;
 
-    public static Texture jungleBackgroundStartTexture;
-    public static Texture jungleBackgroundRepeatTexture;
+    public static Texture jungleBackgrounds;
     public static TextureRegion jungleBackgroundStart;
     public static TextureRegion jungleBackgroundRepeat;
 
-    public static Texture snowBackgroundStartTexture;
-    public static Texture snowBackgroundRepeatTexture;
+    public static Texture snowBackgrounds;
     public static TextureRegion snowBackgroundStart;
     public static TextureRegion snowBackgroundRepeat;
 
-    public static Texture spaceBackgroundStartTexture;
-    public static Texture spaceBackgroundRepeatTexture;
+    public static Texture spaceBackgrounds;
     public static TextureRegion spaceBackgroundStart;
     public static TextureRegion spaceBackgroundRepeat;
 
@@ -83,9 +76,6 @@ public class Assets {
         // Main Menu (UI)
         mainMenuItems = new Texture(game, "mapPack1.png");
         mainMenuBackground = new TextureRegion(mainMenuItems, 0, 0, 480, 800);
-
-        gameBackgroundItems = new Texture(game, "background.png");
-        gameBackground = new TextureRegion(mainMenuItems, 0, 0, 320, 480);
 
         // Map (level selector) Screen
         mapBackgroundTexture = new Texture(game, "game_map.png");
@@ -123,40 +113,45 @@ public class Assets {
         bananaFrozen = new TextureRegion(bananasTexture, 128, 0, 128, 128);
         bananaSpace = new TextureRegion(bananasTexture, 0, 128, 128, 128);
 
-        //Backgrounds
+        // Menu
         menuBackgroundTexture = new Texture(game, "menu.png");
         menuBackground = new TextureRegion(menuBackgroundTexture, 0, 0, 768, 1280);
-
-        jungleBackgroundStartTexture = new Texture(game, "jungle_background_start.png");
-        jungleBackgroundRepeatTexture = new Texture(game, "jungle_background_repeat.png");
-        jungleBackgroundStart = new TextureRegion(jungleBackgroundStartTexture, 0, 0, 768, 1280);
-        jungleBackgroundRepeat = new TextureRegion(jungleBackgroundRepeatTexture, 0, 0, 768, 1280);
-
-        snowBackgroundStartTexture = new Texture(game, "snow_background_start.PNG");
-        snowBackgroundRepeatTexture = new Texture(game, "snow_background_repeat.png");
-        snowBackgroundStart = new TextureRegion(snowBackgroundStartTexture, 0, 0, 768, 1280);
-        snowBackgroundRepeat = new TextureRegion(snowBackgroundRepeatTexture, 0, 0, 768, 1280);
-
-        spaceBackgroundStartTexture = new Texture(game, "space_background_start.png");
-        spaceBackgroundRepeatTexture = new Texture(game, "space_background_repeat.png");
-        spaceBackgroundStart = new TextureRegion(spaceBackgroundStartTexture, 0, 0, 768, 1280);
-        spaceBackgroundRepeat = new TextureRegion(spaceBackgroundRepeatTexture, 0, 0, 768, 1280);
 
     	// Fonts
     	fontTex = new Texture(game, "font3.png");
         font = new Font(fontTex, 0, 0, 16, 32, 40);
 
     }
+    
+    public static void loadLevel(GLGame game, int index)
+    {
+    	if(index == 1) {
+            jungleBackgrounds = new Texture(game, "jungleBackgrounds.png");
+            jungleBackgroundStart = new TextureRegion(jungleBackgrounds, 0, 0, 768, 1280);
+            jungleBackgroundRepeat = new TextureRegion(jungleBackgrounds, 768, 0, 768, 1280);
+    	} else if (index == 2) {
+            snowBackgrounds = new Texture(game, "snowBackgrounds.png");
+            snowBackgroundStart = new TextureRegion(snowBackgrounds, 0, 0, 768, 1280);
+            snowBackgroundRepeat = new TextureRegion(snowBackgrounds, 768, 0, 768, 1280);
+    	} else {
+            spaceBackgrounds = new Texture(game, "spaceBackgrounds.png");
+            spaceBackgroundStart = new TextureRegion(spaceBackgrounds, 0, 0, 768, 1280);
+            spaceBackgroundRepeat = new TextureRegion(spaceBackgrounds, 768, 0, 768, 1280);
+    	}
+    }
 
     public static void reload() {
         tileMapItems.reload();
         playerItems.reload();
         mainMenuItems.reload();
-        gameBackgroundItems.reload();
         mapBackgroundTexture.reload();
         mapButtonsTexture.reload();
         starsTexture.reload();
         bananasTexture.reload();
+        
+        jungleBackgrounds.reload();
+        snowBackgrounds.reload();
+        spaceBackgrounds.reload();
 
         //if(Settings.soundEnabled )
         // music.play();
