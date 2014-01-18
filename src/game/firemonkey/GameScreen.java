@@ -302,6 +302,7 @@ public class GameScreen extends GLScreen {
 		 batcher.beginBatch(Assets.fontTex);
          Assets.font.drawText(batcher, "pts :" + world.score, 40, 30);
          batcher.endBatch();
+         
 		
 		gameUI.draw();	}
 	

@@ -27,11 +27,11 @@ public class World {
     public static final int WORLD_STATE_GAME_OVER 	= 2;
     
     //Banana patterns
-    public static final int BANANA_PATTERN_BLANK_MIN		= 5;//5%
+    public static final int BANANA_PATTERN_BLANK_MIN		= 2;//5%
     public static final int BANANA_PATTERN_RANDOM_MIN		= 60;//60%
     public static final int BANANA_PATTERN_STACK_MIN 		= 75;//15%
     public static final int BANANA_PATTERN_RECTANGLE_MIN 	= 85;//10%
-    public static final int BANANA_PATTERN_DIAGONAL_MIN 	= 95;//10%
+    public static final int BANANA_PATTERN_DIAGONAL_MIN 	= 98;//10%
     float minWidth = 0.5f;
 	float maxWidth = WORLD_WIDTH - 0.5f;
 	boolean showBanana = false;
@@ -68,7 +68,7 @@ public class World {
     	this.activeBananas = new ArrayList<Banana>();
     	this.activeExplosions = new ArrayList<Explosion>();
     	
-    	this.nextGenerationHeight = WORLD_HEIGHT/2;
+    	this.nextGenerationHeight = 0;
     	this.lastBarrelHeight = WORLD_HEIGHT * 4; // DEBUG
     	
     	this.score = 0;

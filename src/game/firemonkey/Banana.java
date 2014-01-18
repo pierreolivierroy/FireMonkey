@@ -11,7 +11,7 @@ public class Banana extends DynamicGameObject{
 	public final static int STATE_TOUCHED = 1;
 	public final static int TILT_VELOCITY = 30;
 	public final static int BOOST_LOW = 15;
-	public final static int BOOST_MED = 20;
+	public final static int BOOST_MED = 25;
 	public final static int BOOST_HIGH = 40;
 	
 	public final static int POINTS_LOW = 20;
