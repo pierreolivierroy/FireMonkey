@@ -10,9 +10,14 @@ public class Banana extends DynamicGameObject{
 	public final static int STATE_IDLE = 0;
 	public final static int STATE_TOUCHED = 1;
 	public final static int TILT_VELOCITY = 30;
+	
 	public final static int BOOST_LOW = 15;
-	public final static int BOOST_MED = 20;
+	public final static int BOOST_MED = 25;
 	public final static int BOOST_HIGH = 40;
+	
+	public final static int POINTS_LOW = 20;
+	public final static int POINTS_MED = 40;
+	public final static int POINTS_HIGH = 60;
 	
 	public int points;
 	public int state;
@@ -24,11 +29,11 @@ public class Banana extends DynamicGameObject{
 	Random rand;
 	boolean isTiltingUp;
 	
-	public Banana(float x, float y, float width, float height, float boost) {
+	public Banana(float x, float y, float width, float height, float boost, int points) {
 		super(x, y, width, height);
 		state = STATE_IDLE;
 		boostValue = boost;
-		points = (int) boostValue;
+		this.points = points;
 		hitZone = new Circle(x, y, width/2);
 		
 		rand = new Random();

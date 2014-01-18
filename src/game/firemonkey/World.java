@@ -27,13 +27,14 @@ public class World {
     public static final int WORLD_STATE_GAME_OVER 	= 2;
     
     //Banana patterns
-    public static final int BANANA_PATTERN_BLANK_MIN = 5;//5%
-    public static final int BANANA_PATTERN_RANDOM_MIN = 60;//60%
-    public static final int BANANA_PATTERN_STACK_MIN = 75;//15%
-    public static final int BANANA_PATTERN_RECTANGLE_MIN = 85;//10%
-    public static final int BANANA_PATTERN_DIAGONAL_MIN = 95;//10%
+    public static final int BANANA_PATTERN_BLANK_MIN		= 2;//5%
+    public static final int BANANA_PATTERN_RANDOM_MIN		= 60;//60%
+    public static final int BANANA_PATTERN_STACK_MIN 		= 75;//15%
+    public static final int BANANA_PATTERN_RECTANGLE_MIN 	= 85;//10%
+    public static final int BANANA_PATTERN_DIAGONAL_MIN 	= 98;//10%
     float minWidth = 0.5f;
 	float maxWidth = WORLD_WIDTH - 0.5f;
+	boolean showBanana = false;
     
     public final WorldListener listener;
     public GameUI gameUI;
@@ -50,7 +51,7 @@ public class World {
     private float lastBarrelHeight;
     
     public float maxHeight = 0.0f; 
-    public float levelTargetHeight = 1000.0f; // DEBUG VALUE
+    public float levelTargetHeight = 10000.0f; // DEBUG VALUE
     
     public int score; 			// Overall final score
     private int bananaScore; 		// Score based on nb of bananas consumed
@@ -63,11 +64,11 @@ public class World {
     	this.listener = listener;
     	this.gameUI = gUI;
     	
-    	this.monkey = new Monkey(WORLD_WIDTH/2, Monkey.PLAYER_HEIGHT/2);
+    	this.monkey = new Monkey(WORLD_WIDTH/2, Monkey.PLAYER_HEIGHT/2, Monkey.PLAYER_DEFAULT_JUMPS);
     	this.activeBananas = new ArrayList<Banana>();
     	this.activeExplosions = new ArrayList<Explosion>();
     	
-    	this.nextGenerationHeight = WORLD_HEIGHT/2;
+    	this.nextGenerationHeight = 0;
     	this.lastBarrelHeight = WORLD_HEIGHT * 4; // DEBUG
     	
     	this.score = 0;
@@ -166,20 +167,109 @@ public class World {
 			int min = 0;
 			int max = 100;
 			int pattern = r.nextInt(max-min) + min;		
-			
-			//Generate banana petterns randomly according to their stats
-			if(BANANA_PATTERN_BLANK_MIN < pattern && pattern <= BANANA_PATTERN_RANDOM_MIN)
-				generateRandomBananaPattern();
-			else if(BANANA_PATTERN_RANDOM_MIN < pattern && pattern <= BANANA_PATTERN_STACK_MIN)
-				generateStackBananaPattern();
-			else if(BANANA_PATTERN_RECTANGLE_MIN < pattern && pattern <= BANANA_PATTERN_DIAGONAL_MIN)
-				generateRectangleBananaPattern();
-			else if(BANANA_PATTERN_DIAGONAL_MIN < pattern && pattern <= max)
-				generateDiagonalBananaPattern();	
-			
-			removeBananas();
-		}
+		
+			if(levelTargetHeight < monkey.position.y && !showBanana){
+				generateBananaPattern();
+				showBanana = true;
+			}
+			else {
+				//Generate banana petterns randomly according to their stats
+				if(BANANA_PATTERN_BLANK_MIN < pattern && pattern <= BANANA_PATTERN_RANDOM_MIN)
+					generateRandomBananaPattern();
+				else if(BANANA_PATTERN_RANDOM_MIN < pattern && pattern <= BANANA_PATTERN_STACK_MIN)
+					generateStackBananaPattern();
+				else if(BANANA_PATTERN_RECTANGLE_MIN < pattern && pattern <= BANANA_PATTERN_DIAGONAL_MIN)
+					generateRectangleBananaPattern();
+				else if(BANANA_PATTERN_DIAGONAL_MIN < pattern && pattern <= max)
+					generateDiagonalBananaPattern();	
+			}		
+		}		
 
+		removeBananas();
+	}
+	
+private void generateBananaPattern(){
+				
+		float incrementX = 0.0f;
+		float incrementY = 1.5f;
+					
+		float xValue = 1.5f;
+		float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
+			
+		for(int i = 0; i < 8; i++){
+			
+			float x = xValue + incrementX;
+			float y = yValue + incrementY;			
+			Banana bb = new Banana(x, y, 1, 1, Banana.BOOST_HIGH, Banana.POINTS_MED);
+
+			activeBananas.add(bb);
+			if(i > 3)
+				incrementX += 0.4f;
+			else if(i > 6)
+				incrementX += 0.2f;
+			else
+				incrementX += 0.5f;
+			
+			incrementY += 1.5f;
+		}
+		
+		incrementX = 1.5f;
+		incrementY = 0.8f;
+		
+		for (int i = 0; i < 3; i++) {
+			float x = xValue + incrementX;
+			float y = yValue + incrementY;			
+			Banana bb = new Banana(x, y, 1, 1, Banana.BOOST_HIGH, Banana.POINTS_MED);
+
+			activeBananas.add(bb);
+			if(i == 2){
+				incrementX += 1.0f;
+				incrementY += 1.5f;
+			}
+			else {
+				incrementX += 1.5f;
+				incrementY += 0.8f;
+			}
+		}
+		
+		for (int i = 0; i < 3; i++) {
+			float x = xValue + incrementX;
+			float y = yValue + incrementY;			
+			Banana bb = new Banana(x, y, 1, 1, Banana.BOOST_HIGH, Banana.POINTS_MED);
+
+			activeBananas.add(bb);
+			incrementX += 0.3f;
+			incrementY += 1.5f;
+		}
+		
+		incrementX -= 0.3f;
+		incrementY += 0.3f;
+		
+		for (int i = 0; i < 4; i++) {
+			float x = xValue + incrementX;
+			float y = yValue + incrementY;			
+			Banana bb = new Banana(x, y, 1, 1, Banana.BOOST_HIGH, Banana.POINTS_MED);
+
+			activeBananas.add(bb);
+			
+			if(i == 4){
+				incrementX -= 0.8f;
+				incrementY += 0.0f;
+			}
+			else {
+				incrementX -= 0.8f;
+				incrementY += 1.5f;
+			}	
+		}
+		
+		incrementX -= 0.5f;
+		incrementY -= 1.5f;
+		
+		float x = xValue + incrementX;
+		float y = yValue + incrementY;			
+		Banana bb = new Banana(x, y, 1, 1, Banana.BOOST_HIGH, Banana.POINTS_MED);
+		activeBananas.add(bb);
+		
 	}
 	
 	private void generateDiagonalBananaPattern(){
@@ -189,8 +279,8 @@ public class World {
 		int minD = 0;
 		int maxD = 2;
 		int direction = randDirection.nextInt(maxD-minD) + minD;	
-		int minBananas = 10;
-		int maxBananas = 26;
+		int minBananas = 8;
+		int maxBananas = 16;
 		int bananas = r.nextInt(maxBananas-minBananas) + minBananas;		
 		
 		//To the right
@@ -204,7 +294,7 @@ public class World {
 			
 			for (int i = 0; i < bananas; i++) {
 										
-				Banana b = new Banana(x, y, 1, 1, Banana.BOOST_MED);
+				Banana b = new Banana(x, y, 1, 1, Banana.BOOST_MED, Banana.POINTS_MED);
 				activeBananas.add(b);
 				
 				incrementY += 1.5f;
@@ -224,7 +314,7 @@ public class World {
 			
 			for (int i = 0; i < bananas; i++) {
 										
-				Banana b = new Banana(x, y, 1, 1, Banana.BOOST_MED);
+				Banana b = new Banana(x, y, 1, 1, Banana.BOOST_MED, Banana.POINTS_MED);
 				activeBananas.add(b);
 				
 				incrementY += 1.5f;
@@ -242,9 +332,16 @@ public class World {
 			float xValue = rand.nextFloat() * (WORLD_WIDTH - 1f) + 0.5f;
 			float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
 			
-			Banana b = new Banana(xValue, yValue, 1, 1, Banana.BOOST_MED);
-			boolean collision = false;
+			//Generate random banana size/points/boost
+			float bananaSize = randomizeBananaSize();
+			int points = 120 - ((int)bananaSize * 10);
+			float boost = bananaSize * 30;
 			
+			Banana b = new Banana(xValue, yValue, bananaSize, bananaSize, boost, points);
+			
+			//Check collisions
+			boolean collision = false;
+						
 			for (int j = 0; j < activeBananas.size(); j++) {
 				
 				if(OverlapTester.overlapCircles(activeBananas.get(j).hitZone, b.hitZone)){
@@ -253,6 +350,7 @@ public class World {
 				}
 			}
 			
+			//If no collisions
 			if(collision == false)
 				activeBananas.add(b);
 
@@ -260,14 +358,12 @@ public class World {
 	}
 	
 	private void generateRectangleBananaPattern(){
-						
-		nextGenerationHeight += 16f;
-		
+								
 		Random r = new Random();
 		int minWidth = 2;
 		int maxWidth = 6;
 		int minHeight = 2;
-		int maxHeight = 10;
+		int maxHeight = 8;
 		int rectangleWidth = r.nextInt(maxWidth-minWidth) + minWidth;
 		int rectangleHeight = r.nextInt(maxHeight-minHeight) + minHeight;
 		
@@ -279,10 +375,7 @@ public class World {
 		float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;		
 		float x = xValue + incrementX;
 		float y = yValue + incrementY;			
-		
-		Banana b = new Banana(xValue, yValue, 1, 1, Banana.BOOST_MED);
-		activeBananas.add(b);
-		
+				
 		for(int i = 0; i < rectangleHeight; i++){
 			
 			incrementX = 0f;
@@ -291,7 +384,7 @@ public class World {
 			for(int j = 0; j < rectangleWidth; j++){
 				
 				x = xValue + incrementX;						
-				Banana bb = new Banana(x, y, 1, 1, Banana.BOOST_MED);
+				Banana bb = new Banana(x, y, 1, 1, Banana.BOOST_MED, Banana.POINTS_MED);
 				activeBananas.add(bb);
 				incrementX += 1.5f;
 			}
@@ -304,8 +397,8 @@ public class World {
 	private void generateStackBananaPattern(){
 		
 		Random r = new Random();
-		int minBananas = 2;
-		int maxbananas = 20;
+		int minBananas = 3;
+		int maxbananas = 8;
 		int nbBananas = r.nextInt(maxbananas-minBananas) + minBananas;
 		
 		float increment = 1.5f;
@@ -315,18 +408,27 @@ public class World {
 		float xValue = rand.nextFloat() * (maxWidth - minWidth) + minWidth;
 		float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
 	
-		Banana b = new Banana(xValue, yValue, 1, 1, Banana.BOOST_HIGH);
+		Banana b = new Banana(xValue, yValue, 1, 1, Banana.BOOST_HIGH, Banana.POINTS_MED);
 
 		activeBananas.add(b);
 		
 		for(int i = 0; i < nbBananas; i++){
 			
 			float y = yValue + ((float)increment);			
-			Banana bb = new Banana(xValue, y, 1, 1, Banana.BOOST_HIGH);
+			Banana bb = new Banana(xValue, y, 1, 1, Banana.BOOST_HIGH, Banana.POINTS_MED);
 
 			activeBananas.add(bb);
 			increment += 1.5f;
 		}
+	}
+	
+	private float randomizeBananaSize(){
+		
+		float minSize = 0.5f;
+		float maxSize = 1.0f;
+		Random r = new Random();		
+		
+		return r.nextFloat() * (maxSize - minSize) + minSize;
 	}
 	
 	private void removeBananas(){
