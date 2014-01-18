@@ -32,8 +32,8 @@ public class GameScreen extends GLScreen {
     static final int STATE_TOUCH_REFUEL = 12;
     
     // Screen size
-    static final int SCREEN_WIDTH	= 480;
-    static final int SCREEN_HEIGHT	= 800;
+    static final int SCREEN_WIDTH	= 768;
+    static final int SCREEN_HEIGHT	= 1280;
 
     int 			state;
     int 			touchState;
@@ -134,9 +134,14 @@ public class GameScreen extends GLScreen {
 	    
 	    // Update World
 	    world.update(deltaTime, game.getInput().getAccelX());
+	    
+	    if(world.state == World.WORLD_STATE_GAME_OVER)
+	    	this.state = GAME_OVER;
 	}
 	
-	private void updatePaused() {
+	private void updatePaused() 
+	{
+		
 	}	
 	
 	private void updateGameOver() {
@@ -146,12 +151,16 @@ public class GameScreen extends GLScreen {
 	        TouchEvent event = touchEvents.get(i);
 	        touchPoint.set(event.x, event.y);
 	        guiCam.touchToWorld(touchPoint);
+	        
+	        if(event.type == TouchEvent.TOUCH_UP){
+	        	game.setScreen(new MainMenuScreen(game));
+	        }
 	    }
 	}
 	
 	private void worldTouchHandler(TouchEvent event, Vector2 point)
 	{
-		// Convert for world coordinate (ex 16:9 rather than 800x480)
+		// Convert for world coordinate (ex 16:9 rather than 1280x768)
 		point.x = (point.x/SCREEN_WIDTH) * WorldRenderer.FRUSTUM_WIDTH;
 		point.y = (point.y/SCREEN_HEIGHT) * WorldRenderer.FRUSTUM_HEIGHT;
 		
@@ -162,7 +171,9 @@ public class GameScreen extends GLScreen {
 			if(event.type == TouchEvent.TOUCH_DRAGGED ||event.type == TouchEvent.TOUCH_DOWN){     
 	         	
 	        } else if(event.type == TouchEvent.TOUCH_UP){
-	        	world.player.velocity.y = 20;
+	        	//world.monkey.velocity.y = 20;
+				Explosion e = new Explosion(100, point.x, point.y);
+				world.activeExplosions.add(e);
 	        }
 			break;
 			

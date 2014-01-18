@@ -6,6 +6,7 @@ import java.util.Random;
 import android.util.Log;
 
 import com.bag.lib.math.Circle;
+import com.bag.lib.math.OverlapTester;
 import com.bag.lib.math.Vector2;
 
 
@@ -29,13 +30,16 @@ public class World {
     public final WorldListener listener;
     public GameUI gameUI;
     
-    public Player player;
-    public ArrayList<Circle> clouds;
+    public Monkey monkey;
+    public ArrayList<Banana> activeBananas;
+    public ArrayList<Explosion> activeExplosions;
     
     public int state;
     public static final Vector2 gravity = new Vector2(0, -10);
     
     private float nextGenerationHeight;
+    public float maxHeight = 0.0f; // Current max height reached by player.
+    public int score;
     
     private Random rand;
     
@@ -45,58 +49,92 @@ public class World {
     	this.listener = listener;
     	this.gameUI = gUI;
     	
-    	this.player = new Player(WORLD_WIDTH/2, 4);
-    	clouds = new ArrayList<Circle>();
+    	this.monkey = new Monkey(WORLD_WIDTH/2, 4);
+    	this.activeBananas = new ArrayList<Banana>();
+    	this.activeExplosions = new ArrayList<Explosion>();
     	
-    	nextGenerationHeight = WORLD_HEIGHT/2;
+    	this.nextGenerationHeight = WORLD_HEIGHT/2;
     }
 
 	public void update(float deltaTime, float accelX) {
 		updatePlayer(deltaTime, accelX);
 		updateLevel(deltaTime);
 		updateExplosions(deltaTime);
+		
+		checkMonkeyBananaCollision();
+		checkGameOver();
 	}
 
 	private void updatePlayer(float deltaTime, float accelX) {
 
-		if (player.state == Player.PLAYER_STATE_FLYING || player.state == Player.PLAYER_STATE_STARTING) // Starting is DEBUG
-			player.velocity.x = -accelX / 10 * Player.MOVE_VELOCITY;
+		if (monkey.state == Monkey.PLAYER_STATE_FLYING || monkey.state == Monkey.PLAYER_STATE_STARTING) // Starting is DEBUG
+			monkey.velocity.x = -accelX / 10 * Monkey.MOVE_VELOCITY;
 		
-	    if(player.state == Player.PLAYER_STATE_HIT) {
+	    if(monkey.state == Monkey.PLAYER_STATE_HIT) {
 //	    	explosion = new Explosion(50, (int)player.position.x, (int)player.position.y);
 //	    	player.state = player.previousState;
 	    }
 	    
-	    player.update(deltaTime);
+	    monkey.update(deltaTime);
+	    maxHeight = Math.max(monkey.position.y, maxHeight);
 	}
 
 	private void updateExplosions(float deltaTime) 
 	{
-//		try{	
-//			explosion.update(deltaTime);
-//		} catch(Exception e){}
+		try{	
+			for (Explosion e: activeExplosions) {
+				e.update(deltaTime);
+			}
+		} catch(Exception e){}
 	}
 	
 	private void updateLevel(float deltaTime)
 	{
 		// Generation if player is exiting an already filled zone
-		if(player.position.y > nextGenerationHeight) {
+		if(monkey.position.y > nextGenerationHeight) {
 			nextGenerationHeight += WORLD_HEIGHT;
 			rand = new Random();
 			
 			for (int i = 0; i < 4; i++) {
 				float xValue = rand.nextFloat() * WORLD_WIDTH;
 				float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
-				Circle c = new Circle(xValue, yValue, 2);
-				clouds.add(c);
+				Banana b = new Banana(xValue, yValue, 1, 1, 30.0f);
+				activeBananas.add(b);
 			}
 		}
 		
-		for (int i = 0; i < clouds.size(); i++) {
-			Circle c = clouds.get(i);
-			if(c.center.y <= player.position.y - WORLD_HEIGHT/2)
-				clouds.remove(c);
+		// Remove clouds if out of view
+		for (int i = 0; i < activeBananas.size(); i++) {
+			Banana b = activeBananas.get(i);
+			if(b.position.y <= monkey.position.y - WORLD_HEIGHT/2)
+				activeBananas.remove(b);
 		}
+	}
+	
+	private void checkMonkeyBananaCollision()
+	{
+		for (int i = 0; i < activeBananas.size(); i++) {
+			Banana b = activeBananas.get(i);
+			
+			// Collision
+			if(OverlapTester.overlapRectangles(monkey.bounds, b.bounds)) {
+				
+				// BANANA EXPLOSION YO
+				Explosion e = new Explosion(20, b.position.x, b.position.y);
+				activeExplosions.add(e);
+				
+				score += b.points;
+				monkey.bananaCollision(b.boostValue);
+				
+				activeBananas.remove(b);
+			}
+		}
+	}
+	
+	private void checkGameOver()
+	{
+		if(monkey.position.y < maxHeight - WORLD_HEIGHT)
+			state = WORLD_STATE_GAME_OVER;
 	}
 }
 
