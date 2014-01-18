@@ -39,6 +39,10 @@ public class Assets {
     public static TextureRegion monkey_flying;
     public static TextureRegion monkey_hit_bonus;
     public static TextureRegion monkey_dead;
+    public static TextureRegion monkey_idle_space;
+    public static TextureRegion monkey_flying_space;
+    public static TextureRegion monkey_hit_bonus_space;
+    public static TextureRegion monkey_dead_space;
 
 
     public static Texture bananasTexture;
@@ -100,11 +104,16 @@ public class Assets {
         playerItems = new Texture(game, "pacman.png");
         player = new TextureRegion(playerItems, 0, 0, 64, 64);
         
-    	monkeyTexture = new Texture(game, "monkeys.png");
-    	monkey_flying = new TextureRegion(monkeyTexture, 0, 0, 64, 64);
-    	monkey_idle = new TextureRegion(monkeyTexture, 64, 0, 64, 64);
-    	monkey_hit_bonus = new TextureRegion(monkeyTexture, 128, 0, 64, 64);
-    	monkey_dead = new TextureRegion(monkeyTexture, 64, 64, 64, 64);
+    	monkeyTexture = new Texture(game, "monkeys-hd.png");
+    	monkey_flying = new TextureRegion(monkeyTexture, 0, 0, 128, 128);
+        monkey_idle = new TextureRegion(monkeyTexture, 128, 0, 128, 128);
+        monkey_hit_bonus = new TextureRegion(monkeyTexture, 256, 0, 128, 128);
+        monkey_dead = new TextureRegion(monkeyTexture, 384, 0, 128, 128);
+
+        monkey_flying_space = new TextureRegion(monkeyTexture, 0, 128, 128, 128);
+        monkey_idle_space = new TextureRegion(monkeyTexture, 256, 128, 128, 128);
+        monkey_hit_bonus_space = new TextureRegion(monkeyTexture, 128, 128, 128, 128);
+        monkey_dead_space = new TextureRegion(monkeyTexture, 384, 128, 128, 128);
 
         bananasTexture = new Texture(game, "bananas.png");
         bananaNormal = new TextureRegion(bananasTexture, 0, 0, 128, 128);

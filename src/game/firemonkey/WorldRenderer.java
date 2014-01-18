@@ -40,20 +40,58 @@ public class WorldRenderer {
     
     public void renderBackground() {
         float center = 8;
-    	if(world.maxHeight <= 24) {
-            batcher.beginBatch(Assets.jungleBackgroundStartTexture);
-            batcher.drawSprite(cam.position.x, center, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.jungleBackgroundStart);
-            batcher.endBatch();
+        if(World.currentLevel == 1) {
+            if(world.maxHeight <= 24) {
+                batcher.beginBatch(Assets.jungleBackgroundStartTexture);
+                batcher.drawSprite(cam.position.x, center, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.jungleBackgroundStart);
+                batcher.endBatch();
+            }
+            if(world.maxHeight >= 8) {
+                batcher.beginBatch(Assets.jungleBackgroundRepeatTexture);
+                batcher.drawSprite(cam.position.x, center + 15, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.jungleBackgroundRepeat);
+                batcher.endBatch();
+            }
+            if(world.maxHeight >= 23) {
+                batcher.beginBatch(Assets.jungleBackgroundRepeatTexture);
+                batcher.drawSprite(cam.position.x, cam.position.y, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.jungleBackgroundRepeat);
+                batcher.endBatch();
+            }
         }
-        if(world.maxHeight >= 8) {
-            batcher.beginBatch(Assets.jungleBackgroundRepeatTexture);
-            batcher.drawSprite(cam.position.x, center + 15, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.jungleBackgroundRepeat);
-            batcher.endBatch();
+
+        else if(World.currentLevel == 2) {
+            if(world.maxHeight <= 24) {
+                batcher.beginBatch(Assets.snowBackgroundStartTexture);
+                batcher.drawSprite(cam.position.x, center, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.snowBackgroundStart);
+                batcher.endBatch();
+            }
+            if(world.maxHeight >= 8) {
+                batcher.beginBatch(Assets.snowBackgroundRepeatTexture);
+                batcher.drawSprite(cam.position.x, center + 15, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.snowBackgroundRepeat);
+                batcher.endBatch();
+            }
+            if(world.maxHeight >= 23) {
+                batcher.beginBatch(Assets.snowBackgroundRepeatTexture);
+                batcher.drawSprite(cam.position.x, cam.position.y, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.snowBackgroundRepeat);
+                batcher.endBatch();
+            }
         }
-        if(world.maxHeight >= 23) {
-            batcher.beginBatch(Assets.jungleBackgroundRepeatTexture);
-            batcher.drawSprite(cam.position.x, cam.position.y, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.jungleBackgroundRepeat);
-            batcher.endBatch();
+
+        else if(World.currentLevel == 3) {
+            if(world.maxHeight <= 24) {
+                batcher.beginBatch(Assets.spaceBackgroundStartTexture);
+                batcher.drawSprite(cam.position.x, center, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.spaceBackgroundStart);
+                batcher.endBatch();
+            }
+            if(world.maxHeight >= 8) {
+                batcher.beginBatch(Assets.spaceBackgroundRepeatTexture);
+                batcher.drawSprite(cam.position.x, center + 15, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.spaceBackgroundRepeat);
+                batcher.endBatch();
+            }
+            if(world.maxHeight >= 23) {
+                batcher.beginBatch(Assets.spaceBackgroundRepeatTexture);
+                batcher.drawSprite(cam.position.x, cam.position.y, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.spaceBackgroundRepeat);
+                batcher.endBatch();
+            }
         }
     }
     
@@ -75,15 +113,27 @@ public class WorldRenderer {
     }
     
     private void renderPlayer()
-    {	
-    	batcher.beginBatch(Assets.monkeyTexture);
-    	if(world.monkey.state == Monkey.PLAYER_STATE_STARTING || world.monkey.state == Monkey.PLAYER_STATE_FALLING)
-    		batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, Monkey.PLAYER_WIDTH, Monkey.PLAYER_HEIGHT, Assets.monkey_idle);
-    	else if(world.monkey.state == Monkey.PLAYER_STATE_FLYING)
-    		batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, Monkey.PLAYER_WIDTH, Monkey.PLAYER_HEIGHT, Assets.monkey_flying);
-    	else
-    		batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, Monkey.PLAYER_WIDTH, Monkey.PLAYER_HEIGHT, Assets.monkey_flying);
-    	batcher.endBatch();
+    {
+        if(World.currentLevel == 1 || World.currentLevel == 2) {
+            batcher.beginBatch(Assets.monkeyTexture);
+            if(world.monkey.state == Monkey.PLAYER_STATE_STARTING || world.monkey.state == Monkey.PLAYER_STATE_FALLING)
+                batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, Monkey.PLAYER_WIDTH, Monkey.PLAYER_HEIGHT, Assets.monkey_idle);
+            else if(world.monkey.state == Monkey.PLAYER_STATE_FLYING)
+                batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, Monkey.PLAYER_WIDTH, Monkey.PLAYER_HEIGHT, Assets.monkey_flying);
+            else
+                batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, Monkey.PLAYER_WIDTH, Monkey.PLAYER_HEIGHT, Assets.monkey_flying);
+            batcher.endBatch();
+        }
+        else if(World.currentLevel == 3) {
+            batcher.beginBatch(Assets.monkeyTexture);
+            if(world.monkey.state == Monkey.PLAYER_STATE_STARTING || world.monkey.state == Monkey.PLAYER_STATE_FALLING)
+                batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, Monkey.PLAYER_WIDTH, Monkey.PLAYER_HEIGHT, Assets.monkey_idle_space);
+            else if(world.monkey.state == Monkey.PLAYER_STATE_FLYING)
+                batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, Monkey.PLAYER_WIDTH, Monkey.PLAYER_HEIGHT, Assets.monkey_flying_space);
+            else
+                batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, Monkey.PLAYER_WIDTH, Monkey.PLAYER_HEIGHT, Assets.monkey_flying_space);
+            batcher.endBatch();
+        }
     }
     
     private void renderBananas()
@@ -93,7 +143,13 @@ public class WorldRenderer {
     	
     	batcher.beginBatch(Assets.bananasTexture);
     	for (Banana b : world.activeBananas) {
-    		batcher.drawSprite(b.position.x, b.position.y, b.bounds.width, b.bounds.height, b.tiltAngle-10, Assets.bananaNormal);
+            if(World.currentLevel == 1) {
+                batcher.drawSprite(b.position.x, b.position.y, b.bounds.width, b.bounds.height, b.tiltAngle-10, Assets.bananaNormal);
+            } else if(World.currentLevel == 2) {
+                batcher.drawSprite(b.position.x, b.position.y, b.bounds.width, b.bounds.height, b.tiltAngle-10, Assets.bananaFrozen);
+            } else if(World.currentLevel == 3) {
+                batcher.drawSprite(b.position.x, b.position.y, b.bounds.width, b.bounds.height, b.tiltAngle-10, Assets.bananaSpace);
+            }
 		}   	
     	batcher.endBatch();
     }
