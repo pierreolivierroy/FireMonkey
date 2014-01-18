@@ -123,7 +123,7 @@ public class World {
 	private void updateExplosions(float deltaTime) 
 	{
 		try{	
-			for (int i = 0; i < activeExplosions.size(); i++) {
+			for (int i = 0; i < activeExplosions.size(); i++) { 
 				Explosion e = activeExplosions.get(i);
 				e.update(deltaTime);
 				
@@ -194,13 +194,13 @@ public class World {
 	
 	private void generateBarrel()
 	{
-		if(activeBarrel != null)	// Only 1 barrel at a time
+		if(activeBarrel != null || maxHeight < 8*WORLD_HEIGHT)	// Only 1 barrel at a time
 			return;
 		
 		rand = new Random();
 		float odds = rand.nextFloat();
 		
-		if(odds > 0.05f && odds < 0.5f) {
+		if(odds > 0.05f && odds < 0.15f) {
 			float xValue = rand.nextFloat() * WORLD_WIDTH;
 			float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
 			activeBarrel = new Barrel(xValue, yValue, 1.3f, 1.6f);
