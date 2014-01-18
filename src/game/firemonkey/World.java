@@ -154,15 +154,18 @@ public class World {
 			int max = 100;
 			int pattern = r.nextInt(max-min) + min;		
 			
+			generateRandomBananaPattern();
+			generateRandomBananaPattern();
+
 			//Generate banana petterns randomly according to their stats
-			if(BANANA_PATTERN_BLANK_MIN < pattern && pattern <= BANANA_PATTERN_RANDOM_MIN)
+			/*if(BANANA_PATTERN_BLANK_MIN < pattern && pattern <= BANANA_PATTERN_RANDOM_MIN)
 				generateRandomBananaPattern();
 			else if(BANANA_PATTERN_RANDOM_MIN < pattern && pattern <= BANANA_PATTERN_STACK_MIN)
 				generateStackBananaPattern();
 			else if(BANANA_PATTERN_RECTANGLE_MIN < pattern && pattern <= BANANA_PATTERN_DIAGONAL_MIN)
 				generateRectangleBananaPattern();
 			else if(BANANA_PATTERN_DIAGONAL_MIN < pattern && pattern <= max)
-				generateDiagonalBananaPattern();	
+				generateDiagonalBananaPattern();	*/
 			
 			removeBananas();
 		}
