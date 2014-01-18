@@ -25,6 +25,9 @@ public class Assets {
     public static Texture mapButtonsTexture;
     public static TextureRegion levelButton;
 
+    public static Texture starsTexture;
+    public static TextureRegion starsCircle;
+
     // Game Interface
 
     // Game Objects
@@ -48,23 +51,33 @@ public class Assets {
 
 
     public static void load(GLGame game) {
-       	
-    	// Main Menu (UI)
-    	mainMenuItems = new Texture(game, "mapPack1.png");
-    	mainMenuBackground = new TextureRegion(mainMenuItems, 0, 0, 480, 800);
-    	
-    	gameBackgroundItems = new Texture(game, "background.png");
-    	gameBackground = new TextureRegion(mainMenuItems, 0, 0, 320, 480);
-    	
-    	// Game Screen 
-    	tileMapItems = new Texture(game, "tilemap.png");
-    	blueTile = new TextureRegion(tileMapItems, 0, 0, 64, 64);
-    	redTile = new TextureRegion(tileMapItems, 64, 0, 64, 64);
 
-    	// Game Objects
-    	playerItems = new Texture(game, "pacman.png");
-    	player = new TextureRegion(playerItems, 0, 0, 64, 64);
-    	
+        // Main Menu (UI)
+        mainMenuItems = new Texture(game, "mapPack1.png");
+        mainMenuBackground = new TextureRegion(mainMenuItems, 0, 0, 480, 800);
+
+        gameBackgroundItems = new Texture(game, "background.png");
+        gameBackground = new TextureRegion(mainMenuItems, 0, 0, 320, 480);
+
+        // Map (level selector) Screen
+        mapBackgroundTexture = new Texture(game, "game_map.jpg");
+        mapBackground = new TextureRegion(mapBackgroundTexture, 0, 0, 768, 1280);
+
+        mapButtonsTexture = new Texture(game, "bouton_map.png");
+        levelButton = new TextureRegion(mapButtonsTexture, 0, 0, 64, 64);
+
+        starsTexture = new Texture(game, "star_circle.png");
+        starsCircle = new TextureRegion(starsTexture, 0, 0, 128, 128);
+
+        // Game Screen
+        tileMapItems = new Texture(game, "tilemap.png");
+        blueTile = new TextureRegion(tileMapItems, 0, 0, 64, 64);
+        redTile = new TextureRegion(tileMapItems, 64, 0, 64, 64);
+
+        // Game Objects
+        playerItems = new Texture(game, "pacman.png");
+        player = new TextureRegion(playerItems, 0, 0, 64, 64);
+        
     	monkeyTexture = new Texture(game, "monkeys.png");
     	monkey_flying = new TextureRegion(monkeyTexture, 0, 0, 64, 64);
     	monkey_idle = new TextureRegion(monkeyTexture, 64, 0, 64, 64);
@@ -72,11 +85,10 @@ public class Assets {
     	monkey_dead = new TextureRegion(monkeyTexture, 64, 64, 64, 64);
     	
     	// Fonts
-    	
     	fontTex = new Texture(game, "font3.png");
         font = new Font(fontTex, 0, 0, 16, 32, 40);
 
-    }       
+    }
 
     public static void reload() {
         tileMapItems.reload();
@@ -85,7 +97,8 @@ public class Assets {
         gameBackgroundItems.reload();
         mapBackgroundTexture.reload();
         mapButtonsTexture.reload();
-
+        starsTexture.reload();
+        
         //if(Settings.soundEnabled )
         // music.play();
     }
