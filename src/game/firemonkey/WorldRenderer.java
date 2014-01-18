@@ -38,11 +38,23 @@ public class WorldRenderer {
         renderObjects();
     }
     
-    public void renderBackground() {	
-    	
-    	batcher.beginBatch(Assets.gameBackgroundItems);
-    	batcher.drawSprite(cam.position.x, cam.position.y, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.gameBackground);
-    	batcher.endBatch();
+    public void renderBackground() {
+        float center = 8;
+    	if(world.maxHeight <= 24) {
+            batcher.beginBatch(Assets.jungleBackgroundStartTexture);
+            batcher.drawSprite(cam.position.x, center, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.jungleBackgroundStart);
+            batcher.endBatch();
+        }
+        if(world.maxHeight >= 8) {
+            batcher.beginBatch(Assets.jungleBackgroundRepeatTexture);
+            batcher.drawSprite(cam.position.x, center + 15, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.jungleBackgroundRepeat);
+            batcher.endBatch();
+        }
+        if(world.maxHeight >= 23) {
+            batcher.beginBatch(Assets.jungleBackgroundRepeatTexture);
+            batcher.drawSprite(cam.position.x, cam.position.y, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.jungleBackgroundRepeat);
+            batcher.endBatch();
+        }
     }
     
     public void renderObjects() {
@@ -79,9 +91,9 @@ public class WorldRenderer {
     	if(world.activeBananas == null || world.activeBananas.size() == 0)
     		return;
     	
-    	batcher.beginBatch(Assets.tileMapItems);
+    	batcher.beginBatch(Assets.bananasTexture);
     	for (Banana b : world.activeBananas) {
-    		batcher.drawSprite(b.position.x, b.position.y, b.bounds.width, b.bounds.height, b.tiltAngle-10, Assets.redTile);
+    		batcher.drawSprite(b.position.x, b.position.y, b.bounds.width, b.bounds.height, b.tiltAngle-10, Assets.bananaNormal);
 		}   	
     	batcher.endBatch();
     }
