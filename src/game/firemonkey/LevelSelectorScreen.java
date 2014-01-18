@@ -94,6 +94,7 @@ public class LevelSelectorScreen extends GLScreen {
                     if(button.state == UIButton.STATE_PRESSED) {
                         if(playerPosition == curLevel) {
                             changeScreen = true;
+                            World.currentLevel = curLevel;
                             screen = new GameScreen(game);
                         } else if(getUnlockedLevel() >= curLevel) {
                             playerPosition = curLevel;
