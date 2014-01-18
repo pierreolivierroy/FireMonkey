@@ -21,6 +21,9 @@ public class Assets {
     public static Texture mapButtonsTexture;
     public static TextureRegion levelButton;
 
+    public static Texture starsTexture;
+    public static TextureRegion starsCircle;
+
     // Game Interface
 
     // Game Objects
@@ -52,6 +55,9 @@ public class Assets {
         mapButtonsTexture = new Texture(game, "bouton_map.png");
         levelButton = new TextureRegion(mapButtonsTexture, 0, 0, 64, 64);
 
+        starsTexture = new Texture(game, "star_circle.png");
+        starsCircle = new TextureRegion(starsTexture, 0, 0, 128, 128);
+
         // Game Screen
         tileMapItems = new Texture(game, "tilemap.png");
         blueTile = new TextureRegion(tileMapItems, 0, 0, 64, 64);
@@ -70,7 +76,8 @@ public class Assets {
         gameBackgroundItems.reload();
         mapBackgroundTexture.reload();
         mapButtonsTexture.reload();
-
+        starsTexture.reload();
+        
         //if(Settings.soundEnabled )
         // music.play();
     }
