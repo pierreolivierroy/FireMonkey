@@ -176,9 +176,9 @@ public class World {
 				showBanana = true;
 			}
 			else {
-								
+				generateDiagonalBananaPattern();			
 				//Generate banana petterns randomly according to their stats
-				if(BANANA_PATTERN_BLANK_MIN < pattern && pattern <= BANANA_PATTERN_RANDOM_MIN)
+				/*if(BANANA_PATTERN_BLANK_MIN < pattern && pattern <= BANANA_PATTERN_RANDOM_MIN)
 					generateRandomBananaPattern();
 				else if(BANANA_PATTERN_RANDOM_MIN < pattern && pattern <= BANANA_PATTERN_STACK_MIN)
 					generateStackBananaPattern();
@@ -187,7 +187,7 @@ public class World {
 				else if(BANANA_PATTERN_DIAGONAL_MIN < pattern && pattern <= max)
 					generateDiagonalBananaPattern();	
 				
-				generateRandomBananaPattern();
+				generateRandomBananaPattern();*/
 			}		
 		}		
 
@@ -288,7 +288,7 @@ private void generateBananaPattern(){
 		int minBananas = 8;
 		int maxBananas = 16;
 		int bananas = r.nextInt(maxBananas-minBananas) + minBananas;		
-		
+
 		//To the right
 		if(direction == 0){
 			float incrementX = WORLD_WIDTH/(float)bananas;
@@ -322,6 +322,10 @@ private void generateBananaPattern(){
 										
 				Banana b = new Banana(x, y, 1, 1, Banana.BOOST_MED, Banana.POINTS_MED);
 				activeBananas.add(b);
+				
+				incrementY += 1.5f;
+				x -= incrementX;
+				y = yValue + incrementY;
 			}
 		}
 		// Remove clouds if out of view

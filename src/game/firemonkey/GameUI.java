@@ -16,7 +16,9 @@ public class GameUI {
 	UIImage bananaIcon1;
 	UIImage bananaIcon2;
 	UIImage bananaIcon3;
-
+	UIImage bananaIcon4;
+	UIImage bananaIcon5;
+	
 	public GameUI(SpriteBatcher sBatcher)
 	{
 	    // UI Declaration
@@ -25,13 +27,17 @@ public class GameUI {
 	    button2 = new UIButton(400, 50, 140, 70, Assets.redTile, Assets.redTile, Assets.player);
 	    
 	    UIImages = new ArrayList<UIImage>();
-	    bananaIcon1 = new UIImage(50, 35, 120, 90, 10, Assets.bananaNormal);
-	    bananaIcon2 = new UIImage(50, 35, 120, 90, 10, Assets.bananaNormal);
-	    bananaIcon3 = new UIImage(50, 35, 120, 90, 10, Assets.bananaNormal);
-	
+	    bananaIcon1 = new UIImage(50, 50, 120, 90, -5, Assets.bananaNormal);
+	    bananaIcon2 = new UIImage(50, 50, 120, 90, 0, Assets.bananaNormal);
+	    bananaIcon3 = new UIImage(50, 50, 120, 90, 20, Assets.bananaNormal);
+	    bananaIcon4 = new UIImage(60, 45, 120, 90, 30, Assets.bananaNormal);
+	    bananaIcon5 = new UIImage(68, 42, 120, 90, 40, Assets.bananaNormal);
+	    
 	    UIImages.add(bananaIcon1);
 	    UIImages.add(bananaIcon2);
 	    UIImages.add(bananaIcon3);
+	    UIImages.add(bananaIcon4);
+	    UIImages.add(bananaIcon5);
 	    //UIButtons.add(button1);
 	    //UIButtons.add(button2);
 	    
