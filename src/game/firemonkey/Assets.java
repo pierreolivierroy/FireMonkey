@@ -50,6 +50,9 @@ public class Assets {
     public static TextureRegion explo1;
 
     // Game Backgrounds
+    public static Texture menuBackgroundTexture;
+    public static TextureRegion menuBackground;
+
     public static Texture tileMapItems;
     public static TextureRegion blueTile;
     public static TextureRegion redTile;
@@ -109,6 +112,10 @@ public class Assets {
         bananaNormal = new TextureRegion(bananasTexture, 0, 0, 128, 128);
         bananaFrozen = new TextureRegion(bananasTexture, 128, 0, 128, 128);
         bananaSpace = new TextureRegion(bananasTexture, 0, 128, 128, 128);
+
+        // Menu
+        menuBackgroundTexture = new Texture(game, "menu.png");
+        menuBackground = new TextureRegion(menuBackgroundTexture, 0, 0, 768, 1280);
 
     	// Fonts
     	fontTex = new Texture(game, "font3.png");
