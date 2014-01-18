@@ -315,10 +315,13 @@ public class GameScreen extends GLScreen {
 	private void presentRunning() {
 		
 		 batcher.beginBatch(Assets.fontTex);
-         Assets.font.drawText(batcher, "pts :" + world.score + " X " + world.monkey.jump, 40, 30);
+         Assets.font.drawText(batcher, "pts :" + world.score, 40, 30);
          batcher.endBatch();
          
-
+         batcher.beginBatch(Assets.fontTex);
+         Assets.font.drawText(batcher, "X" + world.monkey.jump, 700, 30);
+         batcher.endBatch();
+                  
          gameUI.draw();	
          
         // Touch tokens

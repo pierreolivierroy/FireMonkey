@@ -57,6 +57,8 @@ public class LevelSelectorScreen extends GLScreen {
     public void update(float deltaTime) {
         rotationAngle += (40 * deltaTime) % 360;
 
+    	setUnlockedLevel(3);
+        
         if(changeScreen) {
             alpha += (deltaTime / 1.3f );
             if(alpha >= 1) {
