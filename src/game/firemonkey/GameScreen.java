@@ -151,6 +151,9 @@ public class GameScreen extends GLScreen {
 	    // Update World
 	    world.update(deltaTime, game.getInput().getAccelX());
 	    
+	    if(world.monkey.state == Monkey.PLAYER_STATE_BONUS)
+	    	renderer.cam.position.y = world.monkey.position.y;
+	    
 	    if(world.state == World.WORLD_STATE_GAME_OVER)
 	    	this.state = GAME_OVER;
 	}
@@ -180,6 +183,8 @@ public class GameScreen extends GLScreen {
 		point.x = (point.x/SCREEN_WIDTH) * WorldRenderer.FRUSTUM_WIDTH;
 		point.y = (point.y/SCREEN_HEIGHT) * WorldRenderer.FRUSTUM_HEIGHT;
 		
+		
+		
 		switch (world.monkey.state) {
 		
 		// No prior touch states detected
@@ -187,7 +192,31 @@ public class GameScreen extends GLScreen {
 			if(event.type == TouchEvent.TOUCH_DRAGGED ||event.type == TouchEvent.TOUCH_DOWN){     
 	         	
 	        } else if(event.type == TouchEvent.TOUCH_UP){        	
-	        	world.shootMonkey();
+	        	
+	        }
+			break;
+
+		default:
+			if(event.type == TouchEvent.TOUCH_DRAGGED ||event.type == TouchEvent.TOUCH_DOWN){     
+	         	
+	        } else if(event.type == TouchEvent.TOUCH_UP){
+	        	world.monkey.velocity.y = Math.max(20, world.monkey.velocity.y);
+	        }
+			break;
+		}
+	}
+	
+	// Defines interaction with UI Elements according to different states
+	private void UITouchHandler(TouchEvent event, Vector2 point)
+	{
+		switch (world.monkey.state) {
+		
+		// No prior touch states detected
+		case Monkey.PLAYER_STATE_BONUS:
+			if(event.type == TouchEvent.TOUCH_DRAGGED ||event.type == TouchEvent.TOUCH_DOWN){     
+	         	
+	        } else if(event.type == TouchEvent.TOUCH_UP){        	
+	        	world.touchToken(point);
 	        }
 			break;
 
@@ -197,25 +226,6 @@ public class GameScreen extends GLScreen {
 	        } else if(event.type == TouchEvent.TOUCH_UP){
 	        	world.monkey.velocity.y = 20;
 	        }
-			break;
-		}
-	}
-	
-	// Defines interaction with UI Elements according to different states
-	private void UITouchHandler(TouchEvent event, Vector2 point)
-	{
-		switch (touchState) {
-		
-		case STATE_TOUCH_STARTING:
-			break;
-			
-		case STATE_TOUCH_REFUEL:
-			break;
-			
-		case STATE_TOUCH_FLYING:
-			break;
-
-		default:
 			break;
 		}
 	}
@@ -297,8 +307,26 @@ public class GameScreen extends GLScreen {
 		 batcher.beginBatch(Assets.fontTex);
          Assets.font.drawText(batcher, "pts :" + world.score, 40, 30);
          batcher.endBatch();
-		
-		gameUI.draw();	}
+         
+         gameUI.draw();	
+         
+        // Touch tokens
+     	if(world.activeBarrel == null || world.activeBarrel.sequence == null)
+    		return;
+    	
+     	try{
+	     	batcher.beginBatch(Assets.tileMapItems);
+	    	if(world.activeBarrel.sequence != null) {
+		    	for (BarrelToken bt : world.activeBarrel.sequence.tokens) {
+		    		if(!bt.touched) {
+						batcher.drawSprite(bt.position.x, bt.position.y, 100, 100, Assets.blueTile);
+		    		}
+				}
+	    	}
+    	batcher.endBatch();
+     	} catch (Exception e) {}
+
+	}
 	
 	private void presentPaused() { 
 		gameUI.draw();

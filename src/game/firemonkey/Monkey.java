@@ -70,13 +70,15 @@ public class Monkey extends DynamicGameObject {
     
     public void bananaCollision(float boost) 
     {
-    	this.velocity.y = boost;
+    	this.velocity.y = Math.max(boost, this.velocity.y);
     }
     
     public void barrelCollision(Vector2 barrelPos) 
     {
-    	this.state = PLAYER_STATE_BONUS;
-    	this.position.set(barrelPos);
-    	this.velocity.set(0,0);
+    	if(state != PLAYER_STATE_BONUS) {
+	    	this.state = PLAYER_STATE_BONUS;
+	    	this.position.set(barrelPos);
+	    	this.velocity.set(0,0);
+    	}
     }
 }
