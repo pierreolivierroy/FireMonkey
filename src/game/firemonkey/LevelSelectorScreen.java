@@ -99,13 +99,14 @@ public class LevelSelectorScreen extends GLScreen {
         gl.glEnable(GL10.GL_TEXTURE_2D);
         guiCam.setViewportAndMatrices();
 
-        gl.glEnable(GL10.GL_BLEND);
-        gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-
         batcher.beginBatch(Assets.mapBackgroundTexture);
         batcher.drawSprite(768 / 2, 1280 / 2, 768, 1280, Assets.mapBackground);
         batcher.endBatch();
-
+        
+        gl.glEnable(GL10.GL_BLEND);
+        gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);        
+        gl.glColor4f(1, 1, 1, 1);  
+        
         int curLevel = 1;
         int level = getUnlockedLevel();
         for(UIButton button : levelButtons) {

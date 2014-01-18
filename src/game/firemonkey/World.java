@@ -173,7 +173,7 @@ private void generateDiagonalBananaPattern(){
 		for (int i = 0; i < 25; i++) {
 			float xValue = rand.nextFloat() * WORLD_WIDTH;
 			float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
-			Banana b = new Banana(xValue, yValue, 1, 1, Banana.BOOST_MED);
+			Banana b = new Banana(xValue, yValue, 1, 1, Math.max(Banana.BOOST_MED, monkey.velocity.y));
 			activeBananas.add(b);
 		}
 	}
@@ -183,7 +183,7 @@ private void generateDiagonalBananaPattern(){
 		for (int i = 0; i < 4; i++) {
 			float xValue = rand.nextFloat() * (WORLD_WIDTH - 1f) + 0.5f;
 			float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
-			Banana b = new Banana(xValue, yValue, 1, 1, Banana.BOOST_MED);
+			Banana b = new Banana(xValue, yValue, 1, 1, Math.max(Banana.BOOST_MED, monkey.velocity.y));
 			activeBananas.add(b);
 		}
 	}
@@ -211,7 +211,7 @@ private void generateDiagonalBananaPattern(){
 		float x = xValue + incrementX;
 		float y = yValue + incrementY;			
 		
-		Banana b = new Banana(xValue, yValue, 1, 1, Banana.BOOST_MED);
+		Banana b = new Banana(xValue, yValue, 1, 1, Math.max(Banana.BOOST_MED, monkey.velocity.y));
 		activeBananas.add(b);
 		
 		for(int i = 0; i < rectangleHeight; i++){
@@ -222,7 +222,7 @@ private void generateDiagonalBananaPattern(){
 			for(int j = 0; j < rectangleWidth; j++){
 				
 				x = xValue + incrementX;						
-				Banana bb = new Banana(x, y, 1, 1, Banana.BOOST_MED);
+				Banana bb = new Banana(x, y, 1, 1, Math.max(Banana.BOOST_MED, monkey.velocity.y));
 				activeBananas.add(bb);
 				incrementX += 1.5f;
 			}
@@ -246,13 +246,13 @@ private void generateDiagonalBananaPattern(){
 		float xValue = rand.nextFloat() * (maxWidth - minWidth) + minWidth;
 		float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
 		
-		Banana b = new Banana(xValue, yValue, 1, 1, 30.0f);
+		Banana b = new Banana(xValue, yValue, 1, 1, Math.max(Banana.BOOST_HIGH, monkey.velocity.y));
 		activeBananas.add(b);
 		
 		for(int i = 0; i < nbBananas; i++){
 			
 			float y = yValue + ((float)increment);			
-			Banana bb = new Banana(xValue, y, 1, 1, 30.0f);
+			Banana bb = new Banana(xValue, y, 1, 1, Math.max(Banana.BOOST_HIGH, monkey.velocity.y));
 			activeBananas.add(bb);
 			increment += 1.5f;
 		}
@@ -315,7 +315,7 @@ private void generateDiagonalBananaPattern(){
 		if(odds > 0.05f && odds < 0.15f) {
 			float xValue = rand.nextFloat() * WORLD_WIDTH;
 			float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
-			activeBarrel = new Barrel(xValue, yValue, 1.3f, 1.6f);
+			activeBarrel = new Barrel(xValue, yValue, 1.3f, 1.6f, BarrelSequence.DIFF_EASY);
 		}
 	}
 	
@@ -328,6 +328,12 @@ private void generateDiagonalBananaPattern(){
 			state = WORLD_STATE_GAME_OVER;
 	}
 	
+	 /******************************************
+	  * 
+	  * 	UI Touch interactions
+	  * 
+	  ******************************************/
+	
 	public void shootMonkey()
 	{
 		activeExplosions.add(new Explosion(30, (int)activeBarrel.position.x, (int)activeBarrel.position.y, 0.5f));
@@ -335,6 +341,18 @@ private void generateDiagonalBananaPattern(){
 		
 		monkey.state = Monkey.PLAYER_STATE_FLYING;
 		monkey.velocity.y = 60.0f;
+	}
+	
+	public void touchToken(Vector2 touch)
+	{
+		for (int i = 0; i < activeBarrel.sequence.tokens.size(); i++) {
+			BarrelToken bt = activeBarrel.sequence.tokens.get(i);
+			
+			if(OverlapTester.pointInRectangle(bt.bounds, touch)) {
+				activeExplosions.add(new Explosion(20, (int)bt.position.x, (int)bt.position.y, 0.5f));
+				
+			}
+		}
 	}
 }
 

@@ -21,14 +21,18 @@ public class Barrel extends DynamicGameObject{
 	public float boostValue;
 	public Circle hitZone;
 	
+	public BarrelSequence sequence;
+	
 	Random rand;
 	boolean isTiltingUp;
 
-	public Barrel(float x, float y, float width, float height) {
+	public Barrel(float x, float y, float width, float height, int diff) {
 		super(x, y, width, height);
 		
 		state = STATE_IDLE;
 		hitZone = new Circle(x, y, width/2);
+		
+		sequence = new BarrelSequence(diff);
 		
 		rand = new Random();
 		
