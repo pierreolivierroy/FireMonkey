@@ -67,7 +67,7 @@ public class World {
 
 	private void updatePlayer(float deltaTime, float accelX) {
 
-		if (monkey.state == Monkey.PLAYER_STATE_FLYING || monkey.state == Monkey.PLAYER_STATE_STARTING) // Starting is DEBUG
+		if (monkey.state == Monkey.PLAYER_STATE_FLYING || monkey.state == Monkey.PLAYER_STATE_FALLING) // Starting is DEBUG
 			monkey.velocity.x = -accelX / 10 * Monkey.MOVE_VELOCITY;
 		
 	    if(monkey.state == Monkey.PLAYER_STATE_HIT) {
@@ -82,8 +82,12 @@ public class World {
 	private void updateExplosions(float deltaTime) 
 	{
 		try{	
-			for (Explosion e: activeExplosions) {
+			for (int i = 0; i < activeExplosions.size(); i++) {
+				Explosion e = activeExplosions.get(i);
 				e.update(deltaTime);
+				
+				 if(e.state == Explosion.STATE_DEAD)
+					 activeExplosions.remove(i);
 			}
 		} catch(Exception e){}
 	}
@@ -92,10 +96,10 @@ public class World {
 	{
 		// Generation if player is exiting an already filled zone
 		if(monkey.position.y > nextGenerationHeight) {
-			nextGenerationHeight += WORLD_HEIGHT;
+			nextGenerationHeight += (WORLD_HEIGHT + 4);
 			rand = new Random();
 			
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < 2; i++) {
 				float xValue = rand.nextFloat() * WORLD_WIDTH;
 				float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
 				Banana b = new Banana(xValue, yValue, 1, 1, 30.0f);
@@ -120,8 +124,7 @@ public class World {
 			if(OverlapTester.overlapRectangles(monkey.bounds, b.bounds)) {
 				
 				// BANANA EXPLOSION YO
-				Explosion e = new Explosion(20, b.position.x, b.position.y);
-				activeExplosions.add(e);
+				activeExplosions.add(new Explosion(10, (int)b.position.x, (int)b.position.y, 0.5f));
 				
 				score += b.points;
 				monkey.bananaCollision(b.boostValue);

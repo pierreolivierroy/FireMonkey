@@ -171,9 +171,7 @@ public class GameScreen extends GLScreen {
 			if(event.type == TouchEvent.TOUCH_DRAGGED ||event.type == TouchEvent.TOUCH_DOWN){     
 	         	
 	        } else if(event.type == TouchEvent.TOUCH_UP){
-	        	//world.monkey.velocity.y = 20;
-				Explosion e = new Explosion(100, point.x, point.y);
-				world.activeExplosions.add(e);
+	        	world.monkey.velocity.y = 20;
 	        }
 			break;
 			

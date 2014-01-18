@@ -9,6 +9,7 @@ public class Banana extends DynamicGameObject{
 	
 	public int points;
 	public int state;
+	
 	public float boostValue;
 	
 	public Banana(float x, float y, float width, float height, float boost) {

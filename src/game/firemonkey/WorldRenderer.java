@@ -55,7 +55,7 @@ public class WorldRenderer {
         gl.glColor4f(1, 1, 1, 1);
         
         renderPlayer();
-        renderClouds();
+        renderBananas();
         renderExplosions();
         
         gl.glDisable(GL10.GL_BLEND);
@@ -68,7 +68,7 @@ public class WorldRenderer {
     	batcher.endBatch();
     }
     
-    private void renderClouds()
+    private void renderBananas()
     {
     	if(world.activeBananas == null || world.activeBananas.size() == 0)
     		return;
@@ -97,12 +97,10 @@ public class WorldRenderer {
 	        	Explosion e = world.activeExplosions.get(j);
 	        	
 	        	for(int i = 0; i < e.particles.size(); i ++) {
-		            Particle par = e.particles.get(j);
+		            Particle par = e.particles.get(i);
 		            gl.glColor4f(1, 1, 1, par.alpha);
 		      	  	batcher.drawSprite(par.x, par.y , 0.5f, 0.5f, Assets.redTile);
 	        	}
-
-	      	  	
 	        }
         
 	        //gl.glDisable(GL10.GL_BLEND);
