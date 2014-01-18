@@ -115,7 +115,7 @@ public class LevelSelectorScreen extends GLScreen {
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         gl.glEnable(GL10.GL_TEXTURE_2D);
         guiCam.setViewportAndMatrices();
-
+        
         gl.glEnable(GL10.GL_BLEND);
         gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
         gl.glColor4f(1,1,1,1);
@@ -123,7 +123,6 @@ public class LevelSelectorScreen extends GLScreen {
         batcher.beginBatch(Assets.mapBackgroundTexture);
         batcher.drawSprite(768 / 2, 1280 / 2, 768, 1280, Assets.mapBackground);
         batcher.endBatch();
-
 
         int curLevel = 1;
         int level = getUnlockedLevel();
