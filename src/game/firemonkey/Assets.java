@@ -9,10 +9,6 @@ public class Assets {
     // Main Menu
     public static Texture mainMenuItems;
     public static TextureRegion mainMenuBackground;
-
-    // Game Backgrounds
-    public static Texture gameBackgroundItems;
-    public static TextureRegion gameBackground;
     
     // Game Font
     public static Texture fontTex;  
@@ -77,9 +73,6 @@ public class Assets {
         mainMenuItems = new Texture(game, "mapPack1.png");
         mainMenuBackground = new TextureRegion(mainMenuItems, 0, 0, 480, 800);
 
-        gameBackgroundItems = new Texture(game, "background.png");
-        gameBackground = new TextureRegion(mainMenuItems, 0, 0, 320, 480);
-
         // Map (level selector) Screen
         mapBackgroundTexture = new Texture(game, "game_map.png");
         mapBackground = new TextureRegion(mapBackgroundTexture, 0, 0, 768, 1280);
@@ -137,7 +130,6 @@ public class Assets {
         tileMapItems.reload();
         playerItems.reload();
         mainMenuItems.reload();
-        gameBackgroundItems.reload();
         mapBackgroundTexture.reload();
         mapButtonsTexture.reload();
         starsTexture.reload();

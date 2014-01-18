@@ -22,6 +22,7 @@ public class BarrelSequence {
 	public int nextIndex;
 	
 	public int state;
+	public float lifeTime;
 	
 	public BarrelSequence(int difficulty, float height)
 	{
@@ -31,6 +32,15 @@ public class BarrelSequence {
 		nextIndex = 0;
 		completionBonus = 0;
 		generate(difficulty, height);
+		
+		if(difficulty == DIFF_EASY)
+			lifeTime = 2.5f;
+		else if (difficulty == DIFF_MEDIUM)
+			lifeTime = 2.0f;
+		else if (difficulty == DIFF_HARD)
+			lifeTime = 1.5f;
+		else 
+			lifeTime = 2.0f;
 	}
 	
 	public void update(float deltaTime)
@@ -43,11 +53,11 @@ public class BarrelSequence {
 				bt.success = false;
 		}
 		
-//		if(tokens.size() == 0) {
-//			state = STATE_DEAD;
-//			finalizeSequence();
-//		}
-			
+		lifeTime -= deltaTime;
+		if(lifeTime <= 0) {
+			finalizeSequence();
+		}
+	
 	}
 	
 	private void generate(int difficulty, float height)
@@ -64,7 +74,7 @@ public class BarrelSequence {
 			anchorPoints.add(new Vector2(760/2, 300));
 
 			size = 140.0f;
-			bonus = 20.0f;
+			bonus = 15.0f;
 			time = 5.0f;
 			
 		} else if (difficulty == DIFF_MEDIUM) {
@@ -74,7 +84,7 @@ public class BarrelSequence {
 			anchorPoints.add(new Vector2(200, 200));
 			anchorPoints.add(new Vector2(600, 200));
 			size = 100.0f;
-			bonus = 30.0f;
+			bonus = 20.0f;
 			time = 1.5f;
 			
 		} else if (difficulty == DIFF_HARD) {

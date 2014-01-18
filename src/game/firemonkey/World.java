@@ -129,8 +129,8 @@ public class World {
 		
 		if(monkey.state == Monkey.PLAYER_STATE_BONUS)
 			updateBarrelSequence(deltaTime);
-		
-		if(activeBarrel.position.y <= monkey.position.y - WORLD_HEIGHT/2)
+
+		if(activeBarrel != null && activeBarrel.position.y <= monkey.position.y - WORLD_HEIGHT/2)
 			activeBarrel = null;
 	}
 	
@@ -214,7 +214,7 @@ private void generateBananaPattern(){
 		}
 		
 		incrementX = 1.5f;
-		incrementY = 0.8f;
+		incrementY = 0.8f; 
 		
 		for (int i = 0; i < 3; i++) {
 			float x = xValue + incrementX;
