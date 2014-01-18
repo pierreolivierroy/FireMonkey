@@ -22,16 +22,20 @@ public class Monkey extends DynamicGameObject {
     public static final float ROCKET_ACCELERATION	= 5.0f;
     public static final float MOVE_VELOCITY = 25.0f;
     
+    public static final int PLAYER_DEFAULT_JUMPS 	= 7;
+    
     public int state;   
     public int previousState;
     public Circle hitZone;
+    public int jump;
     
     private float stateTime;   
         
-	public Monkey(float x, float y) {
+	public Monkey(float x, float y, int jump) {
 		super(x, y, PLAYER_WIDTH, PLAYER_HEIGHT);
 		this.state = PLAYER_STATE_STARTING;
 		this.hitZone = new Circle(x, y, PLAYER_HEIGHT/3);
+		this.jump = jump;
 	}
 
     public void update(float deltaTime) {  
