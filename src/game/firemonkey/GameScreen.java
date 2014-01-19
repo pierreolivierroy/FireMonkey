@@ -216,13 +216,13 @@ public class GameScreen extends GLScreen {
 	        } 
 			else if(event.type == TouchEvent.TOUCH_UP){
 	        	
-				if(world.monkey.state != Monkey.PLAYER_STATE_BONUS){
+				if(world.monkey.state != Monkey.PLAYER_STATE_BONUS && world.monkey.immuneTime <= 0){
 					if(world.monkey.firstJump == true){
 		        		world.monkey.firstJump = false;
 		        		world.monkey.velocity.y = 30;
 		        	}
 		        	else if(world.monkey.jump > 0 && world.monkey.jump <= Monkey.PLAYER_DEFAULT_JUMPS && world.monkey.firstJump == false){
-			        		world.monkey.velocity.y += 20;
+			        		world.monkey.velocity.y = 30;
 				        	world.monkey.jump--; 
 		        	}
 				}	        		

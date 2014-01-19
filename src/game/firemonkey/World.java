@@ -522,10 +522,7 @@ public class World {
 			float xValue = (rand.nextFloat() * WORLD_WIDTH - 1) + 1;
 			float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
 
-			if(maxHeight > 3000)
-				activeBarrel = new Barrel(xValue, yValue, 1.3f, 1.6f);
-			else 
-				activeBarrel = new Barrel(xValue, yValue, 1.3f, 1.6f);
+			activeBarrel = new Barrel(xValue, yValue, 1.3f, 1.6f);
 		}
 	}
 
@@ -575,6 +572,8 @@ public class World {
         if(activeBarrel.sequence.totalSuccess) {
             monkey.jump++;
         }
+        
+        monkey.immuneTime = 0.5f;
 
 		activeBarrel = null;
 	}
