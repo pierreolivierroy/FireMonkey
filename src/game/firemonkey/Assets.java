@@ -4,6 +4,8 @@ import com.bag.lib.*;
 import com.bag.lib.gl.*;
 import com.bag.lib.impl.*;
 
+import java.util.ArrayList;
+
 public class Assets {
 
     // Main Menu
@@ -45,9 +47,12 @@ public class Assets {
     public static TextureRegion bananaFrozen;
     public static TextureRegion bananaSpace;
 
-    public static  Texture barrelsTexture;
+    public static Texture barrelsTexture;
     public static TextureRegion barrelEmpty;
     public static TextureRegion barrelFull;
+
+    public static Texture numbersTexture;
+    public static ArrayList<TextureRegion> numbersList;
 
     // Game Backgrounds
     public static Texture menuBackgroundTexture;
@@ -77,8 +82,6 @@ public class Assets {
 
     public static Sound bananaSound_1;
     public static Sound bananaSound_2;
-    
-    
 
     public static void load(GLGame game) {
 
@@ -128,6 +131,14 @@ public class Assets {
         barrelEmpty = new TextureRegion(barrelsTexture, 0, 0, 150, 181);
         barrelFull = new TextureRegion(barrelsTexture, 256, 0, 150, 181);
 
+        numbersTexture = new Texture(game, "numbers.png");
+        numbersList = new ArrayList<TextureRegion>();
+        numbersList.add(new TextureRegion(numbersTexture, 0, 0, 128 ,128));
+        numbersList.add(new TextureRegion(numbersTexture, 128, 0, 128 ,128));
+        numbersList.add(new TextureRegion(numbersTexture, 0, 128, 128 ,128));
+        numbersList.add(new TextureRegion(numbersTexture, 128, 128, 128 ,128));
+        numbersList.add(new TextureRegion(numbersTexture, 0, 256, 128 ,128));
+
         // Menu
         menuBackgroundTexture = new Texture(game, "menu.png");
         menuBackground = new TextureRegion(menuBackgroundTexture, 0, 0, 768, 1280);
@@ -167,6 +178,8 @@ public class Assets {
         mapButtonsTexture.reload();
         starsTexture.reload();
         bananasTexture.reload();
+        barrelsTexture.reload();
+        numbersTexture.reload();
         
         try {
         	jungleBackgrounds.reload();

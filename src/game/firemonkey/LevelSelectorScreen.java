@@ -63,7 +63,6 @@ public class LevelSelectorScreen extends GLScreen {
         if(changeScreen) {
             alpha += (deltaTime / 1.3f );
             if(alpha >= 1) {
-                screen = new GameScreen(game);
                 game.setScreen(screen);
             }
         }

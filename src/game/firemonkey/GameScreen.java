@@ -344,11 +344,11 @@ public class GameScreen extends GLScreen {
     		return;
     	
      	try{
-	     	batcher.beginBatch(Assets.tileMapItems);
+	     	batcher.beginBatch(Assets.numbersTexture);
 	    	if(world.activeBarrel.sequence != null) {
 		    	for (BarrelToken bt : world.activeBarrel.sequence.tokens) {
 		    		if(!bt.touched) {
-						batcher.drawSprite(bt.position.x, bt.position.y, 100, 100, Assets.blueTile);
+						batcher.drawSprite(bt.position.x, bt.position.y, 128, 128, Assets.numbersList.get(bt.index));
 		    		}
 				}
 	    	}

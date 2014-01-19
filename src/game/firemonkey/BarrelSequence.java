@@ -3,6 +3,8 @@ package game.firemonkey;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.bag.lib.math.Circle;
+import com.bag.lib.math.OverlapTester;
 import com.bag.lib.math.Vector2;
 
 public class BarrelSequence {
@@ -10,9 +12,9 @@ public class BarrelSequence {
 	public final static int STATE_ACTIVE 	= 0;
 	public final static int STATE_DEAD 		= 1;
 	
-	public final static int DIFF_EASY 	= 0;
-	public final static int DIFF_MEDIUM = 1;
-	public final static int DIFF_HARD 	= 2;
+	public final static int DIFF_EASY 	= 1;
+	public final static int DIFF_MEDIUM = 2;
+	public final static int DIFF_HARD 	= 3;
 	
 	public ArrayList<BarrelToken> tokens;
 	public ArrayList<Vector2> anchorPoints;
@@ -36,11 +38,11 @@ public class BarrelSequence {
 		generate(difficulty, height);
 		
 		if(difficulty == DIFF_EASY)
-			lifeTime = 2.2f;
-		else if (difficulty == DIFF_MEDIUM)
 			lifeTime = 1.8f;
+		else if (difficulty == DIFF_MEDIUM)
+			lifeTime = 2.0f;
 		else if (difficulty == DIFF_HARD)
-			lifeTime = 1.5f;
+			lifeTime = 2.0f;
 		else 
 			lifeTime = 2.0f;
 	}
@@ -59,7 +61,6 @@ public class BarrelSequence {
 		if(lifeTime <= 0) {
 			finalizeSequence();
 		}
-	
 	}
 	
 	private void generate(int difficulty, float height)
@@ -71,26 +72,78 @@ public class BarrelSequence {
 		
 		if (difficulty == DIFF_EASY) {
 			nbTokens = 3;
-			anchorPoints.add(new Vector2(100, 1000));
-			anchorPoints.add(new Vector2(650, 1000));
-			anchorPoints.add(new Vector2(760/2, 300));
+            size = 140.0f;
+            bonus = 15.0f;
+            time = 5.0f;
 
-			size = 140.0f;
-			bonus = 15.0f;
-			time = 5.0f;
-			
+            generateAnchorList(nbTokens, height);
+
+            boolean regenAnchors;
+            do {
+                regenAnchors = false;
+                for(int i=0; i<anchorPoints.size(); i++) {
+                    Vector2 point = anchorPoints.get(i);
+                    Circle circle = new Circle(point.x, point.y, size/2);
+                    for(int j=0; j<anchorPoints.size(); j++) {
+                        if(i == j) continue;
+                        if(OverlapTester.pointInCircle(circle, anchorPoints.get(j))) {
+                            regenAnchors = true;
+                        }
+                    }
+                }
+                if(regenAnchors)
+                    generateAnchorList(nbTokens, height);
+            } while (regenAnchors);
+
 		} else if (difficulty == DIFF_MEDIUM) {
 			nbTokens = 4;
-			anchorPoints.add(new Vector2(200, 800));
-			anchorPoints.add(new Vector2(600, 800));
-			anchorPoints.add(new Vector2(200, 200));
-			anchorPoints.add(new Vector2(600, 200));
 			size = 100.0f;
 			bonus = 20.0f;
 			time = 1.5f;
+
+            generateAnchorList(nbTokens, height);
+
+            boolean regenAnchors;
+            do {
+                regenAnchors = false;
+                for(int i=0; i<anchorPoints.size(); i++) {
+                    Vector2 point = anchorPoints.get(i);
+                    Circle circle = new Circle(point.x, point.y, size/2);
+                    for(int j=0; j<anchorPoints.size(); j++) {
+                        if(i == j) continue;
+                        if(OverlapTester.pointInCircle(circle, anchorPoints.get(j))) {
+                            regenAnchors = true;
+                        }
+                    }
+                }
+                if(regenAnchors)
+                    generateAnchorList(nbTokens, height);
+            } while (regenAnchors);
 			
 		} else if (difficulty == DIFF_HARD) {
-			nbTokens = 5;
+            nbTokens = 5;
+            size = 100.0f;
+            bonus = 20.0f;
+            time = 1.5f;
+
+            generateAnchorList(nbTokens, height);
+
+            boolean regenAnchors;
+            do {
+                regenAnchors = false;
+                for(int i=0; i<anchorPoints.size(); i++) {
+                    Vector2 point = anchorPoints.get(i);
+                    Circle circle = new Circle(point.x, point.y, size/2);
+                    for(int j=0; j<anchorPoints.size(); j++) {
+                        if(i == j) continue;
+                        if(OverlapTester.pointInCircle(circle, anchorPoints.get(j))) {
+                            regenAnchors = true;
+                        }
+                    }
+                }
+                if(regenAnchors)
+                    generateAnchorList(nbTokens, height);
+            } while (regenAnchors);
 			
 		}
 		
@@ -101,6 +154,18 @@ public class BarrelSequence {
 			tokens.add(bt);
 		}
 	}
+
+    public void generateAnchorList(int size, float height) {
+        anchorPoints.clear();
+        for(int i=0; i<size; i++) {
+            int x = randomInRange(50, 740);
+            int y = randomInRange(50, 1230);
+            while(y+30 >= height && y-30 <= height) {
+                y = randomInRange(50, 1230);
+            }
+            anchorPoints.add(new Vector2(x, y));
+        }
+    }
 	
 	public void inputSequence(BarrelToken bt)
 	{
@@ -146,4 +211,8 @@ public class BarrelSequence {
 		state = STATE_DEAD;
 		completionBonus = bonus + velocityBonus;
 	}
+
+    public int randomInRange(int start, int end) {
+        return start + (int)(Math.random() * ((end - start) + 1));
+    }
 }
