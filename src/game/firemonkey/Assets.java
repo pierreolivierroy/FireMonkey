@@ -57,6 +57,12 @@ public class Assets {
     public static Texture numbersTexture;
     public static ArrayList<TextureRegion> numbersList;
 
+    // Game Texts
+    public static Texture textsTexture;
+    public static TextureRegion readyText;
+    public static TextureRegion clickToStartText;
+    public static TextureRegion gameoverText;
+
     // Game Backgrounds
     public static Texture menuBackgroundTexture;
     public static TextureRegion menuBackground;
@@ -161,6 +167,12 @@ public class Assets {
         numbersList.add(new TextureRegion(numbersTexture, 0, 128, 128 ,128));
         numbersList.add(new TextureRegion(numbersTexture, 128, 128, 128 ,128));
         numbersList.add(new TextureRegion(numbersTexture, 0, 256, 128 ,128));
+
+        // Game texts
+        textsTexture = new Texture(game, "texts.png");
+        readyText = new TextureRegion(textsTexture, 0, 0, 512, 128);
+        clickToStartText = new TextureRegion(textsTexture, 0, 128, 512, 40);
+        gameoverText = new TextureRegion(textsTexture, 0, 165, 512, 91);
 
         // Menu
         menuBackgroundTexture = new Texture(game, "menu.png");

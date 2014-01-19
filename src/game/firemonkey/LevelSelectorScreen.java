@@ -174,34 +174,34 @@ public class LevelSelectorScreen extends GLScreen {
 
                 batcher.beginBatch(Assets.highscoreBubblesTexture);
                 if(playerPosition == 1) {
-                    batcher.drawSprite(button.position.x - 10, button.position.y + 105, 256, 256, Assets.highscoreBubbleLeft);
+                    batcher.drawSprite(button.position.x - 10, button.position.y + 105, 306, 256, Assets.highscoreBubbleLeft);
                 } else if(playerPosition == 2) {
-                    batcher.drawSprite(button.position.x, button.position.y + 115, 256, 256, Assets.highscoreBubbleRight);
+                    batcher.drawSprite(button.position.x, button.position.y + 115, 306, 256, Assets.highscoreBubbleRight);
                 } else if(playerPosition == 3) {
-                    batcher.drawSprite(button.position.x - 10, button.position.y + 105, 256, 256, Assets.highscoreBubbleLeft);
+                    batcher.drawSprite(button.position.x - 10, button.position.y + 105, 306, 256, Assets.highscoreBubbleLeft);
                 }
                 batcher.endBatch();
 
                 batcher.beginBatch(Assets.bananasTexture);
                 if(playerPosition == 1) {
-                    batcher.drawSprite(button.position.x - 85, button.position.y + 117, 64, 64, Assets.bananaNormal);
+                    batcher.drawSprite(button.position.x - 115, button.position.y + 117, 64, 64, Assets.bananaNormal);
                 } else if(playerPosition == 2) {
-                    batcher.drawSprite(button.position.x - 75, button.position.y + 125, 64, 64, Assets.bananaFrozen);
+                    batcher.drawSprite(button.position.x - 105, button.position.y + 125, 64, 64, Assets.bananaFrozen);
                 } else if(playerPosition == 3) {
-                    batcher.drawSprite(button.position.x - 85, button.position.y + 117, 64, 64, Assets.bananaSpace);
+                    batcher.drawSprite(button.position.x - 115, button.position.y + 117, 64, 64, Assets.bananaSpace);
                 }
                 batcher.endBatch();
 
                 batcher.beginBatch(Assets.fontTex);
                 if(playerPosition == 1) {
-                    Assets.font.drawText(batcher, "High", button.position.x - 40, button.position.y + 137);
-                    //Assets.font.drawText(batcher, "TOUCH TO START!", button.position.x - 80, button.position.y);
+                    Assets.font.drawText(batcher, "High:", button.position.x - 60, button.position.y + 140);
+                    Assets.font.drawText(batcher, Integer.toString(getHighScore(1)), button.position.x - 65, button.position.y + 90);
                 } else if(playerPosition == 2) {
-                    Assets.font.drawText(batcher, "High", button.position.x - 30, button.position.y + 145);
-                    //Assets.font.drawText(batcher, "TOUCH TO START!", button.position.x - 80, button.position.y);
+                    Assets.font.drawText(batcher, "High:", button.position.x - 50, button.position.y + 148);
+                    Assets.font.drawText(batcher, Integer.toString(getHighScore(2)), button.position.x - 55, button.position.y + 98);
                 } else if(playerPosition == 3) {
-                    Assets.font.drawText(batcher, "High", button.position.x - 40, button.position.y + 137);
-                    //Assets.font.drawText(batcher, "TOUCH TO START!", button.position.x - 80, button.position.y);
+                    Assets.font.drawText(batcher, "High:", button.position.x - 60, button.position.y + 140);
+                    Assets.font.drawText(batcher, Integer.toString(getHighScore(3)), button.position.x - 65, button.position.y + 90);
                 }
                 batcher.endBatch();
             }
@@ -243,6 +243,25 @@ public class LevelSelectorScreen extends GLScreen {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt("UNLOCKED_LEVEL", level);
         editor.commit();
+    }
+
+    // Use 0 for total high score
+    public int getHighScore(int level) {
+        final SharedPreferences prefs = getGCMPreferences();
+        int score;
+        switch (level) {
+            case 0: score = prefs.getInt("GLOBAL_HIGHSCORE", 0);
+                    break;
+            case 1: score = prefs.getInt("LEVEL1_HIGHSCORE", 0);
+                    break;
+            case 2: score = prefs.getInt("LEVEL2_HIGHSCORE", 0);
+                    break;
+            case 3: score = prefs.getInt("LEVEL3_HIGHSCORE", 0);
+                    break;
+            default: score = 0;
+                    break;
+        }
+        return score;
     }
 
     public SharedPreferences getGCMPreferences() {

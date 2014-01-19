@@ -7,6 +7,9 @@ import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.bag.lib.Game;
 import com.bag.lib.Input.TouchEvent;
 import com.bag.lib.gl.Camera2D;
@@ -337,12 +340,16 @@ public class GameScreen extends GLScreen {
 	}
 	
 	private void presentReady() {
-         
-		 batcher.beginBatch(Assets.fontTex);
-         Assets.font.drawText(batcher, "PREPARE FOR LAUNCH!", 262, 520);
-         Assets.font.drawText(batcher, "TOUCH TO START!", 300, 560);
-         batcher.endBatch();
-		
+//		 batcher.beginBatch(Assets.fontTex);
+//         Assets.font.drawText(batcher, "PREPARE FOR LAUNCH!", 262, 520);
+//         Assets.font.drawText(batcher, "TOUCH TO START!", 300, 560);
+//         batcher.endBatch();
+
+        batcher.beginBatch(Assets.textsTexture);
+        batcher.drawSprite(400, 550, 512, 128, Assets.readyText);
+        batcher.drawSprite(470, 400, 512, 40, Assets.clickToStartText);
+        batcher.endBatch();
+
          gameUI.draw();
 	}
 	
@@ -385,14 +392,19 @@ public class GameScreen extends GLScreen {
 	}
 	
 	private void presentGameOver() {
-		
-		 batcher.beginBatch(Assets.fontTex);
-		 Assets.font.drawText(batcher, "Your Monkey ran ", 150, 840);
-		 Assets.font.drawText(batcher, "out of bananas!", 150, 800);
-		 Assets.font.drawText(batcher, "Game Over!", 230, 700);
-         Assets.font.drawText(batcher, "- Final Score -", 140, 600);
-         Assets.font.drawText(batcher, "" + world.score, 340, 560);
-         batcher.endBatch();
+
+        batcher.beginBatch(Assets.textsTexture);
+        batcher.drawSprite(400, 950, 512, 128, Assets.gameoverText);
+        batcher.endBatch();
+
+        batcher.beginBatch(Assets.fontTex);
+        Assets.font.drawText(batcher, "Your Monkey ran ", 150, 830);
+        Assets.font.drawText(batcher, "out of bananas!", 150, 790);
+        Assets.font.drawText(batcher, "- Final Score -", 140, 600);
+        Assets.font.drawText(batcher, "" + world.score, 340, 550);
+        batcher.endBatch();
+
+        setHighScore(World.currentLevel, world.score);
 		
 		gameUI.draw();
 	}
@@ -435,6 +447,52 @@ public class GameScreen extends GLScreen {
     	} else {
     		Assets.spaceMusic.stop();
     	}
+    }
+
+    // Use 0 for total high score
+    public void setHighScore(int level, int score) {
+        final SharedPreferences prefs = getGCMPreferences();
+        SharedPreferences.Editor editor = prefs.edit();
+        if(score > getHighScore(level)) {
+            switch (level) {
+                case 1: editor.putInt("LEVEL1_HIGHSCORE", score);
+                    break;
+                case 2: editor.putInt("LEVEL2_HIGHSCORE", score);
+                    break;
+                case 3: editor.putInt("LEVEL3_HIGHSCORE", score);
+                    break;
+                default:
+                    break;
+            }
+        }
+        if(score > getHighScore(0)) {
+            editor.putInt("GLOBAL_HIGHSCORE", score);
+        }
+        editor.commit();
+    }
+
+    // Use 0 for total high score
+    public int getHighScore(int level) {
+        final SharedPreferences prefs = getGCMPreferences();
+        int score;
+        switch (level) {
+            case 0: score = prefs.getInt("GLOBAL_HIGHSCORE", 0);
+                break;
+            case 1: score = prefs.getInt("LEVEL1_HIGHSCORE", 0);
+                break;
+            case 2: score = prefs.getInt("LEVEL2_HIGHSCORE", 0);
+                break;
+            case 3: score = prefs.getInt("LEVEL3_HIGHSCORE", 0);
+                break;
+            default: score = 0;
+                break;
+        }
+        return score;
+    }
+
+    public SharedPreferences getGCMPreferences() {
+        return FireMonkeyActivity.context.getSharedPreferences(FireMonkeyActivity.class.getSimpleName(),
+                Context.MODE_PRIVATE);
     }
 }
 
