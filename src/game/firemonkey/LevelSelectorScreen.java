@@ -30,6 +30,8 @@ public class LevelSelectorScreen extends GLScreen {
     ArrayList<UIButton> levelButtons;
     UIButton startGame;
 
+    UIButton backButton;
+
     public LevelSelectorScreen(Game game) {
         super(game);
         rotationAngle = 0;
@@ -54,6 +56,8 @@ public class LevelSelectorScreen extends GLScreen {
         levelButtons.add(new UIButton(200, 820, 64, 64, Assets.levelButton, Assets.levelButton, null));
 
         startGame = new UIButton(390, 100, 375, 110, null, null, null);
+
+        backButton = new UIButton(50, 50, 74, 74, Assets.menuBackButton, Assets.menuBackButton, null);
         
         if(!Assets.intro.isPlaying()) {
         	Assets.intro.setVolume(1.0f);
@@ -100,6 +104,8 @@ public class LevelSelectorScreen extends GLScreen {
                 }
                 if(OverlapTester.pointInRectangle(startGame.bounds, touchPoint)) {
                     startGame.state = UIButton.STATE_PRESSED;
+                } else if(OverlapTester.pointInRectangle(backButton.bounds, touchPoint)) {
+                    backButton.state = UIButton.STATE_PRESSED;
                 }
             }
 
@@ -127,6 +133,10 @@ public class LevelSelectorScreen extends GLScreen {
                     World.currentLevel = playerPosition;
                     Assets.loadLevel((GLGame) game, playerPosition);
                     screen = new GameScreen(game);
+                } else if(backButton.state == UIButton.STATE_PRESSED) {
+                    changeScreen = true;
+                    backButton.state = UIButton.STATE_IDLE;
+                    screen = new MainMenuScreen(game);
                 }
             }
         }
@@ -207,6 +217,10 @@ public class LevelSelectorScreen extends GLScreen {
             }
             curLevel++;
         }
+
+        batcher.beginBatch(Assets.menuButtonsTexture);
+        batcher.drawSprite(backButton.position.x, backButton.position.y, backButton.R_width, backButton.R_height, Assets.menuBackButton);
+        batcher.endBatch();
 
         if(changeScreen) {
             gl.glColor4f(1,1,1,alpha);

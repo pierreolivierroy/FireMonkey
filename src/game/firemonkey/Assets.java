@@ -63,6 +63,10 @@ public class Assets {
     public static TextureRegion clickToStartText;
     public static TextureRegion gameoverText;
 
+    // Menu buttons
+    public static Texture menuButtonsTexture;
+    public static TextureRegion menuBackButton;
+
     // Game Backgrounds
     public static Texture menuBackgroundTexture;
     public static TextureRegion menuBackground;
@@ -88,6 +92,9 @@ public class Assets {
     public static TextureRegion flameRed;
     public static TextureRegion flameYellow;
     public static TextureRegion flameOrange;
+
+    public static Texture highscoreBackgroundTexture;
+    public static TextureRegion highscoreBackground;
 
     public static Sound bananaSound_1;
     public static Sound bananaSound_2;
@@ -177,6 +184,14 @@ public class Assets {
         // Menu
         menuBackgroundTexture = new Texture(game, "menu.png");
         menuBackground = new TextureRegion(menuBackgroundTexture, 0, 0, 768, 1280);
+
+        // Highschore
+        highscoreBackgroundTexture = new Texture(game, "highscore_background.png");
+        highscoreBackground = new TextureRegion(highscoreBackgroundTexture, 0, 0, 768, 1280);
+
+        // Menu buttons
+        menuButtonsTexture = new Texture(game, "menu_buttons.png");
+        menuBackButton = new TextureRegion(menuButtonsTexture, 0, 0, 64, 64);
 
     	// Fonts
     	fontTex = new Texture(game, "font3.png");
