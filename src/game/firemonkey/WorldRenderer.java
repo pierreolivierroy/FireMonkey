@@ -48,11 +48,14 @@ public class WorldRenderer {
             if(world.maxHeight <= 24) {     
                 batcher.drawSprite(cam.position.x, center, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.jungleBackgroundStart);               
             }
-            if(world.maxHeight >= 8) {
-                batcher.drawSprite(cam.position.x, center + 15, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.jungleBackgroundRepeat);
+            if(world.maxHeight >= 8 && world.maxHeight <= 24) {
+                batcher.drawSprite(cam.position.x, center + 16, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.jungleBackgroundRepeat);
             }
-            if(world.maxHeight >= 23) {
-                batcher.drawSprite(cam.position.x, cam.position.y, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.jungleBackgroundRepeat);
+            if(world.maxHeight > 24) {
+                batcher.drawSprite(cam.position.x, cam.position.y - world.screenIncrement + (world.repeatIncrement_1 * World.WORLD_HEIGHT), 
+                		World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.jungleBackgroundRepeat);
+                batcher.drawSprite(cam.position.x, cam.position.y - world.screenIncrement + ((1 + world.repeatIncrement_2) * World.WORLD_HEIGHT), 
+                		World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.jungleBackgroundRepeat); 
             }
             batcher.endBatch();
         }
@@ -62,13 +65,14 @@ public class WorldRenderer {
             if(world.maxHeight <= 24) {
                 batcher.drawSprite(cam.position.x, center, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.snowBackgroundStart);
             }
-            if(world.maxHeight >= 8) {
-                batcher.drawSprite(cam.position.x, center + 15, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.snowBackgroundRepeat);
+            if(world.maxHeight >= 8 && world.maxHeight <= 24) {
+                batcher.drawSprite(cam.position.x, center + 16, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.snowBackgroundRepeat);
             }
-            if(world.maxHeight >= 23) {
-            	Log.d("BG", "Height" + 31 + ((world.maxHeight/1000) * 16));
-                batcher.drawSprite(cam.position.x, 31 + ((world.maxHeight/1000) * 16), World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.snowBackgroundRepeat);
-                batcher.drawSprite(cam.position.x, 31 + ((world.maxHeight/1000) * 16) + World.WORLD_HEIGHT, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.snowBackgroundRepeat);
+            if(world.maxHeight > 24) {
+                batcher.drawSprite(cam.position.x, cam.position.y - world.screenIncrement + (world.repeatIncrement_1 * World.WORLD_HEIGHT), 
+                		World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.snowBackgroundRepeat);
+                batcher.drawSprite(cam.position.x, cam.position.y - world.screenIncrement + ((1 + world.repeatIncrement_2) * World.WORLD_HEIGHT), 
+                		World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.snowBackgroundRepeat); 
             }
             batcher.endBatch();
         }
@@ -78,11 +82,14 @@ public class WorldRenderer {
             if(world.maxHeight <= 24) {           
                 batcher.drawSprite(cam.position.x, center, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.spaceBackgroundStart);
             }
-            if(world.maxHeight >= 8) {
-                batcher.drawSprite(cam.position.x, center + 15, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.spaceBackgroundRepeat);
+            if(world.maxHeight >= 8 && world.maxHeight <= 24) {
+                batcher.drawSprite(cam.position.x, center + 16, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.spaceBackgroundRepeat);
             }
-            if(world.maxHeight >= 23) {
-                batcher.drawSprite(cam.position.x, cam.position.y, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.spaceBackgroundRepeat); 
+            if(world.maxHeight > 24) {
+                batcher.drawSprite(cam.position.x, cam.position.y - world.screenIncrement + (world.repeatIncrement_1 * World.WORLD_HEIGHT), 
+                		World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.spaceBackgroundRepeat);
+                batcher.drawSprite(cam.position.x, cam.position.y - world.screenIncrement + ((1 + world.repeatIncrement_2) * World.WORLD_HEIGHT), 
+                		World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.spaceBackgroundRepeat); 
             }
             batcher.endBatch();
         }

@@ -161,7 +161,6 @@ public class Assets {
 
     public static void reload() {
         tileMapItems.reload();
-        playerItems.reload();
         mainMenuItems.reload();
         mapBackgroundTexture.reload();
         mapButtonsTexture.reload();

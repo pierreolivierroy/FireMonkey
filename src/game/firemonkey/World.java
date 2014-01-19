@@ -55,13 +55,18 @@ public class World {
 
 	public float maxHeight = 0.0f; 
 	public float levelTargetHeight = 10000.0f; // DEBUG VALUE
-	public float lastHeighStep;
+	public float lastHeight;
+	public float screenIncrement;
+	public float repeatIncrement_1;
+	public float repeatIncrement_2;
 
 	public int score; 			// Overall final score
 	private int bananaScore; 		// Score based on nb of bananas consumed
 
 	private Random rand;
 
+	public float debug = 0;
+	
 	public World(WorldListener listener, GameUI gUI) {
 
 		this.state = WORLD_STATE_RUNNING;
@@ -99,18 +104,31 @@ public class World {
 		checkGameOver();
 	}
 
+	float threshold_1 = 16;
+	float threshold_2 = 16;
+	
 	private void updatePlayer(float deltaTime, float accelX) {
 
 		if (monkey.state == Monkey.PLAYER_STATE_FLYING || monkey.state == Monkey.PLAYER_STATE_FALLING) // Starting is DEBUG
 			monkey.velocity.x = -accelX / 10 * Monkey.MOVE_VELOCITY;
 		
+		lastHeight = monkey.position.y;
 		monkey.update(deltaTime);
 		
-		float lastPos = monkey.position.y;
-		maxHeight = Math.max(monkey.position.y, maxHeight);
+		if(monkey.position.y > lastHeight && lastHeight >= 32) {
+			screenIncrement += (monkey.position.y - lastHeight)/100;
+		}
 		
-		
-		
+		if(screenIncrement >= threshold_1) {
+			repeatIncrement_1 ++;
+			threshold_1 += WORLD_HEIGHT;
+		}
+		if(screenIncrement >= threshold_2) {
+			repeatIncrement_2 ++;
+			threshold_2 += WORLD_HEIGHT;
+		}
+
+		maxHeight = Math.max(monkey.position.y, maxHeight);	
 		if(maxHeight >= levelTargetHeight)
 		{
 			// UNLOCK LEVEL X
@@ -555,7 +573,6 @@ public class World {
 
 		monkey.velocity.y = activeBarrel.sequence.completionBonus;
 		monkey.jump += (activeBarrel.sequence.totalSuccess) ? 1 : 0;
-		monkey.jump = (monkey.jump > Monkey.PLAYER_DEFAULT_JUMPS) ? Monkey.PLAYER_DEFAULT_JUMPS : monkey.jump;
 
 		activeBarrel = null;
 	}
