@@ -28,6 +28,7 @@ public class LevelSelectorScreen extends GLScreen {
     static int playerPosition = 1;
 
     ArrayList<UIButton> levelButtons;
+    UIButton startGame;
 
     public LevelSelectorScreen(Game game) {
         super(game);
@@ -51,6 +52,9 @@ public class LevelSelectorScreen extends GLScreen {
         levelButtons.add(new UIButton(240, 375, 64, 64, Assets.levelButton, Assets.levelButton, null));
         levelButtons.add(new UIButton(430, 700, 64, 64, Assets.levelButton, Assets.levelButton, null));
         levelButtons.add(new UIButton(200, 820, 64, 64, Assets.levelButton, Assets.levelButton, null));
+
+        startGame = new UIButton(390, 100, 375, 110, null, null, null);
+
         setUnlockedLevel(3);
     }
 
@@ -63,7 +67,6 @@ public class LevelSelectorScreen extends GLScreen {
         if(changeScreen) {
             alpha += (deltaTime / 1.3f );
             if(alpha >= 1) {
-                screen = new GameScreen(game);
                 game.setScreen(screen);
             }
         }
@@ -88,6 +91,9 @@ public class LevelSelectorScreen extends GLScreen {
                         break;
                     }
                 }
+                if(OverlapTester.pointInRectangle(startGame.bounds, touchPoint)) {
+                    startGame.state = UIButton.STATE_PRESSED;
+                }
             }
 
             // Detect touch on specific bounding rects
@@ -107,6 +113,13 @@ public class LevelSelectorScreen extends GLScreen {
                         button.state = UIButton.STATE_IDLE;
                     }
                     curLevel++;
+                }
+                if(startGame.state == UIButton.STATE_PRESSED) {
+                    changeScreen = true;
+                    startGame.state = UIButton.STATE_IDLE;
+                    World.currentLevel = playerPosition;
+                    Assets.loadLevel((GLGame) game, playerPosition);
+                    screen = new GameScreen(game);
                 }
             }
         }

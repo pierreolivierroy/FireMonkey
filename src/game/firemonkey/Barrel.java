@@ -26,7 +26,7 @@ public class Barrel extends DynamicGameObject{
 	Random rand;
 	boolean isTiltingUp;
 
-	public Barrel(float x, float y, float width, float height, int diff) {
+	public Barrel(float x, float y, float width, float height) {
 		super(x, y, width, height);
 		
 		state = STATE_IDLE;

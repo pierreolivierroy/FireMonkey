@@ -505,7 +505,7 @@ public class World {
 			activeBarrel.state = Barrel.STATE_MONKEY_IN;
 
 			if(activeBarrel.sequence == null) {
-				activeBarrel.generateSequence(BarrelSequence.DIFF_EASY, monkey.position.y);
+				activeBarrel.generateSequence(World.currentLevel, monkey.position.y);
 			}
 		}
 	}
@@ -523,9 +523,9 @@ public class World {
 			float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
 
 			if(maxHeight > 3000)
-				activeBarrel = new Barrel(xValue, yValue, 1.3f, 1.6f, BarrelSequence.DIFF_MEDIUM);
+				activeBarrel = new Barrel(xValue, yValue, 1.3f, 1.6f);
 			else 
-				activeBarrel = new Barrel(xValue, yValue, 1.3f, 1.6f, BarrelSequence.DIFF_EASY);
+				activeBarrel = new Barrel(xValue, yValue, 1.3f, 1.6f);
 		}
 	}
 
@@ -572,7 +572,9 @@ public class World {
 		}
 
 		monkey.velocity.y = activeBarrel.sequence.completionBonus;
-		monkey.jump += (activeBarrel.sequence.totalSuccess) ? 1 : 0;
+        if(activeBarrel.sequence.totalSuccess) {
+            monkey.jump++;
+        }
 
 		activeBarrel = null;
 	}
