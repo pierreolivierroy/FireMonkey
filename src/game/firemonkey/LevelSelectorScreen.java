@@ -242,7 +242,8 @@ public class LevelSelectorScreen extends GLScreen {
 
     @Override
     public void resume() {
-    	Assets.intro.play();
+    	if(!Assets.intro.isPlaying())
+    		Assets.intro.play();
     }
 
     @Override

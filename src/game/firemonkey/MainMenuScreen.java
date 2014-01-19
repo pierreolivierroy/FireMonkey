@@ -44,7 +44,11 @@ public class MainMenuScreen extends GLScreen {
 
         // Pre-load assets here
         Assets.load((GLGame) game);
-        Assets.intro.play();
+        
+        Assets.intro.setVolume(1.0f);
+        if(!Assets.intro.isPlaying()) {      	
+        	Assets.intro.play();
+        }
 
         quickGame = new UIButton(397, 765, 375, 110, null, null, null);
         campaign =  new UIButton(397, 645, 375, 110, null, null, null);
@@ -144,6 +148,7 @@ public class MainMenuScreen extends GLScreen {
 
     @Override
     public void resume() {
+    	Assets.intro.setVolume(1.0f);
     	Assets.intro.play();
     }
 

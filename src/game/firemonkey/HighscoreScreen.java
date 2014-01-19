@@ -6,12 +6,12 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import com.bag.lib.Game;
 import com.bag.lib.Input;
 import com.bag.lib.Screen;
 import com.bag.lib.gl.Camera2D;
 import com.bag.lib.gl.SpriteBatcher;
-import com.bag.lib.impl.GLGame;
 import com.bag.lib.impl.GLScreen;
 import com.bag.lib.math.OverlapTester;
 import com.bag.lib.math.Vector2;
@@ -41,7 +41,7 @@ public class HighscoreScreen extends GLScreen {
         touchPoint = new Vector2();
 
         // Pre-load assets here
-        Assets.load((GLGame) game);
+        // Assets.load((GLGame) game);
         Assets.intro.play();
 
         backButton = new UIButton(50, 50, 74, 74, Assets.menuBackButton, Assets.menuBackButton, null);
