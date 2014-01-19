@@ -206,7 +206,7 @@ public class World {
 				showBanana = true;
 			} else {
 				//Generate banana petterns randomly according to their stats
-				if(0 <= pattern && pattern <= BANANA_PATTERN_FRENZY)//FRENZY
+				if(min <= pattern && pattern <= BANANA_PATTERN_FRENZY)//FRENZY
 					generateRectangleBananaPattern(6, 7, 49, 50);
 				else if(BANANA_PATTERN_FRENZY < pattern && pattern <= BANANA_PATTERN_BANANA)
 					generateStackBananaPattern();
@@ -216,7 +216,7 @@ public class World {
 					generateStackBananaPattern();
 				else if(BANANA_PATTERN_STACK_MIN < pattern && pattern <= BANANA_PATTERN_RECTANGLE_MIN)
 					generateRectangleBananaPattern(2, 5, 2, 8);
-				else if(BANANA_PATTERN_DIAGONAL_MIN < pattern && pattern <= max)
+				else if(BANANA_PATTERN_RECTANGLE_MIN < pattern && pattern <= BANANA_PATTERN_DIAGONAL_MIN)
 					generateDiagonalBananaPattern();
 			}
 			
@@ -313,7 +313,7 @@ public class World {
 		Random r = new Random();
 		Random randDirection = new Random();
 		int minD = 0;
-		int maxD = 1;
+		int maxD = 2;
 		int direction = randDirection.nextInt(maxD-minD) + minD;	
 		int minBananas = 8;
 		int maxBananas = 14;
@@ -432,6 +432,8 @@ public class World {
 			incrementY += 1.5f;
 			y = yValue + incrementY;	
 		}
+		
+		nextGenerationHeight += rectangleHeight;
 	}
 
 	private void generateStackBananaPattern(){
