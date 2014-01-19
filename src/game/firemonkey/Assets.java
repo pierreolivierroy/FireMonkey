@@ -213,15 +213,15 @@ public class Assets {
         
         spaceMusic = game.getAudio().newMusic("space.ogg");
         spaceMusic.setLooping(true);
-        spaceMusic.setVolume(0.8f);
+        spaceMusic.setVolume(0.7f);
         
         jungleMusic = game.getAudio().newMusic("jungle.ogg");
         jungleMusic.setLooping(true);
-        jungleMusic.setVolume(0.8f);
+        jungleMusic.setVolume(0.7f);
         
         snowMusic = game.getAudio().newMusic("snow.ogg");
         snowMusic.setLooping(true);
-        snowMusic.setVolume(0.8f);
+        snowMusic.setVolume(0.65f);
 
     }
     
