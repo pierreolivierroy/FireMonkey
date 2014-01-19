@@ -7,10 +7,6 @@ import com.bag.lib.impl.*;
 import java.util.ArrayList;
 
 public class Assets {
-
-    // Main Menu
-    public static Texture mainMenuItems;
-    public static TextureRegion mainMenuBackground;
     
     // Game Font
     public static Texture fontTex;  
@@ -92,6 +88,8 @@ public class Assets {
     public static TextureRegion flameRed;
     public static TextureRegion flameYellow;
     public static TextureRegion flameOrange;
+    public static TextureRegion rocket;
+    public static TextureRegion flames;
 
     public static Texture highscoreBackgroundTexture;
     public static TextureRegion highscoreBackground;
@@ -101,8 +99,10 @@ public class Assets {
     public static Sound barrelSound_1;
     public static Sound bonusSound_1;
     public static Sound missSound_1;
+    public static Sound jumpSound_1;
     
     public static Music intro;
+    public static Music snowMusic;
     public static Music spaceMusic;
     public static Music jungleMusic;
     
@@ -115,10 +115,6 @@ public class Assets {
     	} else {
     		loaded = true;
     	}
-    	
-        // Main Menu (UI)
-        mainMenuItems = new Texture(game, "mapPack1.png");
-        mainMenuBackground = new TextureRegion(mainMenuItems, 0, 0, 480, 800);
 
         // Map (level selector) Screen
         mapBackgroundTexture = new Texture(game, "game_map.png");
@@ -162,6 +158,8 @@ public class Assets {
         flameRed = new TextureRegion(flamesTexture, 32, 0, 32, 32);
         flameYellow= new TextureRegion(flamesTexture, 64, 0, 32, 32);
         flameOrange = new TextureRegion(flamesTexture, 0, 0, 32, 32);
+        rocket = new TextureRegion(flamesTexture, 96, 0, 32, 32);
+        flames = new TextureRegion(flamesTexture, 0, 0, 32, 32);
 
         barrelsTexture = new Texture(game, "barrels.png");
         barrelEmpty = new TextureRegion(barrelsTexture, 0, 0, 150, 181);
@@ -203,6 +201,7 @@ public class Assets {
         bonusSound_1 = game.getAudio().newSound("bonus_1.ogg");
         barrelSound_1 = game.getAudio().newSound("barrel_1.ogg");
         missSound_1 = game.getAudio().newSound("miss_1.ogg");
+        jumpSound_1 = game.getAudio().newSound("jump_1.ogg");
         
         intro = game.getAudio().newMusic("intro.ogg");
         intro.setLooping(true);
@@ -215,6 +214,10 @@ public class Assets {
         jungleMusic = game.getAudio().newMusic("jungle.ogg");
         jungleMusic.setLooping(true);
         jungleMusic.setVolume(0.8f);
+        
+        snowMusic = game.getAudio().newMusic("snow.ogg");
+        snowMusic.setLooping(true);
+        snowMusic.setVolume(0.8f);
 
     }
     
@@ -237,13 +240,13 @@ public class Assets {
 
     public static void reload() {
         tileMapItems.reload();
-        mainMenuItems.reload();
         mapBackgroundTexture.reload();
         mapButtonsTexture.reload();
         starsTexture.reload();
         bananasTexture.reload();
         barrelsTexture.reload();
         numbersTexture.reload();
+        monkeyTexture.reload();
         highscoreBubblesTexture.reload();
         
         try {
