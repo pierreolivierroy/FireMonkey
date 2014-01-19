@@ -245,11 +245,13 @@ public class GameScreen extends GLScreen {
 		        		world.monkey.velocity.y = 30;
 		        	}
 		        	else if(world.monkey.jump > 0 && !world.monkey.firstJump) {
-		        		world.activeExplosions.add(new Explosion(30, (int)world.monkey.position.x, 
-		        				(int) world.monkey.position.y + (int) Monkey.PLAYER_HEIGHT, 3.0f));
+		        		/*world.activeExplosions.add(new Explosion(30, (int)world.monkey.position.x, 
+		        				(int) world.monkey.position.y + (int) Monkey.PLAYER_HEIGHT, 3.0f));*/
 			        	world.monkey.velocity.y = 30;
 				        world.monkey.jump--;
 				        worldListener.playJump();
+				        world.monkey.jumpBoostActive = true;
+				        world.monkey.jumpHeight = world.monkey.position.y + world.monkey.PLAYER_BOOST_MAX_HEIGHT;
 		        	}
 				}	        		
 	        } 

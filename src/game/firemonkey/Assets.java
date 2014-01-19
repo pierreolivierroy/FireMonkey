@@ -152,7 +152,7 @@ public class Assets {
         flameYellow= new TextureRegion(flamesTexture, 64, 0, 32, 32);
         flameOrange = new TextureRegion(flamesTexture, 0, 0, 32, 32);
         rocket = new TextureRegion(flamesTexture, 96, 0, 32, 32);
-        flames = new TextureRegion(flamesTexture, 0, 0, 32, 32);
+        flames = new TextureRegion(flamesTexture, 0, 32, 32, 32);
 
         barrelsTexture = new Texture(game, "barrels.png");
         barrelEmpty = new TextureRegion(barrelsTexture, 0, 0, 150, 181);

@@ -114,6 +114,20 @@ public class WorldRenderer {
     
     private void renderPlayer()
     {
+    	if(world.monkey.jumpBoostActive){
+        	
+        	if(world.monkey.position.y >= world.monkey.jumpHeight){
+        		System.out.println("FINI");
+        		world.monkey.jumpHeight = 0f;
+        		world.monkey.jumpBoostActive = false;
+        	}        
+        	else {
+        		batcher.beginBatch(Assets.flamesTexture);
+            	batcher.drawSprite(world.monkey.position.x, world.monkey.position.y - 1f, 1f, 1f, Assets.flames);
+            	batcher.endBatch();
+        	}
+        }
+    	
         if(World.currentLevel == 1 || World.currentLevel == 2) {
             batcher.beginBatch(Assets.monkeyTexture);
             if(world.monkey.state == Monkey.PLAYER_STATE_STARTING || world.monkey.state == Monkey.PLAYER_STATE_FALLING)
