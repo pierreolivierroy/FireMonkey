@@ -216,15 +216,16 @@ public class GameScreen extends GLScreen {
 	        } 
 			else if(event.type == TouchEvent.TOUCH_UP){
 	        	
-	        	if(world.monkey.firstJump == true){
-	        		world.monkey.firstJump = false;
-	        		world.monkey.velocity.y = 30;
-	        	}
-	        	else if(world.monkey.jump > 0 && world.monkey.jump <= Monkey.PLAYER_DEFAULT_JUMPS && world.monkey.firstJump == false){
-		        		world.monkey.velocity.y = Math.max(20, world.monkey.velocity.y);
-			        	world.monkey.jump--; 
-	        	}
-	        		
+				if(world.monkey.state != Monkey.PLAYER_STATE_BONUS){
+					if(world.monkey.firstJump == true){
+		        		world.monkey.firstJump = false;
+		        		world.monkey.velocity.y = 30;
+		        	}
+		        	else if(world.monkey.jump > 0 && world.monkey.jump <= Monkey.PLAYER_DEFAULT_JUMPS && world.monkey.firstJump == false){
+			        		world.monkey.velocity.y = Math.max(20, world.monkey.velocity.y);
+				        	world.monkey.jump--; 
+		        	}
+				}	        		
 	        } 
 			break;
 		}
