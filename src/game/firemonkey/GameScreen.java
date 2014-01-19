@@ -186,7 +186,11 @@ public class GameScreen extends GLScreen {
 		        guiCam.touchToWorld(touchPoint);
 		        
 		        if(event.type == TouchEvent.TOUCH_UP){
-		        	game.setScreen(new LevelSelectorScreen(game));
+                    if(World.GAME_MODE == World.GAME_MODE_CAMPAIGN) {
+                        game.setScreen(new LevelSelectorScreen(game));
+                    } else if(World.GAME_MODE == World.GAME_MODE_QUICKSTART) {
+                        game.setScreen(new MainMenuScreen(game));
+                    }
 		        }
 		    }
 		    } catch (Exception e){}
