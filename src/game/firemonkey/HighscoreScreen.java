@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import com.bag.lib.Game;
 import com.bag.lib.Input;
 import com.bag.lib.Screen;
@@ -14,7 +16,7 @@ import com.bag.lib.impl.GLScreen;
 import com.bag.lib.math.OverlapTester;
 import com.bag.lib.math.Vector2;
 
-public class MainMenuScreen extends GLScreen {
+public class HighscoreScreen extends GLScreen {
     Camera2D guiCam;
     SpriteBatcher batcher;
     Vector2 touchPoint;
@@ -22,13 +24,9 @@ public class MainMenuScreen extends GLScreen {
     boolean changeScreen;
     float alpha;
 
-    UIButton quickGame;
-    UIButton campaign;
-    UIButton highScore;
-
     UIButton backButton;
 
-    public MainMenuScreen(Game game) {
+    public HighscoreScreen(Game game) {
         super(game);
         alpha = 0;
         changeScreen = false;
@@ -46,9 +44,7 @@ public class MainMenuScreen extends GLScreen {
         Assets.load((GLGame) game);
         Assets.intro.play();
 
-        quickGame = new UIButton(397, 765, 375, 110, null, null, null);
-        campaign =  new UIButton(397, 645, 375, 110, null, null, null);
-        highScore = new UIButton(397, 525, 375, 110, null, null, null);
+        backButton = new UIButton(50, 50, 74, 74, Assets.menuBackButton, Assets.menuBackButton, null);
     }
 
     @Override
@@ -74,35 +70,17 @@ public class MainMenuScreen extends GLScreen {
             guiCam.touchToWorld(touchPoint);
 
             if(event.type == Input.TouchEvent.TOUCH_DOWN) {
-                if(OverlapTester.pointInRectangle(quickGame.bounds, touchPoint)) {
-                    quickGame.state = UIButton.STATE_PRESSED;
-                } else if(OverlapTester.pointInRectangle(campaign.bounds, touchPoint)) {
-                    campaign.state = UIButton.STATE_PRESSED;
-                } else if(OverlapTester.pointInRectangle(highScore.bounds, touchPoint)) {
-                    highScore.state = UIButton.STATE_PRESSED;
+                if(OverlapTester.pointInRectangle(backButton.bounds, touchPoint)) {
+                    backButton.state = UIButton.STATE_PRESSED;
                 }
             }
 
             // Detect touch on specific bounding rects
             if(event.type == Input.TouchEvent.TOUCH_UP) {
-                if(quickGame.state == UIButton.STATE_PRESSED) {
-                	Assets.bananaSound_1.play(0.8f);
+                if(backButton.state == UIButton.STATE_PRESSED) {
                     changeScreen = true;
-                    quickGame.state = UIButton.STATE_IDLE;
-                    Assets.loadLevel((GLGame) game, 1);
-                    World.GAME_MODE = World.GAME_MODE_QUICKSTART;
-                    screen = new GameScreen(game);
-                } else if(campaign.state == UIButton.STATE_PRESSED) {
-                	Assets.bananaSound_1.play(0.8f);
-                    changeScreen = true;
-                    campaign.state = UIButton.STATE_IDLE;
-                    World.GAME_MODE = World.GAME_MODE_CAMPAIGN;
-                    screen = new LevelSelectorScreen(game);
-                } else if(highScore.state == UIButton.STATE_PRESSED) {
-                	Assets.bananaSound_1.play(0.8f);
-                    changeScreen = true;
-                    highScore.state = UIButton.STATE_IDLE;
-                    screen = new HighscoreScreen(game);
+                    backButton.state = UIButton.STATE_IDLE;
+                    screen = new MainMenuScreen(game);
                 }
             }
         }
@@ -122,8 +100,30 @@ public class MainMenuScreen extends GLScreen {
         gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
         gl.glColor4f(1,1,1,1);
 
-        batcher.beginBatch(Assets.menuBackgroundTexture);
-        batcher.drawSprite(768 / 2, 1280 / 2, 768, 1280, Assets.menuBackground);
+        batcher.beginBatch(Assets.highscoreBackgroundTexture);
+        batcher.drawSprite(768 / 2, 1280 / 2, 768, 1280, Assets.highscoreBackground);
+        batcher.endBatch();
+
+        batcher.beginBatch(Assets.menuButtonsTexture);
+        batcher.drawSprite(backButton.position.x, backButton.position.y, backButton.R_width, backButton.R_height, Assets.menuBackButton);
+        batcher.endBatch();
+
+        // High score text
+        batcher.beginBatch(Assets.fontTex);
+        Assets.font.drawText(batcher, Integer.toString(getHighScore(0)), 768 / 2 - 65, 730);
+        Assets.font.drawText(batcher, Integer.toString(getHighScore(1)), 768 / 2 - 65, 505);
+        Assets.font.drawText(batcher, Integer.toString(getHighScore(2)), 768 / 2 - 65, 305);
+        Assets.font.drawText(batcher, Integer.toString(getHighScore(3)), 768 / 2 - 65, 105);
+        batcher.endBatch();
+
+        batcher.beginBatch(Assets.bananasTexture);
+        batcher.drawSprite(768 / 2 - 135, 510, 64, 64, Assets.bananaNormal);
+        batcher.drawSprite(768 / 2 - 135, 310, 64, 64, Assets.bananaFrozen);
+        batcher.drawSprite(768 / 2 - 135, 110, 64, 64, Assets.bananaSpace);
+
+        batcher.drawSprite(768 / 2 - 120, 800, 64, 64, Assets.bananaNormal);
+        batcher.drawSprite(768 / 2, 800, 64, 64, Assets.bananaSpace);
+        batcher.drawSprite(768 / 2 + 120, 800, 64, 64, Assets.bananaFrozen);
         batcher.endBatch();
 
         if(changeScreen) {
@@ -139,16 +139,37 @@ public class MainMenuScreen extends GLScreen {
 
     @Override
     public void pause() {
-    	Assets.intro.pause();
     }
 
     @Override
     public void resume() {
-    	Assets.intro.play();
     }
 
     @Override
     public void dispose() {
-    	Assets.intro.stop();
+    }
+
+    // Use 0 for total high score
+    public int getHighScore(int level) {
+        final SharedPreferences prefs = getGCMPreferences();
+        int score;
+        switch (level) {
+            case 0: score = prefs.getInt("GLOBAL_HIGHSCORE", 0);
+                break;
+            case 1: score = prefs.getInt("LEVEL1_HIGHSCORE", 0);
+                break;
+            case 2: score = prefs.getInt("LEVEL2_HIGHSCORE", 0);
+                break;
+            case 3: score = prefs.getInt("LEVEL3_HIGHSCORE", 0);
+                break;
+            default: score = 0;
+                break;
+        }
+        return score;
+    }
+
+    public SharedPreferences getGCMPreferences() {
+        return FireMonkeyActivity.context.getSharedPreferences(FireMonkeyActivity.class.getSimpleName(),
+                Context.MODE_PRIVATE);
     }
 }

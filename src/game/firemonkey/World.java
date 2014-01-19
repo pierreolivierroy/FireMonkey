@@ -208,7 +208,7 @@ public class World {
 				showBanana = true;
 			} else {
 				//Generate banana petterns randomly according to their stats
-				if(min <= pattern && pattern <= BANANA_PATTERN_FRENZY)//FRENZY
+				if(min < pattern && pattern <= BANANA_PATTERN_FRENZY)//FRENZY
 					generateRectangleBananaPattern(6, 7, 49, 50);
 				else if(BANANA_PATTERN_FRENZY < pattern && pattern <= BANANA_PATTERN_BANANA)
 					generateStackBananaPattern();
