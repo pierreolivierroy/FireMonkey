@@ -46,7 +46,7 @@ public class LevelSelectorScreen extends GLScreen {
         touchPoint = new Vector2();
 
         // Pre-load assets here
-        Assets.load((GLGame) game);
+        //Assets.load((GLGame) game);
 
         levelButtons = new ArrayList<UIButton>();
         levelButtons.add(new UIButton(240, 375, 64, 64, Assets.levelButton, Assets.levelButton, null));
@@ -54,7 +54,11 @@ public class LevelSelectorScreen extends GLScreen {
         levelButtons.add(new UIButton(200, 820, 64, 64, Assets.levelButton, Assets.levelButton, null));
 
         startGame = new UIButton(390, 100, 375, 110, null, null, null);
-
+        
+        if(!Assets.intro.isPlaying()) {
+        	Assets.intro.play();
+        }
+        
         setUnlockedLevel(3);
     }
 
@@ -66,7 +70,9 @@ public class LevelSelectorScreen extends GLScreen {
         
         if(changeScreen) {
             alpha += (deltaTime / 1.3f );
+            Assets.intro.setVolume(1 - alpha);
             if(alpha >= 1) {
+            	Assets.intro.stop();
                 game.setScreen(screen);
             }
         }
