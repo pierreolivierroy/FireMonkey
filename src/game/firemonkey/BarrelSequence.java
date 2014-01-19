@@ -36,9 +36,9 @@ public class BarrelSequence {
 		generate(difficulty, height);
 		
 		if(difficulty == DIFF_EASY)
-			lifeTime = 2.5f;
+			lifeTime = 2.2f;
 		else if (difficulty == DIFF_MEDIUM)
-			lifeTime = 2.0f;
+			lifeTime = 1.8f;
 		else if (difficulty == DIFF_HARD)
 			lifeTime = 1.5f;
 		else 

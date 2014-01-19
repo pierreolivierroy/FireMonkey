@@ -69,7 +69,16 @@ public class Assets {
     public static Texture spaceBackgrounds;
     public static TextureRegion spaceBackgroundStart;
     public static TextureRegion spaceBackgroundRepeat;
+    
+    public static Texture flamesTexture;
+    public static TextureRegion flameRed;
+    public static TextureRegion flameYellow;
+    public static TextureRegion flameOrange;
 
+    public static Sound bananaSound_1;
+    public static Sound bananaSound_2;
+    
+    
 
     public static void load(GLGame game) {
 
@@ -93,10 +102,7 @@ public class Assets {
         redTile = new TextureRegion(tileMapItems, 64, 0, 64, 64);
         whiteTween = new TextureRegion(tileMapItems, 0, 64, 64, 64);
 
-        // Game Objects
-        playerItems = new Texture(game, "pacman.png");
-        player = new TextureRegion(playerItems, 0, 0, 64, 64);
-        
+        // Game Object      
     	monkeyTexture = new Texture(game, "monkeys-hd.png");
     	monkey_flying = new TextureRegion(monkeyTexture, 0, 0, 128, 128);
         monkey_idle = new TextureRegion(monkeyTexture, 128, 0, 128, 128);
@@ -112,6 +118,11 @@ public class Assets {
         bananaNormal = new TextureRegion(bananasTexture, 0, 0, 128, 128);
         bananaFrozen = new TextureRegion(bananasTexture, 128, 0, 128, 128);
         bananaSpace = new TextureRegion(bananasTexture, 0, 128, 128, 128);
+        
+        flamesTexture = new Texture(game, "flames.png");
+        flameRed = new TextureRegion(flamesTexture, 32, 0, 32, 32);
+        flameYellow= new TextureRegion(flamesTexture, 64, 0, 32, 32);
+        flameOrange = new TextureRegion(flamesTexture, 0, 0, 32, 32);
 
         // Menu
         menuBackgroundTexture = new Texture(game, "menu.png");
@@ -120,6 +131,10 @@ public class Assets {
     	// Fonts
     	fontTex = new Texture(game, "font3.png");
         font = new Font(fontTex, 0, 0, 16, 32, 40);
+        
+        // Sounds
+        bananaSound_1 = game.getAudio().newSound("banana_1.ogg");
+        bananaSound_2 = game.getAudio().newSound("banana_2.ogg");
 
     }
     
@@ -149,9 +164,18 @@ public class Assets {
         starsTexture.reload();
         bananasTexture.reload();
         
-        jungleBackgrounds.reload();
-        snowBackgrounds.reload();
-        spaceBackgrounds.reload();
+        try {
+        	jungleBackgrounds.reload();
+		} catch (Exception e) { }
+        
+        try {
+        	snowBackgrounds.reload();
+		} catch (Exception e) { }
+        
+        try {
+        	spaceBackgrounds.reload();
+		} catch (Exception e) { }
+        
 
         //if(Settings.soundEnabled )
         // music.play();

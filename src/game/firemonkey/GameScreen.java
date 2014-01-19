@@ -1,6 +1,8 @@
 package game.firemonkey;
 
 import java.util.List;
+import java.util.Random;
+
 import javax.microedition.khronos.opengles.GL10;
 
 import android.util.Log;
@@ -68,6 +70,17 @@ public class GameScreen extends GLScreen {
         worldListener = new WorldListener() {		
 			public int getTime() {
 				return (int)elapsedTime;			
+			}
+
+			@Override
+			public void playBananaHit() {
+				Random rand = new Random();
+				float r = rand.nextFloat();
+				
+				if(r > 0.5)
+					Assets.bananaSound_1.play(0.5f);		
+				else
+					Assets.bananaSound_2.play(0.5f);
 			}
         };
         

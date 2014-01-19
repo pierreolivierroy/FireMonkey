@@ -173,7 +173,7 @@ public class WorldRenderer {
         gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 	  	try {
 
-			batcher.beginBatch(Assets.tileMapItems);
+			batcher.beginBatch(Assets.flamesTexture);
 
 	        for(int j = 0; j < world.activeExplosions.size(); j++) {
 	        	Explosion e = world.activeExplosions.get(j);
@@ -181,7 +181,7 @@ public class WorldRenderer {
 	        	for(int i = 0; i < e.particles.size(); i ++) {
 		            Particle par = e.particles.get(i);
 		            gl.glColor4f(1, 1, 1, par.alpha);
-		      	  	batcher.drawSprite(par.x, par.y , 0.5f, 0.5f, Assets.redTile);
+		      	  	batcher.drawSprite(par.x, par.y , 0.5f, 0.5f, par.asset);
 	        	}
 	        }
         

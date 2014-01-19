@@ -12,6 +12,7 @@ public class World {
 	public interface WorldListener {
 		//public void sound();
 		int getTime();
+		void playBananaHit();
 	}
 
 	// World's size
@@ -27,13 +28,13 @@ public class World {
 	public static int currentLevel = 1;
 
 	//Banana patterns
-	public static final int BANANA_PATTERN_BLANK_MIN		= 2;//5%
-	public static final int BANANA_PATTERN_RANDOM_MIN		= 40;//60%
-	public static final int BANANA_PATTERN_STACK_MIN 		= 60;//15%
-	public static final int BANANA_PATTERN_RECTANGLE_MIN 	= 70;//10%
-	public static final int BANANA_PATTERN_DIAGONAL_MIN 	= 90;//10%
+	public static final int BANANA_PATTERN_BLANK_MIN		= 3;//5%
+	public static final int BANANA_PATTERN_RANDOM_MIN		= 45;//60%
+	public static final int BANANA_PATTERN_STACK_MIN 		= 75;//15%
+	public static final int BANANA_PATTERN_RECTANGLE_MIN 	= 80;//10%
+	public static final int BANANA_PATTERN_DIAGONAL_MIN 	= 95;//10%
 	public static final int BANANA_PATTERN_BANANA			= 98;//10%
-	
+
 	float minWidth = 0.5f;
 	float maxWidth = WORLD_WIDTH - 0.5f;
 	boolean showBanana = false;
@@ -47,7 +48,7 @@ public class World {
 	public ArrayList<Explosion> activeExplosions;
 
 	public int state;
-	public static final Vector2 gravity = new Vector2(0, -10);
+	public static Vector2 gravity;
 
 	private float nextGenerationHeight;
 	private float lastBarrelHeight;
@@ -75,6 +76,8 @@ public class World {
 
 		this.score = 0;
 		this.bananaScore = 0;
+
+		World.gravity = new Vector2(0, -11 - currentLevel);
 	}
 
 	public void update(float deltaTime, float accelX) {
@@ -83,9 +86,9 @@ public class World {
 		updatePlayer(deltaTime, accelX);
 		updateBananas(deltaTime);
 		updateBarrel(deltaTime);
-		
+
 		updateLevel(deltaTime);
-		
+
 		updateExplosions(deltaTime);
 
 		checkMonkeyBananaCollision();
@@ -178,7 +181,7 @@ public class World {
 			} else {
 				//Generate banana petterns randomly according to their stats
 				if(BANANA_PATTERN_BLANK_MIN < pattern && pattern <= BANANA_PATTERN_RANDOM_MIN)
-					generateRandomBananaPattern(6);
+					generateRandomBananaPattern(5 -  currentLevel);
 				else if(BANANA_PATTERN_RANDOM_MIN < pattern && pattern <= BANANA_PATTERN_STACK_MIN)
 					generateStackBananaPattern();
 				else if(BANANA_PATTERN_RECTANGLE_MIN < pattern && pattern <= BANANA_PATTERN_DIAGONAL_MIN)
@@ -285,7 +288,7 @@ public class World {
 		int maxD = 1;
 		int direction = randDirection.nextInt(maxD-minD) + minD;	
 		int minBananas = 8;
-		int maxBananas = 16;
+		int maxBananas = 14;
 		int bananas = r.nextInt(maxBananas-minBananas) + minBananas;		
 
 		//To the right
@@ -321,7 +324,7 @@ public class World {
 
 				Banana b = new Banana(x, y, 1, 1, Banana.BOOST_MED, Banana.POINTS_MED);
 				activeBananas.add(b);
-				
+
 				incrementY += 1.5f;
 				x -= incrementX;
 				y = yValue + incrementY;
@@ -340,7 +343,7 @@ public class World {
 			//Generate random banana size/points/boost
 			float bananaSize = randomizeBananaSize();
 			int points = 120 - ((int)bananaSize * 10);
-			float boost = bananaSize * 30;
+			float boost = bananaSize * 24;
 
 			Banana b = new Banana(xValue, yValue, bananaSize, bananaSize, boost, points);
 
@@ -429,7 +432,7 @@ public class World {
 
 	private float randomizeBananaSize(){
 		float minSize = 0.8f;
-		float maxSize = 1.6f;
+		float maxSize = 1.5f;
 
 		Random r = new Random();		
 
@@ -460,10 +463,11 @@ public class World {
 			if(OverlapTester.overlapCircles(monkey.hitZone, b.hitZone)) {
 
 				// BANANA EXPLOSION YO
-				activeExplosions.add(new Explosion(10, (int)b.position.x, (int)b.position.y, 0.5f));
+				activeExplosions.add(new Explosion(10, (int)b.position.x, (int)b.position.y, 0.3f));
 
 				bananaScore += b.points;
 				monkey.bananaCollision(b.boostValue);
+				listener.playBananaHit();
 
 				activeBananas.remove(b);
 			}
@@ -516,7 +520,7 @@ public class World {
 
 	public void shootMonkey()
 	{
-		activeExplosions.add(new Explosion(30, (int)activeBarrel.position.x, (int)activeBarrel.position.y, 0.5f));
+		activeExplosions.add(new Explosion(30, (int)activeBarrel.position.x, (int)activeBarrel.position.y, 0.3f));
 		activeBarrel = null;
 
 		monkey.state = Monkey.PLAYER_STATE_FLYING;
@@ -529,7 +533,7 @@ public class World {
 			BarrelToken bt = activeBarrel.sequence.tokens.get(i);
 
 			if(OverlapTester.pointInRectangle(bt.bounds, touch)) {
-				activeExplosions.add(new Explosion(20, (int)bt.position.x, (int)bt.position.y, 0.5f));
+				activeExplosions.add(new Explosion(20, (int)bt.position.x, (int)bt.position.y, 0.7f));
 				activeBarrel.sequence.inputSequence(bt);				
 			}
 		}
@@ -546,11 +550,11 @@ public class World {
 		if(activeBarrel.sequence.completionBonus <= 15) {
 			activeBarrel.sequence.completionBonus = 15.0f;
 		}
-		
+
 		monkey.velocity.y = activeBarrel.sequence.completionBonus;
 		monkey.jump += (activeBarrel.sequence.totalSuccess) ? 1 : 0;
 		monkey.jump = (monkey.jump > 5) ? 5 : monkey.jump;
-		
+
 		activeBarrel = null;
 	}
 }
