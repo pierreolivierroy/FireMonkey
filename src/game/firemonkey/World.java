@@ -15,6 +15,7 @@ public class World {
 		void playBananaHit();
 		void playBarrelOut();
 		void playBonusAcquired();
+		void playMiss();
 	}
 
 	// World's size
@@ -59,7 +60,6 @@ public class World {
 	public static Vector2 gravity;
 
 	private float nextGenerationHeight;
-	private float lastBarrelHeight;
 
 	public float maxHeight = 0.0f; 
 	public float levelTargetHeight = 10000.0f; // DEBUG VALUE
@@ -86,7 +86,6 @@ public class World {
 		this.activeExplosions = new ArrayList<Explosion>();
 
 		this.nextGenerationHeight = 0;
-		this.lastBarrelHeight = WORLD_HEIGHT * 4; // DEBUG
 
 		this.score = 0;
 		this.bananaScore = 0;
@@ -142,8 +141,6 @@ public class World {
 		{
 			// UNLOCK LEVEL X
 		}
-		
-		
 	}
 
 	private void updateBananas(float deltaTime)
@@ -445,8 +442,6 @@ public class World {
 		int nbBananas = r.nextInt(maxbananas-minBananas) + minBananas;
 
 		float increment = 1.5f;
-		float minSpacer = 1.0f;
-		float maxSpacer = 3.0f;
 
 		float xValue = rand.nextFloat() * (maxWidth - minWidth) + minWidth;
 		float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
@@ -524,7 +519,7 @@ public class World {
 			activeBarrel.state = Barrel.STATE_MONKEY_IN;
 
 			if(activeBarrel.sequence == null) {
-				activeBarrel.generateSequence(World.currentLevel, monkey.position.y);
+				activeBarrel.generateSequence(World.currentLevel, monkey.position.y, listener);
 			}
 		}
 	}
@@ -538,7 +533,7 @@ public class World {
 		float odds = rand.nextFloat();
 
 		if(odds > 0.985f && odds < 0.989f) {
-			float xValue = (rand.nextFloat() * WORLD_WIDTH - 1) + 1;
+			float xValue = (rand.nextFloat() * WORLD_WIDTH - 1.5f) + 1.5f;
 			float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
 
 			if(yValue < monkey.position.y + WORLD_HEIGHT/2)
@@ -551,9 +546,6 @@ public class World {
 	private void checkGameOver()
 	{
 		if(monkey.position.y < maxHeight - WORLD_HEIGHT)
-
-			// WRITE SCORE TO HIGHSCORE FOR LEVEL X
-
 			state = WORLD_STATE_GAME_OVER;
 	}
 
@@ -574,7 +566,6 @@ public class World {
 			if(OverlapTester.pointInRectangle(bt.bounds, touch)) {
 				activeExplosions.add(new Explosion(20, (int)bt.position.x, (int)bt.position.y, 1.5f));
 				activeBarrel.sequence.inputSequence(bt);
-				listener.playBananaHit();
 			}
 		}
 
@@ -594,6 +585,7 @@ public class World {
 		monkey.velocity.y = activeBarrel.sequence.completionBonus;
         if(activeBarrel.sequence.totalSuccess) {
             monkey.jump++;
+            score += 100;
             listener.playBonusAcquired();
         }
         

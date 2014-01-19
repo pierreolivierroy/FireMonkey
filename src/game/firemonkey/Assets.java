@@ -57,6 +57,12 @@ public class Assets {
     public static Texture numbersTexture;
     public static ArrayList<TextureRegion> numbersList;
 
+    // Game Texts
+    public static Texture textsTexture;
+    public static TextureRegion readyText;
+    public static TextureRegion clickToStartText;
+    public static TextureRegion gameoverText;
+
     // Game Backgrounds
     public static Texture menuBackgroundTexture;
     public static TextureRegion menuBackground;
@@ -89,9 +95,11 @@ public class Assets {
     public static Sound bananaSound_2;
     public static Sound barrelSound_1;
     public static Sound bonusSound_1;
+    public static Sound missSound_1;
     
     public static Music intro;
     public static Music spaceMusic;
+    public static Music jungleMusic;
     
     public static boolean loaded = false;
 
@@ -164,6 +172,12 @@ public class Assets {
         numbersList.add(new TextureRegion(numbersTexture, 128, 128, 128 ,128));
         numbersList.add(new TextureRegion(numbersTexture, 0, 256, 128 ,128));
 
+        // Game texts
+        textsTexture = new Texture(game, "texts.png");
+        readyText = new TextureRegion(textsTexture, 0, 0, 512, 128);
+        clickToStartText = new TextureRegion(textsTexture, 0, 128, 512, 40);
+        gameoverText = new TextureRegion(textsTexture, 0, 165, 512, 91);
+
         // Menu
         menuBackgroundTexture = new Texture(game, "menu.png");
         menuBackground = new TextureRegion(menuBackgroundTexture, 0, 0, 768, 1280);
@@ -177,7 +191,7 @@ public class Assets {
         bananaSound_2 = game.getAudio().newSound("banana_2.ogg");
         bonusSound_1 = game.getAudio().newSound("bonus_1.ogg");
         barrelSound_1 = game.getAudio().newSound("barrel_1.ogg");
-
+        missSound_1 = game.getAudio().newSound("miss_1.ogg");
         
         intro = game.getAudio().newMusic("intro.ogg");
         intro.setLooping(true);
@@ -186,6 +200,10 @@ public class Assets {
         spaceMusic = game.getAudio().newMusic("space.ogg");
         spaceMusic.setLooping(true);
         spaceMusic.setVolume(0.8f);
+        
+        jungleMusic = game.getAudio().newMusic("jungle.ogg");
+        jungleMusic.setLooping(true);
+        jungleMusic.setVolume(0.8f);
 
     }
     
@@ -215,6 +233,7 @@ public class Assets {
         bananasTexture.reload();
         barrelsTexture.reload();
         numbersTexture.reload();
+        highscoreBubblesTexture.reload();
         
         try {
         	jungleBackgrounds.reload();
@@ -227,8 +246,7 @@ public class Assets {
         try {
         	spaceBackgrounds.reload();
 		} catch (Exception e) { }
-        
-
+       
         //if(Settings.soundEnabled )
         // music.play();
     }

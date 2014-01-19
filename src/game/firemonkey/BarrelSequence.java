@@ -1,7 +1,8 @@
 package game.firemonkey;
 
+import game.firemonkey.World.WorldListener;
+
 import java.util.ArrayList;
-import java.util.Random;
 
 import com.bag.lib.math.Circle;
 import com.bag.lib.math.OverlapTester;
@@ -26,8 +27,9 @@ public class BarrelSequence {
 	public int state;
 	public float lifeTime;
 	public boolean totalSuccess;
+	WorldListener listener;
 	
-	public BarrelSequence(int difficulty, float height)
+	public BarrelSequence(int difficulty, float height, WorldListener wl)
 	{
 		state = STATE_ACTIVE;
 		tokens = new ArrayList<BarrelToken>();
@@ -35,6 +37,8 @@ public class BarrelSequence {
 		nextIndex = 0;
 		completionBonus = 0;
 		totalSuccess = false;
+		this.listener = wl;
+		
 		generate(difficulty, height);
 		
 		if(difficulty == DIFF_EASY)
@@ -72,7 +76,7 @@ public class BarrelSequence {
 		
 		if (difficulty == DIFF_EASY) {
 			nbTokens = 3;
-            size = 140.0f;
+            size = 160.0f;
             bonus = 15.0f;
             time = 5.0f;
 
@@ -97,7 +101,7 @@ public class BarrelSequence {
 
 		} else if (difficulty == DIFF_MEDIUM) {
 			nbTokens = 4;
-			size = 100.0f;
+			size = 120.0f;
 			bonus = 20.0f;
 			time = 1.5f;
 
@@ -122,7 +126,7 @@ public class BarrelSequence {
 			
 		} else if (difficulty == DIFF_HARD) {
             nbTokens = 5;
-            size = 100.0f;
+            size = 120.0f;
             bonus = 20.0f;
             time = 1.5f;
 
@@ -147,7 +151,6 @@ public class BarrelSequence {
 			
 		}
 		
-		Random rand = new Random();
 		for (int i = 0; i < nbTokens; i++) {
 			Vector2 pos = anchorPoints.get(i);			
 			BarrelToken bt = new BarrelToken(pos.x, pos.y, size, size, i, time, bonus);
@@ -172,10 +175,10 @@ public class BarrelSequence {
 		if(bt.index == nextIndex) {
 			bt.success = true;
 			nextIndex = bt.index + 1;
-			// PLAY COOL SOUND
+			listener.playBananaHit();
 		} else if (bt.index < tokens.size()){
 			nextIndex = bt.index + 1;
-			// PLAY BAD SOUND
+			listener.playMiss();
 		} else {
 			finalizeSequence();
 			// PLAY WIN SOUND
