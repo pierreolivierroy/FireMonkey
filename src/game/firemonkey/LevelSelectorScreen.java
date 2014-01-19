@@ -108,6 +108,7 @@ public class LevelSelectorScreen extends GLScreen {
                 int curLevel = 1;
                 for(UIButton button : levelButtons) {
                     if(button.state == UIButton.STATE_PRESSED) {
+                    	Assets.bananaSound_1.play(0.8f);
                         if(playerPosition == curLevel) {
                             changeScreen = true;
                             World.currentLevel = curLevel;
@@ -122,6 +123,7 @@ public class LevelSelectorScreen extends GLScreen {
                     curLevel++;
                 }
                 if(startGame.state == UIButton.STATE_PRESSED) {
+                	Assets.bananaSound_1.play(0.8f);
                     changeScreen = true;
                     startGame.state = UIButton.STATE_IDLE;
                     World.currentLevel = playerPosition;
