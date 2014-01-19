@@ -468,7 +468,7 @@ public class World {
 		
 		Random r = new Random();
 		
-		if(r.nextFloat() > 0.99)
+		if(r.nextFloat() > 0.97)
 			return giganticSize;
 
 		return r.nextFloat() * (maxSize - minSize) + minSize;

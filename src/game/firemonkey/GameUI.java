@@ -27,17 +27,13 @@ public class GameUI {
 	    bananaIcon4 = new UIImage(48, 35, 60, 45, 30, Assets.bananaNormal);
 	    bananaIcon5 = new UIImage(55, 34, 60, 45, 40, Assets.bananaNormal);
 	    
-	
-	    jumpIcon = new UIImage(650, 35, 50, 50, 0, Assets.rocket);	    
+	    jumpIcon = new UIImage(730, 35, 50, 50, 0, Assets.rocket);	    
 	    
 	    UIImagesBanana.add(bananaIcon1);
 	    UIImagesBanana.add(bananaIcon2);
 	    UIImagesBanana.add(bananaIcon3);
 	    UIImagesBanana.add(bananaIcon4); 
 	    UIImagesBanana.add(bananaIcon5);
-	   
-	    //UIButtons.add(button1);
-	    //UIButtons.add(button2);
 	    
 	    batcher = sBatcher;
 	}
