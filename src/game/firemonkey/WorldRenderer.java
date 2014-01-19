@@ -108,6 +108,9 @@ public class WorldRenderer {
                 batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, Monkey.PLAYER_WIDTH, Monkey.PLAYER_HEIGHT, Assets.monkey_idle);
             else if(world.monkey.state == Monkey.PLAYER_STATE_FLYING)
                 batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, Monkey.PLAYER_WIDTH, Monkey.PLAYER_HEIGHT, Assets.monkey_flying);
+            else if(world.monkey.state == Monkey.PLAYER_STATE_BONUS) {
+                batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, 0, 0, Assets.monkey_flying);
+            }
             else
                 batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, Monkey.PLAYER_WIDTH, Monkey.PLAYER_HEIGHT, Assets.monkey_flying);
             batcher.endBatch();
@@ -118,6 +121,8 @@ public class WorldRenderer {
                 batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, Monkey.PLAYER_WIDTH, Monkey.PLAYER_HEIGHT, Assets.monkey_idle_space);
             else if(world.monkey.state == Monkey.PLAYER_STATE_FLYING)
                 batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, Monkey.PLAYER_WIDTH, Monkey.PLAYER_HEIGHT, Assets.monkey_flying_space);
+            else if(world.monkey.state == Monkey.PLAYER_STATE_BONUS)
+                batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, 0, 0, Assets.monkey_flying);
             else
                 batcher.drawSprite(world.monkey.position.x, world.monkey.position.y, Monkey.PLAYER_WIDTH, Monkey.PLAYER_HEIGHT, Assets.monkey_flying_space);
             batcher.endBatch();
@@ -148,13 +153,17 @@ public class WorldRenderer {
     		return;
     	
     	Barrel b = world.activeBarrel;
-    	batcher.beginBatch(Assets.tileMapItems);
-    	batcher.drawSprite(b.position.x, b.position.y, b.bounds.width, b.bounds.height, b.tiltAngle-10, Assets.blueTile);
-    	 
+    	batcher.beginBatch(Assets.barrelsTexture);
+        if(world.monkey.state == Monkey.PLAYER_STATE_BONUS) {
+            batcher.drawSprite(b.position.x, b.position.y, b.bounds.width, b.bounds.height, b.tiltAngle-10, Assets.barrelFull);
+        } else {
+            batcher.drawSprite(b.position.x, b.position.y, b.bounds.width, b.bounds.height, b.tiltAngle-10, Assets.barrelEmpty);
+        }
+
     	if(world.activeBarrel.sequence != null) {
 	    	for (BarrelToken bt : world.activeBarrel.sequence.tokens) {
 	    		if(!bt.touched) {
-					batcher.drawSprite(bt.position.x, bt.position.y, bt.bounds.width, bt.bounds.height, Assets.blueTile);
+					batcher.drawSprite(bt.position.x, bt.position.y, bt.bounds.width, bt.bounds.height, Assets.barrelEmpty);
 	    		}
 			}
     	}

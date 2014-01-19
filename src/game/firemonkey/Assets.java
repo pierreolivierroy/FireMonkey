@@ -40,14 +40,14 @@ public class Assets {
     public static TextureRegion monkey_hit_bonus_space;
     public static TextureRegion monkey_dead_space;
 
-
     public static Texture bananasTexture;
     public static TextureRegion bananaNormal;
     public static TextureRegion bananaFrozen;
     public static TextureRegion bananaSpace;
 
-    public static Texture explosionItems;
-    public static TextureRegion explo1;
+    public static  Texture barrelsTexture;
+    public static TextureRegion barrelEmpty;
+    public static TextureRegion barrelFull;
 
     // Game Backgrounds
     public static Texture menuBackgroundTexture;
@@ -112,6 +112,10 @@ public class Assets {
         bananaNormal = new TextureRegion(bananasTexture, 0, 0, 128, 128);
         bananaFrozen = new TextureRegion(bananasTexture, 128, 0, 128, 128);
         bananaSpace = new TextureRegion(bananasTexture, 0, 128, 128, 128);
+
+        barrelsTexture = new Texture(game, "barrels.png");
+        barrelEmpty = new TextureRegion(barrelsTexture, 0, 0, 150, 181);
+        barrelFull = new TextureRegion(barrelsTexture, 256, 0, 150, 181);
 
         // Menu
         menuBackgroundTexture = new Texture(game, "menu.png");
