@@ -53,6 +53,9 @@ public class Assets {
     public static Texture numbersTexture;
     public static ArrayList<TextureRegion> numbersList;
 
+    public static Texture boostTexture;
+    public static TextureRegion boost;
+
     // Game Texts
     public static Texture textsTexture;
     public static TextureRegion readyText;
@@ -172,6 +175,9 @@ public class Assets {
         numbersList.add(new TextureRegion(numbersTexture, 0, 128, 128 ,128));
         numbersList.add(new TextureRegion(numbersTexture, 128, 128, 128 ,128));
         numbersList.add(new TextureRegion(numbersTexture, 0, 256, 128 ,128));
+
+        boostTexture = new Texture(game, "boost.png");
+        boost = new TextureRegion(boostTexture, 0, 0, 128, 128);
 
         // Game texts
         textsTexture = new Texture(game, "texts.png");
