@@ -55,6 +55,7 @@ public class World {
 
 	public float maxHeight = 0.0f; 
 	public float levelTargetHeight = 10000.0f; // DEBUG VALUE
+	public float lastHeighStep;
 
 	public int score; 			// Overall final score
 	private int bananaScore; 		// Score based on nb of bananas consumed
@@ -102,19 +103,20 @@ public class World {
 
 		if (monkey.state == Monkey.PLAYER_STATE_FLYING || monkey.state == Monkey.PLAYER_STATE_FALLING) // Starting is DEBUG
 			monkey.velocity.x = -accelX / 10 * Monkey.MOVE_VELOCITY;
-
-		if(monkey.state == Monkey.PLAYER_STATE_HIT) {
-			//	    	explosion = new Explosion(50, (int)player.position.x, (int)player.position.y);
-			//	    	player.state = player.previousState;
-		}
-
+		
 		monkey.update(deltaTime);
-
+		
+		float lastPos = monkey.position.y;
 		maxHeight = Math.max(monkey.position.y, maxHeight);
+		
+		
+		
 		if(maxHeight >= levelTargetHeight)
 		{
 			// UNLOCK LEVEL X
 		}
+		
+		
 	}
 
 	private void updateBananas(float deltaTime)
@@ -463,7 +465,7 @@ public class World {
 			if(OverlapTester.overlapCircles(monkey.hitZone, b.hitZone)) {
 
 				// BANANA EXPLOSION YO
-				activeExplosions.add(new Explosion(10, (int)b.position.x, (int)b.position.y, 0.3f));
+				activeExplosions.add(new Explosion(10, (int)b.position.x, (int)b.position.y, 0.2f));
 
 				bananaScore += b.points;
 				monkey.bananaCollision(b.boostValue);
@@ -520,7 +522,7 @@ public class World {
 
 	public void shootMonkey()
 	{
-		activeExplosions.add(new Explosion(30, (int)activeBarrel.position.x, (int)activeBarrel.position.y, 0.3f));
+		activeExplosions.add(new Explosion(30, (int)activeBarrel.position.x, (int)activeBarrel.position.y, 0.4f));
 		activeBarrel = null;
 
 		monkey.state = Monkey.PLAYER_STATE_FLYING;
@@ -533,7 +535,7 @@ public class World {
 			BarrelToken bt = activeBarrel.sequence.tokens.get(i);
 
 			if(OverlapTester.pointInRectangle(bt.bounds, touch)) {
-				activeExplosions.add(new Explosion(20, (int)bt.position.x, (int)bt.position.y, 0.7f));
+				activeExplosions.add(new Explosion(20, (int)bt.position.x, (int)bt.position.y, 1.5f));
 				activeBarrel.sequence.inputSequence(bt);				
 			}
 		}

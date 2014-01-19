@@ -2,6 +2,8 @@ package game.firemonkey;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import android.util.Log;
+
 import com.bag.lib.gl.Camera2D;
 import com.bag.lib.gl.SpriteBatcher;
 import com.bag.lib.gl.TextureRegion;
@@ -38,6 +40,7 @@ public class WorldRenderer {
         renderObjects();
     }
     
+    float modif = 0;
     public void renderBackground() {
         float center = 8;
         if(World.currentLevel == 1) {
@@ -63,7 +66,9 @@ public class WorldRenderer {
                 batcher.drawSprite(cam.position.x, center + 15, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.snowBackgroundRepeat);
             }
             if(world.maxHeight >= 23) {
-                batcher.drawSprite(cam.position.x, cam.position.y, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.snowBackgroundRepeat);
+            	Log.d("BG", "Height" + 31 + ((world.maxHeight/1000) * 16));
+                batcher.drawSprite(cam.position.x, 31 + ((world.maxHeight/1000) * 16), World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.snowBackgroundRepeat);
+                batcher.drawSprite(cam.position.x, 31 + ((world.maxHeight/1000) * 16) + World.WORLD_HEIGHT, World.WORLD_WIDTH, World.WORLD_HEIGHT, Assets.snowBackgroundRepeat);
             }
             batcher.endBatch();
         }
@@ -160,13 +165,13 @@ public class WorldRenderer {
             batcher.drawSprite(b.position.x, b.position.y, b.bounds.width, b.bounds.height, b.tiltAngle-10, Assets.barrelEmpty);
         }
 
-    	if(world.activeBarrel.sequence != null) {
-	    	for (BarrelToken bt : world.activeBarrel.sequence.tokens) {
-	    		if(!bt.touched) {
-					batcher.drawSprite(bt.position.x, bt.position.y, bt.bounds.width, bt.bounds.height, Assets.barrelEmpty);
-	    		}
-			}
-    	}
+//    	if(world.activeBarrel.sequence != null) {
+//	    	for (BarrelToken bt : world.activeBarrel.sequence.tokens) {
+//	    		if(!bt.touched) {
+//					batcher.drawSprite(bt.position.x, bt.position.y, bt.bounds.width, bt.bounds.height, Assets.barrelEmpty);
+//	    		}
+//			}
+//    	}
     	
     	batcher.endBatch();
     }
