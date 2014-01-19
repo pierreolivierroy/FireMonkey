@@ -197,7 +197,7 @@ public class BarrelSequence {
 	
 	public void finalizeSequence()
 	{
-		float bonus = 8.0f;
+		float bonus = 18.0f;
 		int count = 0;
 		for (BarrelToken bt : tokens) {
 			
