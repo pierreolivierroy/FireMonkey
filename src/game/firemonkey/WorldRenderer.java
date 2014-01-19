@@ -114,6 +114,11 @@ public class WorldRenderer {
     
     private void renderPlayer()
     {
+    	if(world.monkey.state == Monkey.PLAYER_STATE_BONUS){
+    		world.monkey.jumpBoostActive = false;
+    		world.monkey.jumpHeight = 0f;
+    	}
+    	
     	if(world.monkey.jumpBoostActive){
         	
         	if(world.monkey.position.y >= world.monkey.jumpHeight){
