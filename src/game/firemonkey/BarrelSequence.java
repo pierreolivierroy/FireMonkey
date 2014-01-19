@@ -127,7 +127,7 @@ public class BarrelSequence {
 		} else if (difficulty == DIFF_HARD) {
             nbTokens = 5;
             size = 120.0f;
-            bonus = 20.0f;
+            bonus = 34.0f;
             time = 1.5f;
 
             generateAnchorList(nbTokens, height);
