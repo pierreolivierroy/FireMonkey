@@ -28,8 +28,6 @@ public class Assets {
     public static TextureRegion highscoreBubbleRight;
 
     // Game Objects
-    public static Texture playerItems;
-    public static TextureRegion player;
     
     public static Texture monkeyTexture;
     public static TextureRegion monkey_idle;
@@ -162,7 +160,7 @@ public class Assets {
         flameYellow= new TextureRegion(flamesTexture, 64, 0, 32, 32);
         flameOrange = new TextureRegion(flamesTexture, 0, 0, 32, 32);
         rocket = new TextureRegion(flamesTexture, 96, 0, 32, 32);
-        flames = new TextureRegion(flamesTexture, 0, 0, 32, 32);
+        flames = new TextureRegion(flamesTexture, 0, 32, 32, 32);
 
         barrelsTexture = new Texture(game, "barrels.png");
         barrelEmpty = new TextureRegion(barrelsTexture, 0, 0, 150, 181);
@@ -245,6 +243,7 @@ public class Assets {
     }
 
     public static void reload() {
+    	menuBackgroundTexture.reload();
         tileMapItems.reload();
         mapBackgroundTexture.reload();
         mapButtonsTexture.reload();
@@ -254,7 +253,11 @@ public class Assets {
         numbersTexture.reload();
         monkeyTexture.reload();
         fontTex.reload();
+        textsTexture.reload();
         highscoreBubblesTexture.reload();
+        menuButtonsTexture.reload();
+        flamesTexture.reload();
+        highscoreBackgroundTexture.reload();
         
         try {
         	jungleBackgrounds.reload();
@@ -268,8 +271,7 @@ public class Assets {
         	spaceBackgrounds.reload();
 		} catch (Exception e) { }
        
-        //if(Settings.soundEnabled )
-        // music.play();
+
     }
 
     public static void playSound(Sound sound) {

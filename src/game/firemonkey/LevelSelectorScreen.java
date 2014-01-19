@@ -237,7 +237,7 @@ public class LevelSelectorScreen extends GLScreen {
 
     @Override
     public void pause() {
-    	Assets.intro.pause();
+    	Assets.intro.stop();
     }
 
     @Override

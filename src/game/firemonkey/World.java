@@ -211,7 +211,7 @@ public class World {
 				if(min < pattern && pattern <= BANANA_PATTERN_FRENZY)//FRENZY
 					generateRectangleBananaPattern(6, 7, 49, 50);
 				else if(BANANA_PATTERN_FRENZY < pattern && pattern <= BANANA_PATTERN_BANANA)
-					generateStackBananaPattern();
+					generateBananaPattern();
 				else if(BANANA_PATTERN_BLANK_MIN < pattern && pattern <= BANANA_PATTERN_RANDOM_MIN)
 					generateRandomBananaPattern(5 - currentLevel);
 				else if(BANANA_PATTERN_RANDOM_MIN < pattern && pattern <= BANANA_PATTERN_STACK_MIN)
@@ -360,8 +360,6 @@ public class World {
 				y = yValue + incrementY;
 			}
 		}
-		// Remove clouds if out of view
-
 	}
 
 	private void generateRandomBananaPattern(int number){

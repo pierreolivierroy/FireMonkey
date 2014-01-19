@@ -21,12 +21,15 @@ public class Monkey extends DynamicGameObject {
     public static final float MOVE_VELOCITY = 25.0f;
     
     public static final int PLAYER_DEFAULT_JUMPS 	= 5;
+    public static final float PLAYER_BOOST_MAX_HEIGHT = 40f;
     
     public int state;   
     public int previousState;
     public Circle hitZone;
     public int jump;
+    public float jumpHeight = 0f;
     public boolean firstJump = true;
+    public boolean jumpBoostActive = false;
     
     //private float stateTime;   
     public float immuneTime;
