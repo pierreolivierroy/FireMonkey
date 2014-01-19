@@ -371,7 +371,7 @@ public class World {
 			//Generate random banana size/points/boost
 			float bananaSize = randomizeBananaSize();
 			int points = 120 - ((int)bananaSize * 10);
-			float boost = bananaSize * 25;
+			float boost = bananaSize * 22;
 
 			Banana b = new Banana(xValue, yValue, bananaSize, bananaSize, boost, points);
 
@@ -464,11 +464,11 @@ public class World {
 	private float randomizeBananaSize(){
 		float minSize = 0.8f;
 		float maxSize = 1.5f;
-		float giganticSize = 3.0f;
+		float giganticSize = 2.5f;
 		
 		Random r = new Random();
 		
-		if(r.nextFloat() > 0.97)
+		if(r.nextFloat() > 0.985)
 			return giganticSize;
 
 		return r.nextFloat() * (maxSize - minSize) + minSize;
@@ -533,10 +533,10 @@ public class World {
 		rand = new Random();
 		float odds = rand.nextFloat();
 
-		if(odds > 0.992f && odds < 1.0f) {
+		if(odds > 0.995f && odds < 1.0f) {
 			float xValue = (rand.nextFloat() * (WORLD_WIDTH - 1.5f)) + 1.5f;
 			float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
-			Circle c = new Circle(xValue, yValue, 0.72f);
+			Circle c = new Circle(xValue, yValue, 0.75f);
 			
 			for (Banana b : activeBananas) {
 				if(OverlapTester.overlapCircles(b.hitZone, c)) {
