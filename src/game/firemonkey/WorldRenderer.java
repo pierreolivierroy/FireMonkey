@@ -120,10 +120,9 @@ public class WorldRenderer {
         		System.out.println("FINI");
         		world.monkey.jumpHeight = 0f;
         		world.monkey.jumpBoostActive = false;
-        	}        
-        	else {
-        		batcher.beginBatch(Assets.flamesTexture);
-            	batcher.drawSprite(world.monkey.position.x, world.monkey.position.y - 1f, 1f, 1f, Assets.flames);
+        	} else if(world.monkey.state != Monkey.PLAYER_STATE_FALLING && world.monkey.state != Monkey.PLAYER_STATE_BONUS) {
+        		batcher.beginBatch(Assets.boostTexture);
+            	batcher.drawSprite(world.monkey.position.x, world.monkey.position.y - 1f, 1f, 1f, Assets.boost);
             	batcher.endBatch();
         	}
         }

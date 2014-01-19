@@ -381,7 +381,7 @@ public class GameScreen extends GLScreen {
 		batcher.endBatch();
 
 		batcher.beginBatch(Assets.fontTex);
-		Assets.font.drawText(batcher, "X" + world.monkey.jump, 700, 30);
+		Assets.font.drawText(batcher, world.monkey.jump + "X", 650, 30);
 		batcher.endBatch();
 
 		gameUI.draw();
