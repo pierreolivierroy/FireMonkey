@@ -13,7 +13,7 @@ public class Banana extends DynamicGameObject{
 	
 	public final static int BOOST_LOW = 15;
 	public final static int BOOST_MED = 25;
-	public final static int BOOST_HIGH = 40;
+	public final static int BOOST_HIGH = 33;
 	
 	public final static int POINTS_LOW = 20;
 	public final static int POINTS_MED = 40;

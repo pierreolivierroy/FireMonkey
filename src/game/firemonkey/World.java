@@ -178,7 +178,7 @@ public class World {
 			} else {
 				//Generate banana petterns randomly according to their stats
 				if(BANANA_PATTERN_BLANK_MIN < pattern && pattern <= BANANA_PATTERN_RANDOM_MIN)
-					generateRandomBananaPattern(6);
+					generateRandomBananaPattern(4 - currentLevel);
 				else if(BANANA_PATTERN_RANDOM_MIN < pattern && pattern <= BANANA_PATTERN_STACK_MIN)
 					generateStackBananaPattern();
 				else if(BANANA_PATTERN_RECTANGLE_MIN < pattern && pattern <= BANANA_PATTERN_DIAGONAL_MIN)
@@ -340,7 +340,7 @@ public class World {
 			//Generate random banana size/points/boost
 			float bananaSize = randomizeBananaSize();
 			int points = 120 - ((int)bananaSize * 10);
-			float boost = bananaSize * 30;
+			float boost = bananaSize * 20;
 
 			Banana b = new Banana(xValue, yValue, bananaSize, bananaSize, boost, points);
 
@@ -549,7 +549,7 @@ public class World {
 		
 		monkey.velocity.y = activeBarrel.sequence.completionBonus;
 		monkey.jump += (activeBarrel.sequence.totalSuccess) ? 1 : 0;
-		monkey.jump = (monkey.jump > 5) ? 5 : monkey.jump;
+		monkey.jump = (monkey.jump > Monkey.PLAYER_DEFAULT_JUMPS) ? Monkey.PLAYER_DEFAULT_JUMPS : monkey.jump;
 		
 		activeBarrel = null;
 	}
