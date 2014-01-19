@@ -39,6 +39,11 @@ public class World {
 	float maxWidth = WORLD_WIDTH - 0.5f;
 	boolean showBanana = false;
 
+    // Game mode
+    public static int GAME_MODE_QUICKSTART = 1;
+    public static int GAME_MODE_CAMPAIGN = 2;
+    public static int GAME_MODE;
+
 	public final WorldListener listener;
 	public GameUI gameUI;
 

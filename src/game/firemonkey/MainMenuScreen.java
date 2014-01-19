@@ -88,10 +88,12 @@ public class MainMenuScreen extends GLScreen {
                     changeScreen = true;
                     quickGame.state = UIButton.STATE_IDLE;
                     Assets.loadLevel((GLGame) game, 1);
+                    World.GAME_MODE = World.GAME_MODE_QUICKSTART;
                     screen = new GameScreen(game);
                 } else if(campaign.state == UIButton.STATE_PRESSED) {
                     changeScreen = true;
                     campaign.state = UIButton.STATE_IDLE;
+                    World.GAME_MODE = World.GAME_MODE_CAMPAIGN;
                     screen = new LevelSelectorScreen(game);
                 } else if(highScore.state == UIButton.STATE_PRESSED) {
                     changeScreen = true;
