@@ -1,22 +1,18 @@
 package game.firemonkey;
 
+import game.firemonkey.World.WorldListener;
+
 import java.util.List;
 import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import android.util.Log;
-
 import com.bag.lib.Game;
-import com.bag.lib.Music;
 import com.bag.lib.Input.TouchEvent;
 import com.bag.lib.gl.Camera2D;
 import com.bag.lib.gl.SpriteBatcher;
 import com.bag.lib.impl.GLScreen;
-import com.bag.lib.math.OverlapTester;
 import com.bag.lib.math.Vector2;
-
-import game.firemonkey.World.WorldListener;
 
 public class GameScreen extends GLScreen {
 	
@@ -79,17 +75,22 @@ public class GameScreen extends GLScreen {
 				float r = rand.nextFloat();
 				
 				if(r > 0.5)
-					Assets.bananaSound_1.play(0.5f);		
+					Assets.bananaSound_1.play(0.8f);		
 				else
-					Assets.bananaSound_2.play(0.5f);
+					Assets.bananaSound_2.play(0.8f);
 			}
 			
 			public void playBarrelOut() {
-				Assets.barrelSound_1.play(0.5f);		
+				Assets.barrelSound_1.play(0.9f);		
 			}
 			
 			public void playBonusAcquired() {
-				Assets.bonusSound_1.play(0.5f);		
+				Assets.bonusSound_1.play(1.0f);		
+			}
+
+			@Override
+			public void playMiss() {
+				Assets.missSound_1.play(0.9f);		
 			}
         };
         
@@ -233,13 +234,15 @@ public class GameScreen extends GLScreen {
 			else if(event.type == TouchEvent.TOUCH_UP){
 	        	
 				if(world.monkey.state != Monkey.PLAYER_STATE_BONUS && world.monkey.immuneTime <= 0){
-					if(world.monkey.firstJump == true){
+					if(world.monkey.firstJump){
 		        		world.monkey.firstJump = false;
 		        		world.monkey.velocity.y = 30;
 		        	}
-		        	else if(world.monkey.jump > 0 && world.monkey.jump <= Monkey.PLAYER_DEFAULT_JUMPS && world.monkey.firstJump == false){
-			        		world.monkey.velocity.y = 30;
-				        	world.monkey.jump--; 
+		        	else if(world.monkey.jump > 0 && !world.monkey.firstJump) {
+		        		world.activeExplosions.add(new Explosion(30, (int)world.monkey.position.x, 
+		        				(int) world.monkey.position.y + (int) Monkey.PLAYER_HEIGHT, 3.0f));
+			        	world.monkey.velocity.y = 30;
+				        world.monkey.jump--; 
 		        	}
 				}	        		
 	        } 
@@ -396,16 +399,17 @@ public class GameScreen extends GLScreen {
 
     @Override
     public void pause() {
-    	
+    	stopMusic();
     }
 
     @Override
     public void resume() {   
-    	
+    	selectMusic();
     }
 
     @Override
-    public void dispose() {       
+    public void dispose() { 
+    	stopMusic();
     }
     
     
@@ -414,7 +418,7 @@ public class GameScreen extends GLScreen {
     public void selectMusic() 
     {
     	if (World.currentLevel == 1) {
-    		
+    		Assets.jungleMusic.play();
     	} else if (World.currentLevel == 1) {
     		
     	} else {
@@ -425,7 +429,7 @@ public class GameScreen extends GLScreen {
     public void stopMusic() 
     {
     	if (World.currentLevel == 1) {
-    		
+    		Assets.jungleMusic.stop();
     	} else if (World.currentLevel == 1) {
     		
     	} else {

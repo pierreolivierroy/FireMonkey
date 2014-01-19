@@ -1,7 +1,9 @@
 package game.firemonkey;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import java.util.List;
+
+import javax.microedition.khronos.opengles.GL10;
+
 import com.bag.lib.Game;
 import com.bag.lib.Input;
 import com.bag.lib.Screen;
@@ -11,10 +13,6 @@ import com.bag.lib.impl.GLGame;
 import com.bag.lib.impl.GLScreen;
 import com.bag.lib.math.OverlapTester;
 import com.bag.lib.math.Vector2;
-
-import javax.microedition.khronos.opengles.GL10;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainMenuScreen extends GLScreen {
     Camera2D guiCam;
@@ -135,7 +133,6 @@ public class MainMenuScreen extends GLScreen {
 
     @Override
     public void pause() {
-        //Settings.save(game.getFileIO());
     }
 
     @Override

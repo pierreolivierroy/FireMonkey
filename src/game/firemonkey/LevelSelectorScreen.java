@@ -56,6 +56,7 @@ public class LevelSelectorScreen extends GLScreen {
         startGame = new UIButton(390, 100, 375, 110, null, null, null);
         
         if(!Assets.intro.isPlaying()) {
+        	Assets.intro.setVolume(1.0f);
         	Assets.intro.play();
         }
         

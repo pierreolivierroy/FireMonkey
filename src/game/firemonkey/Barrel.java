@@ -1,5 +1,7 @@
 package game.firemonkey;
 
+import game.firemonkey.World.WorldListener;
+
 import java.util.Random;
 
 import com.bag.lib.DynamicGameObject;
@@ -43,9 +45,9 @@ public class Barrel extends DynamicGameObject{
 		tiltAngle = rand.nextFloat() * 30;
 	}
 	
-	public void generateSequence(int diff, float y)
+	public void generateSequence(int diff, float y, WorldListener wl)
 	{
-		sequence = new BarrelSequence(diff, y);
+		sequence = new BarrelSequence(diff, y, wl);
 	}
 	
 	public void update(float deltaTime)

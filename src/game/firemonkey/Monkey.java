@@ -1,7 +1,5 @@
 package game.firemonkey;
 
-import android.util.Log;
-
 import com.bag.lib.DynamicGameObject;
 import com.bag.lib.math.Circle;
 import com.bag.lib.math.Vector2;
@@ -30,7 +28,7 @@ public class Monkey extends DynamicGameObject {
     public int jump;
     public boolean firstJump = true;
     
-    private float stateTime;   
+    //private float stateTime;   
     public float immuneTime;
         
 	public Monkey(float x, float y, int jump) {
@@ -59,12 +57,12 @@ public class Monkey extends DynamicGameObject {
         // Flying / falling stuff
         if(velocity.y > 0 && state != PLAYER_STATE_FLYING) {
             state = PLAYER_STATE_FLYING;
-            stateTime = 0;
+            //stateTime = 0;
         }
         
         if(velocity.y < 0 && state != PLAYER_STATE_FALLING) {
             state = PLAYER_STATE_FALLING;
-            stateTime = 0;
+            //stateTime = 0;
         }
         
         if(immuneTime > 0)
@@ -74,7 +72,7 @@ public class Monkey extends DynamicGameObject {
         if(position.y < PLAYER_HEIGHT/2)
         	position.y = PLAYER_HEIGHT/2;
         
-        stateTime += deltaTime;        
+        //stateTime += deltaTime;        
     }
     
     public void bananaCollision(float boost) 
