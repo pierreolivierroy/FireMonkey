@@ -120,8 +120,7 @@ public class WorldRenderer {
         		System.out.println("FINI");
         		world.monkey.jumpHeight = 0f;
         		world.monkey.jumpBoostActive = false;
-        	}        
-        	else {
+        	} else if(world.monkey.state != Monkey.PLAYER_STATE_FALLING) {
         		batcher.beginBatch(Assets.boostTexture);
             	batcher.drawSprite(world.monkey.position.x, world.monkey.position.y - 1f, 1f, 1f, Assets.boost);
             	batcher.endBatch();

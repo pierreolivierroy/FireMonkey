@@ -258,6 +258,7 @@ public class Assets {
         menuButtonsTexture.reload();
         flamesTexture.reload();
         highscoreBackgroundTexture.reload();
+        boostTexture.reload();
         
         try {
         	jungleBackgrounds.reload();
