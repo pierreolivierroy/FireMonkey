@@ -122,8 +122,8 @@ public class WorldRenderer {
         		world.monkey.jumpBoostActive = false;
         	}        
         	else {
-        		batcher.beginBatch(Assets.flamesTexture);
-            	batcher.drawSprite(world.monkey.position.x, world.monkey.position.y - 1f, 1f, 1f, Assets.flames);
+        		batcher.beginBatch(Assets.boostTexture);
+            	batcher.drawSprite(world.monkey.position.x, world.monkey.position.y - 1f, 1f, 1f, Assets.boost);
             	batcher.endBatch();
         	}
         }
