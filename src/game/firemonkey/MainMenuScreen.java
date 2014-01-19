@@ -136,13 +136,16 @@ public class MainMenuScreen extends GLScreen {
 
     @Override
     public void pause() {
+    	Assets.intro.pause();
     }
 
     @Override
     public void resume() {
+    	Assets.intro.play();
     }
 
     @Override
     public void dispose() {
+    	Assets.intro.stop();
     }
 }

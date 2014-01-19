@@ -100,6 +100,10 @@ public class GameScreen extends GLScreen {
 			}
         };
         
+        if(Assets.intro.isPlaying()) {
+        	Assets.intro.stop();
+        } 
+        
         selectMusic();
         
         batcher = new SpriteBatcher(glGraphics, 5000);

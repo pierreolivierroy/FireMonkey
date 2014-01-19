@@ -223,15 +223,17 @@ public class LevelSelectorScreen extends GLScreen {
 
     @Override
     public void pause() {
-        //Settings.save(game.getFileIO());
+    	Assets.intro.pause();
     }
 
     @Override
     public void resume() {
+    	Assets.intro.play();
     }
 
     @Override
     public void dispose() {
+    	Assets.intro.stop();
     }
 
     public int getUnlockedLevel() {

@@ -3,6 +3,7 @@ package game.firemonkey;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.bag.lib.math.Circle;
 import com.bag.lib.math.OverlapTester;
 import com.bag.lib.math.Vector2;
 
@@ -380,7 +381,6 @@ public class World {
 			boolean collision = false;
 
 			for (int j = 0; j < activeBananas.size(); j++) {
-
 				if(OverlapTester.overlapCircles(activeBananas.get(j).hitZone, b.hitZone)){
 					collision = true;
 					break;
@@ -535,10 +535,17 @@ public class World {
 		rand = new Random();
 		float odds = rand.nextFloat();
 
-		if(odds > 0.985f && odds < 0.989f) {
-			float xValue = (rand.nextFloat() * WORLD_WIDTH - 1.5f) + 1.5f;
-			float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
-
+		if(odds > 0.986f && odds < 0.989f) {
+			float xValue = (rand.nextFloat() * (WORLD_WIDTH - 1.5f)) + 1.5f;
+			float yValue = (rand.nextFloat() * WORLD_HEIGHT) + 3*nextGenerationHeight;
+			Circle c = new Circle(xValue, yValue, 1.5f/2);
+			
+			for (Banana b : activeBananas) {
+				if(OverlapTester.overlapCircles(b.hitZone, c)) {
+					return;
+				}
+			}
+			
 			if(yValue < monkey.position.y + WORLD_HEIGHT/2)
 				return;
 			

@@ -232,6 +232,7 @@ public class Assets {
         barrelsTexture.reload();
         numbersTexture.reload();
         monkeyTexture.reload();
+        fontTex.reload();
         highscoreBubblesTexture.reload();
         
         try {
