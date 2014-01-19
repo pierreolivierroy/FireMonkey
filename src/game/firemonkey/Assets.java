@@ -28,8 +28,6 @@ public class Assets {
     public static TextureRegion highscoreBubbleRight;
 
     // Game Objects
-    public static Texture playerItems;
-    public static TextureRegion player;
     
     public static Texture monkeyTexture;
     public static TextureRegion monkey_idle;
@@ -239,6 +237,7 @@ public class Assets {
     }
 
     public static void reload() {
+    	menuBackgroundTexture.reload();
         tileMapItems.reload();
         mapBackgroundTexture.reload();
         mapButtonsTexture.reload();
@@ -248,7 +247,11 @@ public class Assets {
         numbersTexture.reload();
         monkeyTexture.reload();
         fontTex.reload();
+        textsTexture.reload();
         highscoreBubblesTexture.reload();
+        menuButtonsTexture.reload();
+        flamesTexture.reload();
+        highscoreBackgroundTexture.reload();
         
         try {
         	jungleBackgrounds.reload();
@@ -262,8 +265,7 @@ public class Assets {
         	spaceBackgrounds.reload();
 		} catch (Exception e) { }
        
-        //if(Settings.soundEnabled )
-        // music.play();
+
     }
 
     public static void playSound(Sound sound) {
