@@ -360,7 +360,7 @@ public class GameScreen extends GLScreen {
 	private void presentRunning() {
 		
 		 batcher.beginBatch(Assets.fontTex);
-         Assets.font.drawText(batcher, "X" + world.score, 125, 30);
+         Assets.font.drawText(batcher, "X" + world.score, 100, 30);
          batcher.endBatch();
          
          batcher.beginBatch(Assets.fontTex);

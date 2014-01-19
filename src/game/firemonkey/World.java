@@ -32,13 +32,14 @@ public class World {
 	public static int currentLevel = 1;
 
 	//Banana patterns
-	public static final int BANANA_PATTERN_BLANK_MIN		= 2;//5%
-	public static final int BANANA_PATTERN_RANDOM_MIN		= 45;//60%
-	public static final int BANANA_PATTERN_STACK_MIN 		= 75;//15%
-	public static final int BANANA_PATTERN_RECTANGLE_MIN 	= 80;//10%
-	public static final int BANANA_PATTERN_DIAGONAL_MIN 	= 95;//10%
-	public static final int BANANA_PATTERN_BANANA			= 98;//10%
-
+	public static final int BANANA_PATTERN_FRENZY			= 1;//1%
+	public static final int BANANA_PATTERN_BANANA			= 3;//2%
+	public static final int BANANA_PATTERN_BLANK_MIN		= 5;//2%
+	public static final int BANANA_PATTERN_RANDOM_MIN		= 60;//55%
+	public static final int BANANA_PATTERN_STACK_MIN 		= 85;//25%
+	public static final int BANANA_PATTERN_RECTANGLE_MIN 	= 90;//5%
+	public static final int BANANA_PATTERN_DIAGONAL_MIN 	= 100;//10%
+	
 	float minWidth = 0.5f;
 	float maxWidth = WORLD_WIDTH - 0.5f;
 	boolean showBanana = false;
@@ -200,24 +201,26 @@ public class World {
 			int min = 0;
 			int max = 100;
 			int pattern = r.nextInt(max-min) + min;		
-
+			
 			if(levelTargetHeight < monkey.position.y && !showBanana){
 				generateBananaPattern();
 				showBanana = true;
 			} else {
 				//Generate banana petterns randomly according to their stats
-				if(BANANA_PATTERN_BLANK_MIN < pattern && pattern <= BANANA_PATTERN_RANDOM_MIN)
+				if(min <= pattern && pattern <= BANANA_PATTERN_FRENZY)//FRENZY
+					generateRectangleBananaPattern(6, 7, 49, 50);
+				else if(BANANA_PATTERN_FRENZY < pattern && pattern <= BANANA_PATTERN_BANANA)
+					generateStackBananaPattern();
+				else if(BANANA_PATTERN_BLANK_MIN < pattern && pattern <= BANANA_PATTERN_RANDOM_MIN)
 					generateRandomBananaPattern(5 - currentLevel);
 				else if(BANANA_PATTERN_RANDOM_MIN < pattern && pattern <= BANANA_PATTERN_STACK_MIN)
 					generateStackBananaPattern();
+				else if(BANANA_PATTERN_STACK_MIN < pattern && pattern <= BANANA_PATTERN_RECTANGLE_MIN)
+					generateRectangleBananaPattern(2, 5, 2, 8);
 				else if(BANANA_PATTERN_RECTANGLE_MIN < pattern && pattern <= BANANA_PATTERN_DIAGONAL_MIN)
-					generateRectangleBananaPattern();
-				else if(BANANA_PATTERN_DIAGONAL_MIN < pattern && pattern <= BANANA_PATTERN_BANANA)
 					generateDiagonalBananaPattern();
-				else if(BANANA_PATTERN_BANANA < pattern && pattern <= max)
-					generateBananaPattern();
 			}
-			//generateRandomBananaPattern(4 - currentLevel);	
+			
 		}		
 		removeBananas();
 	}
@@ -311,7 +314,7 @@ public class World {
 		Random r = new Random();
 		Random randDirection = new Random();
 		int minD = 0;
-		int maxD = 1;
+		int maxD = 2;
 		int direction = randDirection.nextInt(maxD-minD) + minD;	
 		int minBananas = 8;
 		int maxBananas = 14;
@@ -391,20 +394,21 @@ public class World {
 		}
 	}
 
-	private void generateRectangleBananaPattern(){
+	private void generateRectangleBananaPattern(int minWidth, int maxWidth, int minHeight, int maxHeight){
 
 		Random r = new Random();
-		int minWidth = 2;
-		int maxWidth = 5;
-		int minHeight = 2;
-		int maxHeight = 8;
 		int rectangleWidth = r.nextInt(maxWidth-minWidth) + minWidth;
 		int rectangleHeight = r.nextInt(maxHeight-minHeight) + minHeight;
 
 		float incrementX = 0f;	
 		float incrementY = 0f;
-
-		float xValue = (WORLD_WIDTH/(float)rectangleWidth);
+		float xValue = 0f;
+		
+		if(rectangleWidth > 4)
+			xValue = ((WORLD_WIDTH-1f)/(float)rectangleWidth)-(0.5f/2);
+		else
+			xValue = (WORLD_WIDTH)/(float)rectangleWidth;
+	
 
 		float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;		
 		float x = xValue + incrementX;
@@ -420,12 +424,17 @@ public class World {
 				x = xValue + incrementX;						
 				Banana bb = new Banana(x, y, 1, 1, Banana.BOOST_HIGH, Banana.POINTS_MED);
 				activeBananas.add(bb);
-				incrementX += 1.5f;
+				if(rectangleWidth > 4)
+					incrementX += (WORLD_WIDTH-1f)/(float)rectangleWidth;
+				else
+					incrementX += 1.5f;
 			}
 
 			incrementY += 1.5f;
 			y = yValue + incrementY;	
 		}
+		
+		nextGenerationHeight += rectangleHeight;
 	}
 
 	private void generateStackBananaPattern(){

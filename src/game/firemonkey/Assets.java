@@ -84,6 +84,8 @@ public class Assets {
     public static TextureRegion flameRed;
     public static TextureRegion flameYellow;
     public static TextureRegion flameOrange;
+    public static TextureRegion rocket;
+    public static TextureRegion flames;
 
     public static Sound bananaSound_1;
     public static Sound bananaSound_2;
@@ -149,6 +151,8 @@ public class Assets {
         flameRed = new TextureRegion(flamesTexture, 32, 0, 32, 32);
         flameYellow= new TextureRegion(flamesTexture, 64, 0, 32, 32);
         flameOrange = new TextureRegion(flamesTexture, 0, 0, 32, 32);
+        rocket = new TextureRegion(flamesTexture, 96, 0, 32, 32);
+        flames = new TextureRegion(flamesTexture, 0, 0, 32, 32);
 
         barrelsTexture = new Texture(game, "barrels.png");
         barrelEmpty = new TextureRegion(barrelsTexture, 0, 0, 150, 181);
