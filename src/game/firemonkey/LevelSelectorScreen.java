@@ -158,7 +158,44 @@ public class LevelSelectorScreen extends GLScreen {
 
             if(playerPosition == curLevel) {
                 batcher.beginBatch(Assets.monkeyTexture);
-                batcher.drawSprite(button.position.x, button.position.y, 64*1.5f, 64*1.5f, Assets.monkey_flying);
+                if(playerPosition == 3) {
+                    batcher.drawSprite(button.position.x, button.position.y, 64*1.5f, 64*1.5f, Assets.monkey_flying_space);
+                } else {
+                    batcher.drawSprite(button.position.x, button.position.y, 64*1.5f, 64*1.5f, Assets.monkey_flying);
+                }
+                batcher.endBatch();
+
+                batcher.beginBatch(Assets.highscoreBubblesTexture);
+                if(playerPosition == 1) {
+                    batcher.drawSprite(button.position.x - 10, button.position.y + 105, 256, 256, Assets.highscoreBubbleLeft);
+                } else if(playerPosition == 2) {
+                    batcher.drawSprite(button.position.x, button.position.y + 115, 256, 256, Assets.highscoreBubbleRight);
+                } else if(playerPosition == 3) {
+                    batcher.drawSprite(button.position.x - 10, button.position.y + 105, 256, 256, Assets.highscoreBubbleLeft);
+                }
+                batcher.endBatch();
+
+                batcher.beginBatch(Assets.bananasTexture);
+                if(playerPosition == 1) {
+                    batcher.drawSprite(button.position.x - 85, button.position.y + 117, 64, 64, Assets.bananaNormal);
+                } else if(playerPosition == 2) {
+                    batcher.drawSprite(button.position.x - 75, button.position.y + 125, 64, 64, Assets.bananaFrozen);
+                } else if(playerPosition == 3) {
+                    batcher.drawSprite(button.position.x - 85, button.position.y + 117, 64, 64, Assets.bananaSpace);
+                }
+                batcher.endBatch();
+
+                batcher.beginBatch(Assets.fontTex);
+                if(playerPosition == 1) {
+                    Assets.font.drawText(batcher, "High", button.position.x - 40, button.position.y + 137);
+                    //Assets.font.drawText(batcher, "TOUCH TO START!", button.position.x - 80, button.position.y);
+                } else if(playerPosition == 2) {
+                    Assets.font.drawText(batcher, "High", button.position.x - 30, button.position.y + 145);
+                    //Assets.font.drawText(batcher, "TOUCH TO START!", button.position.x - 80, button.position.y);
+                } else if(playerPosition == 3) {
+                    Assets.font.drawText(batcher, "High", button.position.x - 40, button.position.y + 137);
+                    //Assets.font.drawText(batcher, "TOUCH TO START!", button.position.x - 80, button.position.y);
+                }
                 batcher.endBatch();
             }
             curLevel++;

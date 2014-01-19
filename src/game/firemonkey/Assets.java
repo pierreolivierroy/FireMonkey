@@ -27,6 +27,9 @@ public class Assets {
     public static TextureRegion starsCircle;
 
     // Game Interface
+    public static Texture highscoreBubblesTexture;
+    public static TextureRegion highscoreBubbleLeft;
+    public static TextureRegion highscoreBubbleRight;
 
     // Game Objects
     public static Texture playerItems;
@@ -104,6 +107,11 @@ public class Assets {
         blueTile = new TextureRegion(tileMapItems, 0, 0, 64, 64);
         redTile = new TextureRegion(tileMapItems, 64, 0, 64, 64);
         whiteTween = new TextureRegion(tileMapItems, 0, 64, 64, 64);
+
+        // Game Interface
+        highscoreBubblesTexture = new Texture(game, "highscore_bubbles.png");
+        highscoreBubbleLeft = new TextureRegion(highscoreBubblesTexture, 256 , 0, 256, 256);
+        highscoreBubbleRight = new TextureRegion(highscoreBubblesTexture, 0, 0, 256, 256);
 
         // Game Object      
     	monkeyTexture = new Texture(game, "monkeys-hd.png");
