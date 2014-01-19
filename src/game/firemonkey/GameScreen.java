@@ -265,7 +265,7 @@ public class GameScreen extends GLScreen {
 				        world.monkey.jump--;
 				        worldListener.playJump();
 				        world.monkey.jumpBoostActive = true;
-				        world.monkey.jumpHeight = world.monkey.position.y + world.monkey.PLAYER_BOOST_MAX_HEIGHT;
+				        world.monkey.jumpHeight = world.monkey.position.y + Monkey.PLAYER_BOOST_MAX_HEIGHT;
 		        	}
 				}	        		
 	        } 
@@ -396,7 +396,7 @@ public class GameScreen extends GLScreen {
 				for (BarrelToken bt : world.activeBarrel.sequence.tokens) {
 					if (!bt.touched) {
 						batcher.drawSprite(bt.position.x, bt.position.y, 128,
-								128, Assets.numbersList.get(bt.index));
+								128, bt.tiltAngle, Assets.numbersList.get(bt.index));
 					}
 				}
 			}

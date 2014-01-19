@@ -92,7 +92,7 @@ public class World {
 		this.score = 0;
 		this.bananaScore = 0;
 
-		World.gravity = new Vector2(0, -11 - currentLevel);
+		World.gravity = new Vector2(0, -10 - currentLevel);
 	}
 
 	public void update(float deltaTime, float accelX) {
@@ -527,16 +527,16 @@ public class World {
 
 	private void generateBarrel()
 	{
-		if(activeBarrel != null || maxHeight < 8*WORLD_HEIGHT)	// Only 1 barrel at a time
+		if(activeBarrel != null || maxHeight < 8*WORLD_HEIGHT || !monkey.hasFellSinceBarrel)	// Only 1 barrel at a time
 			return;
 
 		rand = new Random();
 		float odds = rand.nextFloat();
 
-		if(odds > 0.986f && odds < 0.989f) {
+		if(odds > 0.99f && odds < 1.0f) {
 			float xValue = (rand.nextFloat() * (WORLD_WIDTH - 1.5f)) + 1.5f;
-			float yValue = (rand.nextFloat() * WORLD_HEIGHT) + 3*nextGenerationHeight;
-			Circle c = new Circle(xValue, yValue, 1.5f/2);
+			float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
+			Circle c = new Circle(xValue, yValue, 0.7f);
 			
 			for (Banana b : activeBananas) {
 				if(OverlapTester.overlapCircles(b.hitZone, c)) {

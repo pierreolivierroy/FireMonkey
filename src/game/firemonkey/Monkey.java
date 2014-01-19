@@ -30,6 +30,7 @@ public class Monkey extends DynamicGameObject {
     public float jumpHeight = 0f;
     public boolean firstJump = true;
     public boolean jumpBoostActive = false;
+    public boolean hasFellSinceBarrel = true;
     
     //private float stateTime;   
     public float immuneTime;
@@ -65,6 +66,7 @@ public class Monkey extends DynamicGameObject {
         
         if(velocity.y < 0 && state != PLAYER_STATE_FALLING) {
             state = PLAYER_STATE_FALLING;
+            hasFellSinceBarrel = true;
             //stateTime = 0;
         }
         
@@ -89,6 +91,7 @@ public class Monkey extends DynamicGameObject {
 	    	this.state = PLAYER_STATE_BONUS;
 	    	this.position.set(barrelPos);
 	    	this.velocity.set(0,0);
+	    	this.hasFellSinceBarrel = false;
     	}
     }
 }
