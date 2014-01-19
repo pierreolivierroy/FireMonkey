@@ -33,7 +33,7 @@ The highscore for each level is saved to showoff to your friends!
 
 **== Gameplay ==**
 
-The start a game your have to press anywhere on the screen when you see the "Ready!" text.
+To start a game press anywhere on the screen when you see the "Ready!" text.
 
 Tilt your device sideways to change the position (left/right) of your monkey. 
 
