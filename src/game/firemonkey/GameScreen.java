@@ -72,15 +72,15 @@ public class GameScreen extends GLScreen {
 				return (int)elapsedTime;			
 			}
 
-			@Override
 			public void playBananaHit() {
-				Random rand = new Random();
-				float r = rand.nextFloat();
-				
-				if(r > 0.5)
-					Assets.bananaSound_1.play(0.8f);		
-				else
-					Assets.bananaSound_2.play(0.8f);
+				try {
+					Random rand = new Random();
+					float r = rand.nextFloat();		
+					if(r > 0.5)
+						Assets.bananaSound_1.play(0.8f);		
+					else
+						Assets.bananaSound_2.play(0.8f);
+				} catch (Exception e) {}
 			}
 			
 			public void playBarrelOut() {
@@ -91,9 +91,12 @@ public class GameScreen extends GLScreen {
 				Assets.bonusSound_1.play(1.0f);		
 			}
 
-			@Override
 			public void playMiss() {
 				Assets.missSound_1.play(0.9f);		
+			}
+
+			public void playJump() {
+				Assets.jumpSound_1.play(0.9f);
 			}
         };
         
@@ -245,7 +248,8 @@ public class GameScreen extends GLScreen {
 		        		world.activeExplosions.add(new Explosion(30, (int)world.monkey.position.x, 
 		        				(int) world.monkey.position.y + (int) Monkey.PLAYER_HEIGHT, 3.0f));
 			        	world.monkey.velocity.y = 30;
-				        world.monkey.jump--; 
+				        world.monkey.jump--;
+				        worldListener.playJump();
 		        	}
 				}	        		
 	        } 
@@ -431,8 +435,8 @@ public class GameScreen extends GLScreen {
     {
     	if (World.currentLevel == 1) {
     		Assets.jungleMusic.play();
-    	} else if (World.currentLevel == 1) {
-    		
+    	} else if (World.currentLevel == 2) {
+    		Assets.snowMusic.play();
     	} else {
     		Assets.spaceMusic.play();
     	}
@@ -442,8 +446,8 @@ public class GameScreen extends GLScreen {
     {
     	if (World.currentLevel == 1) {
     		Assets.jungleMusic.stop();
-    	} else if (World.currentLevel == 1) {
-    		
+    	} else if (World.currentLevel == 2) {
+    		Assets.snowMusic.stop();
     	} else {
     		Assets.spaceMusic.stop();
     	}

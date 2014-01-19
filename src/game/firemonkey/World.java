@@ -16,6 +16,7 @@ public class World {
 		void playBarrelOut();
 		void playBonusAcquired();
 		void playMiss();
+		void playJump();
 	}
 
 	// World's size
@@ -571,6 +572,7 @@ public class World {
 		activeExplosions.add(new Explosion(30, (int)activeBarrel.position.x, (int)activeBarrel.position.y, 1.8f));
 
 		monkey.state = Monkey.PLAYER_STATE_FLYING;
+		activeBarrel.sequence.finalizeSequence();
 		if(activeBarrel.sequence.completionBonus <= 15) {
 			activeBarrel.sequence.completionBonus = 15.0f;
 		}
@@ -580,6 +582,8 @@ public class World {
             monkey.jump++;
             score += 100;
             listener.playBonusAcquired();
+        } else {
+        	listener.playMiss();
         }
         
         monkey.immuneTime = 0.5f;

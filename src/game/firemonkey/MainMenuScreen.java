@@ -84,17 +84,20 @@ public class MainMenuScreen extends GLScreen {
             // Detect touch on specific bounding rects
             if(event.type == Input.TouchEvent.TOUCH_UP) {
                 if(quickGame.state == UIButton.STATE_PRESSED) {
+                	Assets.bananaSound_1.play(0.8f);
                     changeScreen = true;
                     quickGame.state = UIButton.STATE_IDLE;
                     Assets.loadLevel((GLGame) game, 1);
                     World.GAME_MODE = World.GAME_MODE_QUICKSTART;
                     screen = new GameScreen(game);
                 } else if(campaign.state == UIButton.STATE_PRESSED) {
+                	Assets.bananaSound_1.play(0.8f);
                     changeScreen = true;
                     campaign.state = UIButton.STATE_IDLE;
                     World.GAME_MODE = World.GAME_MODE_CAMPAIGN;
                     screen = new LevelSelectorScreen(game);
                 } else if(highScore.state == UIButton.STATE_PRESSED) {
+                	Assets.bananaSound_1.play(0.8f);
                     changeScreen = true;
                     highScore.state = UIButton.STATE_IDLE;
                 }
