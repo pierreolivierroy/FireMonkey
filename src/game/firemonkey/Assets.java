@@ -85,9 +85,22 @@ public class Assets {
 
     public static Sound bananaSound_1;
     public static Sound bananaSound_2;
+    public static Sound barrelSound_1;
+    public static Sound bonusSound_1;
+    
+    public static Music intro;
+    public static Music spaceMusic;
+    
+    public static boolean loaded = false;
 
     public static void load(GLGame game) {
 
+    	if(loaded) {
+    		return;
+    	} else {
+    		loaded = true;
+    	}
+    	
         // Main Menu (UI)
         mainMenuItems = new Texture(game, "mapPack1.png");
         mainMenuBackground = new TextureRegion(mainMenuItems, 0, 0, 480, 800);
@@ -158,6 +171,17 @@ public class Assets {
         // Sounds
         bananaSound_1 = game.getAudio().newSound("banana_1.ogg");
         bananaSound_2 = game.getAudio().newSound("banana_2.ogg");
+        bonusSound_1 = game.getAudio().newSound("bonus_1.ogg");
+        barrelSound_1 = game.getAudio().newSound("barrel_1.ogg");
+
+        
+        intro = game.getAudio().newMusic("intro.ogg");
+        intro.setLooping(true);
+        intro.setVolume(1.0f);
+        
+        spaceMusic = game.getAudio().newMusic("space.ogg");
+        spaceMusic.setLooping(true);
+        spaceMusic.setVolume(0.8f);
 
     }
     

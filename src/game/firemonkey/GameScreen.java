@@ -8,6 +8,7 @@ import javax.microedition.khronos.opengles.GL10;
 import android.util.Log;
 
 import com.bag.lib.Game;
+import com.bag.lib.Music;
 import com.bag.lib.Input.TouchEvent;
 import com.bag.lib.gl.Camera2D;
 import com.bag.lib.gl.SpriteBatcher;
@@ -82,7 +83,17 @@ public class GameScreen extends GLScreen {
 				else
 					Assets.bananaSound_2.play(0.5f);
 			}
+			
+			public void playBarrelOut() {
+				Assets.barrelSound_1.play(0.5f);		
+			}
+			
+			public void playBonusAcquired() {
+				Assets.bonusSound_1.play(0.5f);		
+			}
         };
+        
+        selectMusic();
         
         batcher = new SpriteBatcher(glGraphics, 5000);
         gameUI = new GameUI(batcher);
@@ -186,6 +197,7 @@ public class GameScreen extends GLScreen {
 		        guiCam.touchToWorld(touchPoint);
 		        
 		        if(event.type == TouchEvent.TOUCH_UP){
+		        	stopMusic();
                     if(World.GAME_MODE == World.GAME_MODE_CAMPAIGN) {
                         game.setScreen(new LevelSelectorScreen(game));
                     } else if(World.GAME_MODE == World.GAME_MODE_QUICKSTART) {
@@ -394,6 +406,31 @@ public class GameScreen extends GLScreen {
 
     @Override
     public void dispose() {       
+    }
+    
+    
+    // Music
+    
+    public void selectMusic() 
+    {
+    	if (World.currentLevel == 1) {
+    		
+    	} else if (World.currentLevel == 1) {
+    		
+    	} else {
+    		Assets.spaceMusic.play();
+    	}
+    }
+    
+    public void stopMusic() 
+    {
+    	if (World.currentLevel == 1) {
+    		
+    	} else if (World.currentLevel == 1) {
+    		
+    	} else {
+    		Assets.spaceMusic.stop();
+    	}
     }
 }
 

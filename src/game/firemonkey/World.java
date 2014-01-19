@@ -13,6 +13,8 @@ public class World {
 		//public void sound();
 		int getTime();
 		void playBananaHit();
+		void playBarrelOut();
+		void playBonusAcquired();
 	}
 
 	// World's size
@@ -28,7 +30,7 @@ public class World {
 	public static int currentLevel = 1;
 
 	//Banana patterns
-	public static final int BANANA_PATTERN_BLANK_MIN		= 3;//5%
+	public static final int BANANA_PATTERN_BLANK_MIN		= 2;//5%
 	public static final int BANANA_PATTERN_RANDOM_MIN		= 45;//60%
 	public static final int BANANA_PATTERN_STACK_MIN 		= 75;//15%
 	public static final int BANANA_PATTERN_RECTANGLE_MIN 	= 80;//10%
@@ -120,8 +122,9 @@ public class World {
 		lastHeight = monkey.position.y;
 		monkey.update(deltaTime);
 		
+		// Screen Movement
 		if(monkey.position.y > lastHeight && lastHeight >= 32) {
-			screenIncrement += (monkey.position.y - lastHeight)/100;
+			screenIncrement += (monkey.position.y - lastHeight)/80;
 		}
 		
 		if(screenIncrement >= threshold_1) {
@@ -368,7 +371,7 @@ public class World {
 			//Generate random banana size/points/boost
 			float bananaSize = randomizeBananaSize();
 			int points = 120 - ((int)bananaSize * 10);
-			float boost = bananaSize * 24;
+			float boost = bananaSize * 25;
 
 			Banana b = new Banana(xValue, yValue, bananaSize, bananaSize, boost, points);
 
@@ -417,7 +420,7 @@ public class World {
 			for(int j = 0; j < rectangleWidth; j++){
 
 				x = xValue + incrementX;						
-				Banana bb = new Banana(x, y, 1, 1, Banana.BOOST_MED, Banana.POINTS_MED);
+				Banana bb = new Banana(x, y, 1, 1, Banana.BOOST_HIGH, Banana.POINTS_MED);
 				activeBananas.add(bb);
 				incrementX += 1.5f;
 			}
@@ -458,8 +461,12 @@ public class World {
 	private float randomizeBananaSize(){
 		float minSize = 0.8f;
 		float maxSize = 1.5f;
-
-		Random r = new Random();		
+		float giganticSize = 3.0f;
+		
+		Random r = new Random();
+		
+		if(r.nextFloat() > 0.99)
+			return giganticSize;
 
 		return r.nextFloat() * (maxSize - minSize) + minSize;
 	}
@@ -527,6 +534,9 @@ public class World {
 			float xValue = (rand.nextFloat() * WORLD_WIDTH - 1) + 1;
 			float yValue = (rand.nextFloat() * WORLD_HEIGHT) + nextGenerationHeight;
 
+			if(yValue < monkey.position.y + WORLD_HEIGHT/2)
+				return;
+			
 			activeBarrel = new Barrel(xValue, yValue, 1.3f, 1.6f);
 		}
 	}
@@ -556,7 +566,8 @@ public class World {
 
 			if(OverlapTester.pointInRectangle(bt.bounds, touch)) {
 				activeExplosions.add(new Explosion(20, (int)bt.position.x, (int)bt.position.y, 1.5f));
-				activeBarrel.sequence.inputSequence(bt);				
+				activeBarrel.sequence.inputSequence(bt);
+				listener.playBananaHit();
 			}
 		}
 
@@ -576,10 +587,11 @@ public class World {
 		monkey.velocity.y = activeBarrel.sequence.completionBonus;
         if(activeBarrel.sequence.totalSuccess) {
             monkey.jump++;
+            listener.playBonusAcquired();
         }
         
         monkey.immuneTime = 0.5f;
-
+        listener.playBarrelOut();
 		activeBarrel = null;
 	}
 }
