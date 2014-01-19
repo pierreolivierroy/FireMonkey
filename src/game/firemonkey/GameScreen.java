@@ -394,10 +394,10 @@ public class GameScreen extends GLScreen {
         batcher.endBatch();
 
         batcher.beginBatch(Assets.fontTex);
-        Assets.font.drawText(batcher, "Your Monkey ran ", 150, 840);
-        Assets.font.drawText(batcher, "out of bananas!", 150, 800);
+        Assets.font.drawText(batcher, "Your Monkey ran ", 150, 830);
+        Assets.font.drawText(batcher, "out of bananas!", 150, 790);
         Assets.font.drawText(batcher, "- Final Score -", 140, 600);
-        Assets.font.drawText(batcher, "" + world.score, 340, 560);
+        Assets.font.drawText(batcher, "" + world.score, 340, 550);
         batcher.endBatch();
 
         setHighScore(World.currentLevel, world.score);
