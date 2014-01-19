@@ -102,7 +102,7 @@ public class BarrelSequence {
 		} else if (difficulty == DIFF_MEDIUM) {
 			nbTokens = 4;
 			size = 120.0f;
-			bonus = 25.0f;
+			bonus = 10.0f;
 			time = 1.5f;
 
             generateAnchorList(nbTokens, height);
@@ -127,7 +127,7 @@ public class BarrelSequence {
 		} else if (difficulty == DIFF_HARD) {
             nbTokens = 5;
             size = 120.0f;
-            bonus = 32.0f;
+            bonus = 15.0f;
             time = 1.5f;
 
             generateAnchorList(nbTokens, height);
@@ -197,7 +197,7 @@ public class BarrelSequence {
 	
 	public void finalizeSequence()
 	{
-		float bonus = 25.0f;
+		float bonus = 10.0f;
 		int count = 0;
 		for (BarrelToken bt : tokens) {
 			
