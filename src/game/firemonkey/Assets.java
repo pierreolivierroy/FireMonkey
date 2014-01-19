@@ -28,8 +28,6 @@ public class Assets {
     public static TextureRegion highscoreBubbleRight;
 
     // Game Objects
-    public static Texture playerItems;
-    public static TextureRegion player;
     
     public static Texture monkeyTexture;
     public static TextureRegion monkey_idle;
@@ -59,6 +57,10 @@ public class Assets {
     public static TextureRegion clickToStartText;
     public static TextureRegion gameoverText;
 
+    // Menu buttons
+    public static Texture menuButtonsTexture;
+    public static TextureRegion menuBackButton;
+
     // Game Backgrounds
     public static Texture menuBackgroundTexture;
     public static TextureRegion menuBackground;
@@ -86,6 +88,9 @@ public class Assets {
     public static TextureRegion flameOrange;
     public static TextureRegion rocket;
     public static TextureRegion flames;
+
+    public static Texture highscoreBackgroundTexture;
+    public static TextureRegion highscoreBackground;
 
     public static Sound bananaSound_1;
     public static Sound bananaSound_2;
@@ -176,6 +181,14 @@ public class Assets {
         menuBackgroundTexture = new Texture(game, "menu.png");
         menuBackground = new TextureRegion(menuBackgroundTexture, 0, 0, 768, 1280);
 
+        // Highschore
+        highscoreBackgroundTexture = new Texture(game, "highscore_background.png");
+        highscoreBackground = new TextureRegion(highscoreBackgroundTexture, 0, 0, 768, 1280);
+
+        // Menu buttons
+        menuButtonsTexture = new Texture(game, "menu_buttons.png");
+        menuBackButton = new TextureRegion(menuButtonsTexture, 0, 0, 64, 64);
+
     	// Fonts
     	fontTex = new Texture(game, "font3.png");
         font = new Font(fontTex, 0, 0, 16, 32, 40);
@@ -224,6 +237,7 @@ public class Assets {
     }
 
     public static void reload() {
+    	menuBackgroundTexture.reload();
         tileMapItems.reload();
         mapBackgroundTexture.reload();
         mapButtonsTexture.reload();
@@ -232,7 +246,12 @@ public class Assets {
         barrelsTexture.reload();
         numbersTexture.reload();
         monkeyTexture.reload();
+        fontTex.reload();
+        textsTexture.reload();
         highscoreBubblesTexture.reload();
+        menuButtonsTexture.reload();
+        flamesTexture.reload();
+        highscoreBackgroundTexture.reload();
         
         try {
         	jungleBackgrounds.reload();
@@ -246,8 +265,7 @@ public class Assets {
         	spaceBackgrounds.reload();
 		} catch (Exception e) { }
        
-        //if(Settings.soundEnabled )
-        // music.play();
+
     }
 
     public static void playSound(Sound sound) {
