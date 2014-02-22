@@ -94,6 +94,12 @@ public class Assets {
 
     public static Texture highscoreBackgroundTexture;
     public static TextureRegion highscoreBackground;
+    
+    public static Texture creditsBackgroundTexture;
+    public static TextureRegion creditsBackground;
+    
+    public static Texture questionTexture;
+    public static TextureRegion question;
 
     public static Sound bananaSound_1;
     public static Sound bananaSound_2;
@@ -191,6 +197,13 @@ public class Assets {
         highscoreBackgroundTexture = new Texture(game, "highscore_background.png");
         highscoreBackground = new TextureRegion(highscoreBackgroundTexture, 0, 0, 768, 1280);
 
+        // Credits
+        creditsBackgroundTexture = new Texture(game, "Credits.png");
+        creditsBackground = new TextureRegion(creditsBackgroundTexture, 0, 0, 768, 1280);
+        
+        questionTexture = new Texture(game, "question.png");
+        question = new TextureRegion(questionTexture, 0, 0, 64, 64);
+               
         // Menu buttons
         menuButtonsTexture = new Texture(game, "menu_buttons.png");
         menuBackButton = new TextureRegion(menuButtonsTexture, 0, 0, 64, 64);

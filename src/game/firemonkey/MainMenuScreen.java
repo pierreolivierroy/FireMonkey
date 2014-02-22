@@ -25,6 +25,7 @@ public class MainMenuScreen extends GLScreen {
     UIButton quickGame;
     UIButton campaign;
     UIButton highScore;
+    UIButton credits;
 
     UIButton backButton;
 
@@ -53,6 +54,7 @@ public class MainMenuScreen extends GLScreen {
         quickGame = new UIButton(397, 765, 375, 110, null, null, null);
         campaign =  new UIButton(397, 645, 375, 110, null, null, null);
         highScore = new UIButton(397, 525, 375, 110, null, null, null);
+        credits = new UIButton(768-50, 50, 120, 120, null, null, null); 
     }
 
     @Override
@@ -84,6 +86,8 @@ public class MainMenuScreen extends GLScreen {
                     campaign.state = UIButton.STATE_PRESSED;
                 } else if(OverlapTester.pointInRectangle(highScore.bounds, touchPoint)) {
                     highScore.state = UIButton.STATE_PRESSED;
+                } else if(OverlapTester.pointInRectangle(credits.bounds, touchPoint)) {
+                	credits.state = UIButton.STATE_PRESSED;
                 }
             }
 
@@ -107,6 +111,11 @@ public class MainMenuScreen extends GLScreen {
                     changeScreen = true;
                     highScore.state = UIButton.STATE_IDLE;
                     screen = new HighscoreScreen(game);
+                } else if(credits.state == UIButton.STATE_PRESSED) {
+                	Assets.bananaSound_1.play(0.8f);
+                    changeScreen = true;
+                    credits.state = UIButton.STATE_IDLE;
+                    screen = new CreditsScreen(game);
                 }
             }
         }
@@ -128,6 +137,10 @@ public class MainMenuScreen extends GLScreen {
 
         batcher.beginBatch(Assets.menuBackgroundTexture);
         batcher.drawSprite(768 / 2, 1280 / 2, 768, 1280, Assets.menuBackground);
+        batcher.endBatch();
+        
+        batcher.beginBatch(Assets.questionTexture);
+        batcher.drawSprite(768 - 50, 50, 90, 90, Assets.question);
         batcher.endBatch();
 
         if(changeScreen) {
